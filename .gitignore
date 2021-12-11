@@ -145,4 +145,4 @@ bh_unicode_properties.cache
 GitHub.sublime-settings
 
 # Lint
-.swiftlint.yml
+#.swiftlint.yml
