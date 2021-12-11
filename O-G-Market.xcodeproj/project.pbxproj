@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		342706C72764581D00C2EAC4 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342706C62764581D00C2EAC4 /* DetailViewController.swift */; };
+		342706C9276465E600C2EAC4 /* ItemStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342706C8276465E600C2EAC4 /* ItemStatusView.swift */; };
+		342706CB2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342706CA2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift */; };
+		342706CD2764696A00C2EAC4 /* ItemManageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342706CC2764696A00C2EAC4 /* ItemManageListView.swift */; };
 		3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD69B9327642DD900F053E0 /* AppDelegate.swift */; };
 		3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD69B9527642DD900F053E0 /* SceneDelegate.swift */; };
 		3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD69B9727642DD900F053E0 /* MainViewController.swift */; };
@@ -19,6 +22,9 @@
 
 /* Begin PBXFileReference section */
 		342706C62764581D00C2EAC4 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		342706C8276465E600C2EAC4 /* ItemStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemStatusView.swift; sourceTree = "<group>"; };
+		342706CA2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemThumbnailsPageViewController.swift; sourceTree = "<group>"; };
+		342706CC2764696A00C2EAC4 /* ItemManageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemManageListView.swift; sourceTree = "<group>"; };
 		3DD69B9027642DD900F053E0 /* O-G-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O-G-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DD69B9327642DD900F053E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3DD69B9527642DD900F053E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				3DD69B9E27642DDA00F053E0 /* LaunchScreen.storyboard */,
+				342706C8276465E600C2EAC4 /* ItemStatusView.swift */,
+				342706CC2764696A00C2EAC4 /* ItemManageListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -101,6 +109,7 @@
 				3DD69BD627643C3A00F053E0 /* Views */,
 				3DD69B9727642DD900F053E0 /* MainViewController.swift */,
 				342706C62764581D00C2EAC4 /* DetailViewController.swift */,
+				342706CA2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -205,7 +214,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */,
+				342706CB2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
+				342706CD2764696A00C2EAC4 /* ItemManageListView.swift in Sources */,
+				342706C9276465E600C2EAC4 /* ItemStatusView.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
 				342706C72764581D00C2EAC4 /* DetailViewController.swift in Sources */,
 			);
