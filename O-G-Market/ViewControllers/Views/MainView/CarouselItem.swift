@@ -29,7 +29,9 @@ class CarouselItem: UICollectionViewCell {
 		let productDiscountedPriceLabel = UILabel()
 		let priceLabel = NSMutableAttributedString(string: productDiscountedPriceLabel.text ?? "nil")
 		let textRange = NSRange(location: 0, length: priceLabel.length)
-		priceLabel.addAttributes([.font: UIFont.preferredFont(forTextStyle: .subheadline), .foregroundColor: UIColor.systemRed, .strikethroughStyle: 1], range: textRange)
+		priceLabel.addAttributes([.font: UIFont.preferredFont(forTextStyle: .subheadline),
+                                  .foregroundColor: UIColor.systemRed,
+                                  .strikethroughStyle: 1], range: textRange)
 		productDiscountedPriceLabel.attributedText = priceLabel
 		return productDiscountedPriceLabel
 	}()
