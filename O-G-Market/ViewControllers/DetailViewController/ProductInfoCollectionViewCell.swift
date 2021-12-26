@@ -22,6 +22,7 @@ class ProductInfoCollectionViewCell: UICollectionViewCell {
         titleLabel.text = "오동나무의 뿌리"
         registrationDateLabel.text = "2021. 12. 25"
         descriptionLabel.text = "오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ"
+        self.backgroundColor = .red
         
         configureStackView()
         addSubviews()
@@ -34,6 +35,7 @@ class ProductInfoCollectionViewCell: UICollectionViewCell {
     
 }
 
+// MARK: ProductInfoCollectionViewCell Layout
 extension ProductInfoCollectionViewCell {
     private func configureStackView() {
         stackView.axis = .vertical

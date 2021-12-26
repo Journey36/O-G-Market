@@ -24,7 +24,7 @@ enum DetailViewCompositionalLayoutSections {
     // MARK: ProductInfoSection
     static let productInfoSection: NSCollectionLayoutSection = {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(100)), subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(400)), subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets.leading = UIScreen.main.bounds.width * 0.04
         section.contentInsets.trailing = UIScreen.main.bounds.width * 0.04

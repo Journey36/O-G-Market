@@ -42,6 +42,7 @@ class DetailCompositionalViewController: UICollectionViewController {
     
     private func registerSomeViews() {
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.register(ProductInfoCollectionViewCell.self, forCellWithReuseIdentifier: ProductInfoCollectionViewCell.id)
     }
 }
 
@@ -65,9 +66,17 @@ extension DetailCompositionalViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .lightGray
-        return cell
+        if indexPath.section == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+            cell.backgroundColor = .lightGray
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductInfoCollectionViewCell.id, for: indexPath) as? ProductInfoCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+//            cell.backgroundColor = .lightGray
+            return cell
+        }
     }
 }
 
