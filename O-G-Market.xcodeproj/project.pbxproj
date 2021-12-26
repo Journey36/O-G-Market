@@ -28,6 +28,7 @@
 		DE4B8CE9277870F3007454FC /* DetailCompositionalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CE8277870F3007454FC /* DetailCompositionalViewController.swift */; };
 		DE4B8CEB27788CAC007454FC /* ProductInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEA27788CAC007454FC /* ProductInfoCollectionViewCell.swift */; };
 		DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEC2778A0EA007454FC /* UILabel+.swift */; };
+		DE4B8CF02778C9A4007454FC /* ProductImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		DE4B8CE8277870F3007454FC /* DetailCompositionalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCompositionalViewController.swift; sourceTree = "<group>"; };
 		DE4B8CEA27788CAC007454FC /* ProductInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE4B8CEC2778A0EA007454FC /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImageCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				DE4B8CE8277870F3007454FC /* DetailCompositionalViewController.swift */,
 				DE4B8CE62777EEC0007454FC /* DetailViewCompositionalLayoutSections.swift */,
 				DE4B8CEA27788CAC007454FC /* ProductInfoCollectionViewCell.swift */,
+				DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */,
 				DE23F270277130AA00AD2249 /* ProductPriceView.swift */,
 				342706CA2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift */,
 			);
@@ -295,6 +298,7 @@
 				DE4B8CEB27788CAC007454FC /* ProductInfoCollectionViewCell.swift in Sources */,
 				342706CD2764696A00C2EAC4 /* ItemManageListView.swift in Sources */,
 				342706C9276465E600C2EAC4 /* ItemStatusView.swift in Sources */,
+				DE4B8CF02778C9A4007454FC /* ProductImageCollectionViewCell.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
 				DE4B8CE9277870F3007454FC /* DetailCompositionalViewController.swift in Sources */,
 				342706DB276482F200C2EAC4 /* ProductBuyButton.swift in Sources */,

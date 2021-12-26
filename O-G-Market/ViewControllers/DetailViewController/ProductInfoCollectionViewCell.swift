@@ -48,7 +48,7 @@ extension ProductInfoCollectionViewCell {
         stackView.addSubview(registrationDateLabel)
         stackView.addSubview(descriptionLabel)
         
-        addSubview(stackView)
+        self.contentView.addSubview(stackView)
     }
     
     private func configureLayout() {
