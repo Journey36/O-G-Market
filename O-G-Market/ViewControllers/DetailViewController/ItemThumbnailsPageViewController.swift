@@ -1,8 +1,8 @@
 //
-//  ItemThumbnailsPageViewController.swift
+//  ProductPriceView.swift
 //  O-G-Market
 //
-//  Created by 김동빈 on 2021/12/11.
+//  Created by odongnamu on 2021/12/21.
 //
 
 import Foundation

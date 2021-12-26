@@ -13,7 +13,7 @@ class ProductInfoCollectionViewCell: UICollectionViewCell {
     let titleLabel = UILabel(textStyle: .largeTitle)
     let registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
     let descriptionLabel = UILabel(textStyle: .body)
-    let stackView = UIStackView()
+    let stackView = UIStackView(axis: .vertical, alignment: .leading, sapcing: 8)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,7 +24,6 @@ class ProductInfoCollectionViewCell: UICollectionViewCell {
         descriptionLabel.text = "오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ"
         self.backgroundColor = .red
         
-        configureStackView()
         addSubviews()
         configureLayout()
     }
@@ -37,12 +36,6 @@ class ProductInfoCollectionViewCell: UICollectionViewCell {
 
 // MARK: ProductInfoCollectionViewCell Layout
 extension ProductInfoCollectionViewCell {
-    private func configureStackView() {
-        stackView.axis = .vertical
-        stackView.alignment = .leading
-        stackView.spacing = 8
-    }
-    
     private func addSubviews() {
         stackView.addSubview(titleLabel)
         stackView.addSubview(registrationDateLabel)

@@ -29,6 +29,7 @@
 		DE4B8CEB27788CAC007454FC /* ProductInfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEA27788CAC007454FC /* ProductInfoCollectionViewCell.swift */; };
 		DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEC2778A0EA007454FC /* UILabel+.swift */; };
 		DE4B8CF02778C9A4007454FC /* ProductImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */; };
+		DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CF127792C2A007454FC /* UIStackView+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		DE4B8CEA27788CAC007454FC /* ProductInfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE4B8CEC2778A0EA007454FC /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		DE4B8CF127792C2A007454FC /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				DE4B8CEC2778A0EA007454FC /* UILabel+.swift */,
+				DE4B8CF127792C2A007454FC /* UIStackView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */,
 				342706CB2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
+				DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */,
 				DE23F271277130AA00AD2249 /* ProductPriceView.swift in Sources */,
 				342706D1276481D800C2EAC4 /* ProductPriceLabel.swift in Sources */,
 				342706D52764820900C2EAC4 /* ProductCountLabel.swift in Sources */,
