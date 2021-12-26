@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D3D49C32778B21B009A892E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3D49C22778B21B009A892E /* SignUpViewController.swift */; };
 		3D70A4D82776F70B0095F972 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D70A4D72776F70B0095F972 /* ListItem.swift */; };
 		3DA37D8227713E0B00CC84C3 /* CarouselItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA37D8127713E0B00CC84C3 /* CarouselItem.swift */; };
 		3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD69B9327642DD900F053E0 /* AppDelegate.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D3D49C22778B21B009A892E /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		3D70A4D72776F70B0095F972 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
 		3DA37D8127713E0B00CC84C3 /* CarouselItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItem.swift; sourceTree = "<group>"; };
 		3DD69B9027642DD900F053E0 /* O-G-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O-G-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +44,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D3D49C42778B265009A892E /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				3DA37D8127713E0B00CC84C3 /* CarouselItem.swift */,
+				3D70A4D72776F70B0095F972 /* ListItem.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
 		3DD69B8727642DD900F053E0 = {
 			isa = PBXGroup;
 			children = (
@@ -83,8 +94,7 @@
 		3DD69BD627643C3A00F053E0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3DA37D8127713E0B00CC84C3 /* CarouselItem.swift */,
-				3D70A4D72776F70B0095F972 /* ListItem.swift */,
+				3D3D49C42778B265009A892E /* MainView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -101,6 +111,7 @@
 			children = (
 				3DD69BD627643C3A00F053E0 /* Views */,
 				3DD69B9727642DD900F053E0 /* MainViewController.swift */,
+				3D3D49C22778B21B009A892E /* SignUpViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -203,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D3D49C32778B21B009A892E /* SignUpViewController.swift in Sources */,
 				3D70A4D82776F70B0095F972 /* ListItem.swift in Sources */,
 				3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
