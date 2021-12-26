@@ -23,6 +23,9 @@
 		3DD69BA027642DDA00F053E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DD69B9E27642DDA00F053E0 /* LaunchScreen.storyboard */; };
 		3DD69BDC27643E9100F053E0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3DD69BDB27643E9100F053E0 /* SnapKit */; };
 		3DD69BDF27643F0900F053E0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3DD69BDE27643F0900F053E0 /* Alamofire */; };
+		DE23F271277130AA00AD2249 /* ProductPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE23F270277130AA00AD2249 /* ProductPriceView.swift */; };
+		DE4B8CE72777EEC0007454FC /* DetailViewCompositionalLayoutSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CE62777EEC0007454FC /* DetailViewCompositionalLayoutSections.swift */; };
+		DE4B8CE9277870F3007454FC /* DetailCompositionalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CE8277870F3007454FC /* DetailCompositionalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +46,9 @@
 		3DD69B9F27642DDA00F053E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3DD69BA127642DDA00F053E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DD69BA827642EEB00F053E0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		DE23F270277130AA00AD2249 /* ProductPriceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPriceView.swift; sourceTree = "<group>"; };
+		DE4B8CE62777EEC0007454FC /* DetailViewCompositionalLayoutSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCompositionalLayoutSections.swift; sourceTree = "<group>"; };
+		DE4B8CE8277870F3007454FC /* DetailCompositionalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCompositionalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,9 @@
 			children = (
 				342706D92764826800C2EAC4 /* View */,
 				342706C62764581D00C2EAC4 /* DetailViewController.swift */,
+				DE4B8CE8277870F3007454FC /* DetailCompositionalViewController.swift */,
+				DE4B8CE62777EEC0007454FC /* DetailViewCompositionalLayoutSections.swift */,
+				DE23F270277130AA00AD2249 /* ProductPriceView.swift */,
 				342706CA2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift */,
 			);
 			path = DetailViewController;
@@ -263,6 +272,7 @@
 				3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */,
 				342706CB2764690400C2EAC4 /* ItemThumbnailsPageViewController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
+				DE23F271277130AA00AD2249 /* ProductPriceView.swift in Sources */,
 				342706D1276481D800C2EAC4 /* ProductPriceLabel.swift in Sources */,
 				342706D52764820900C2EAC4 /* ProductCountLabel.swift in Sources */,
 				342706CF2764816900C2EAC4 /* ProductNameLabel.swift in Sources */,
@@ -270,7 +280,9 @@
 				342706CD2764696A00C2EAC4 /* ItemManageListView.swift in Sources */,
 				342706C9276465E600C2EAC4 /* ItemStatusView.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
+				DE4B8CE9277870F3007454FC /* DetailCompositionalViewController.swift in Sources */,
 				342706DB276482F200C2EAC4 /* ProductBuyButton.swift in Sources */,
+				DE4B8CE72777EEC0007454FC /* DetailViewCompositionalLayoutSections.swift in Sources */,
 				342706C72764581D00C2EAC4 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
