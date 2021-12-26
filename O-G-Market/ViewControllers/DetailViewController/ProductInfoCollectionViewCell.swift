@@ -10,10 +10,10 @@ import SnapKit
 
 class ProductInfoCollectionViewCell: UICollectionViewCell {
     static let id = "ProductInfoCell"
-    var titleLabel = UILabel(textStyle: .largeTitle)
-    var registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
-    var descriptionLabel = UILabel(textStyle: .body)
-    var stackView = UIStackView()
+    let titleLabel = UILabel(textStyle: .largeTitle)
+    let registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
+    let descriptionLabel = UILabel(textStyle: .body)
+    let stackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
