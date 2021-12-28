@@ -37,19 +37,16 @@ class ProductInfoCollectionViewCell: UICollectionViewCell {
 // MARK: ProductInfoCollectionViewCell Layout
 extension ProductInfoCollectionViewCell {
     private func addSubviews() {
-        stackView.addSubview(titleLabel)
-        stackView.addSubview(registrationDateLabel)
-        stackView.addSubview(descriptionLabel)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(registrationDateLabel)
+        stackView.addArrangedSubview(descriptionLabel)
         
         self.contentView.addSubview(stackView)
     }
     
     private func configureLayout() {
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
 }

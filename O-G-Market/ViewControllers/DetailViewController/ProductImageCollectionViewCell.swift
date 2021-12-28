@@ -29,10 +29,7 @@ class ProductImageCollectionViewCell: UICollectionViewCell {
 extension ProductImageCollectionViewCell {
     private func configureLayout() {
         imageView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.edges.equalToSuperview()
         }
     }
 }
