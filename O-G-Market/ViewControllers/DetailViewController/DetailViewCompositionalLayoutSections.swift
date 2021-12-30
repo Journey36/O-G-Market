@@ -18,6 +18,11 @@ enum DetailViewCompositionalLayoutSections {
         section.contentInsets.bottom = 10
         section.orthogonalScrollingBehavior = .paging
         
+        section.visibleItemsInvalidationHandler = ({ (visibleItems, point, env) in
+             print("print Scroll")
+        })
+        
+        
         return section
     }()
     

@@ -15,10 +15,14 @@ class ProductPriceView: UIView {
     let priceStackView = UIStackView(axis: .vertical, alignment: .leading, sapcing: 8)
     let buyStackView = UIStackView(axis: .vertical, alignment: .leading)
     let totalStackView = UIStackView(axis: .horizontal, alignment: .center)
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = .brown
         
+        priceLabel.text = "10000원"
+        originalPriceLabel.text = "20000원"
+        remainingCountLabel.text = "남은 수량: 1개"
         configureBuyButton()
         addSubviews()
         configureLayout()
@@ -37,15 +41,22 @@ class ProductPriceView: UIView {
 
 extension ProductPriceView {
     private func addSubviews() {
-        priceStackView.addSubview(originalPriceLabel)
-        priceStackView.addSubview(priceLabel)
-        buyStackView.addSubview(remainingCountLabel)
-        buyStackView.addSubview(buyButton)
-        totalStackView.addSubview(priceStackView)
-        totalStackView.addSubview(buyStackView)
+        priceStackView.addArrangedSubview(originalPriceLabel)
+        priceStackView.addArrangedSubview(priceLabel)
+        buyStackView.addArrangedSubview(remainingCountLabel)
+        buyStackView.addArrangedSubview(buyButton)
+        totalStackView.addArrangedSubview(priceStackView)
+        totalStackView.addArrangedSubview(buyStackView)
+        
+        addSubview(totalStackView)
     }
     
     private func configureLayout() {
-        
+        totalStackView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.8)
+            make.height.equalToSuperview().multipliedBy(0.9)
+        }
     }
 }
