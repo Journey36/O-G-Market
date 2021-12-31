@@ -77,13 +77,6 @@ identifier_name:
     - y
     - z
 
-indentation_width:
-  indentation_width: 4
-
-multiline_arguments:
-  first_argument_location: next_line
-  only_enforce_after_first_closure_on_first_line: true
-
 private_over_fileprivate:
   validate_extensions: true
 
