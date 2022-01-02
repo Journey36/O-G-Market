@@ -8,16 +8,21 @@ import UIKit
 import SnapKit
 import SwiftUI
 
+let zeroSize = CGRect.zero
+
 class DetailViewController: UIViewController {
 //    let collectionView = DetailCompositionalViewController(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height))
-    let productImagePageView = ProductImagePageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), images: [])
-    let productPriceView = ProductPriceView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    
+    let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
+    let productPriceView = ProductPriceView(frame: zeroSize)
+    let productInfoView = ProductInfoView(frame: zeroSize)
     
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.view.addSubview(collectionView)
         self.view.addSubview(productPriceView)
         self.view.addSubview(productImagePageView)
+        self.view.addSubview(productInfoView)
         
 //        collectionView.snp.makeConstraints { make in
 //            make.leading.equalToSuperview()
@@ -37,6 +42,13 @@ class DetailViewController: UIViewController {
             make.height.equalToSuperview().multipliedBy(0.3)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
+        }
+        
+        productInfoView.snp.makeConstraints { make in
+            make.top.equalTo(productImagePageView.snp.bottom)
+            make.width.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.6)
         }
     }
     

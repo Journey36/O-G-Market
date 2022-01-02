@@ -30,6 +30,7 @@
 		DE4B8CF02778C9A4007454FC /* ProductImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */; };
 		DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CF127792C2A007454FC /* UIStackView+.swift */; };
 		DE9809A1277E789D0084E39A /* ProductImagePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809A0277E789D0084E39A /* ProductImagePageView.swift */; };
+		DE9809E7278227B50084E39A /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809E6278227B50084E39A /* ProductInfoView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,7 @@
 		DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE4B8CF127792C2A007454FC /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DE9809A0277E789D0084E39A /* ProductImagePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImagePageView.swift; sourceTree = "<group>"; };
+		DE9809E6278227B50084E39A /* ProductInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				DE4B8CEF2778C9A4007454FC /* ProductImageCollectionViewCell.swift */,
 				DE23F270277130AA00AD2249 /* ProductPriceView.swift */,
 				DE9809A0277E789D0084E39A /* ProductImagePageView.swift */,
+				DE9809E6278227B50084E39A /* ProductInfoView.swift */,
 			);
 			path = DetailViewController;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				DE4B8CEB27788CAC007454FC /* ProductInfoCollectionViewCell.swift in Sources */,
 				342706CD2764696A00C2EAC4 /* ItemManageListView.swift in Sources */,
 				342706C9276465E600C2EAC4 /* ItemStatusView.swift in Sources */,
+				DE9809E7278227B50084E39A /* ProductInfoView.swift in Sources */,
 				DE4B8CF02778C9A4007454FC /* ProductImageCollectionViewCell.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
 				DE4B8CE9277870F3007454FC /* DetailCompositionalViewController.swift in Sources */,
