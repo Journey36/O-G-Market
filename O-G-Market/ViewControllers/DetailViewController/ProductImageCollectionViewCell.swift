@@ -17,6 +17,7 @@ class ProductImageCollectionViewCell: UICollectionViewCell {
         
         // 임시코드
         imageView.image = UIImage(systemName: "pencil")
+        configureLayout()
     }
     
     required init?(coder: NSCoder) {

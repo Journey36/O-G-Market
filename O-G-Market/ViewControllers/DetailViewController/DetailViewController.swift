@@ -9,25 +9,34 @@ import SnapKit
 import SwiftUI
 
 class DetailViewController: UIViewController {
-    let collectionView = DetailCompositionalViewController(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height))
+//    let collectionView = DetailCompositionalViewController(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height))
+    let productImagePageView = ProductImagePageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), images: [])
     let productPriceView = ProductPriceView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.addSubview(collectionView)
+//        self.view.addSubview(collectionView)
         self.view.addSubview(productPriceView)
+        self.view.addSubview(productImagePageView)
         
-        collectionView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalTo(view)
-            make.bottom.equalToSuperview()
-        }
+//        collectionView.snp.makeConstraints { make in
+//            make.leading.equalToSuperview()
+//            make.trailing.equalToSuperview()
+//            make.top.equalTo(view)
+//            make.bottom.equalToSuperview()
+//        }
         productPriceView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.1)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
+        }
+        
+        productImagePageView.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.3)
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview()
         }
     }
     

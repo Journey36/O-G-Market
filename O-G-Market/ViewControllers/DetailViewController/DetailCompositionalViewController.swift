@@ -76,10 +76,13 @@ extension DetailCompositionalViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.id, for: indexPath)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.id, for: indexPath) as? ProductImageCollectionViewCell else {
+                return UICollectionViewCell()
+            }
             cell.backgroundColor = .lightGray
             return cell
-        } else {
+        }
+        else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductInfoCollectionViewCell.id, for: indexPath) as? ProductInfoCollectionViewCell else {
                 return UICollectionViewCell()
             }
