@@ -27,16 +27,12 @@ class ProductImagePageView: UICollectionView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createLayout() -> UICollectionViewLayout {
+    private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         return layout
-    }
-    
-    func configureLayout() {
-        
     }
 }
 
