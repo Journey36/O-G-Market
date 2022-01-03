@@ -11,25 +11,27 @@ import SwiftUI
 let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
-//    let collectionView = DetailCompositionalViewController(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height:  UIScreen.main.bounds.height))
-    
     let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.view.addSubview(collectionView)
+        self.view.backgroundColor = .white
+        
+        addSubviews()
+        configureNavigationBar()
+        configureLayout()
+    }
+    
+    private func addSubviews() {
         self.view.addSubview(productPriceView)
         self.view.addSubview(productImagePageView)
         self.view.addSubview(productInfoView)
-        
-//        collectionView.snp.makeConstraints { make in
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.top.equalTo(view)
-//            make.bottom.equalToSuperview()
-//        }
+    }
+    
+    private func configureLayout() {
+        // Scroll View로 수정해야함.
         productPriceView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.1)
@@ -41,26 +43,33 @@ class DetailViewController: UIViewController {
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.3)
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
         }
         
         productInfoView.snp.makeConstraints { make in
             make.top.equalTo(productImagePageView.snp.bottom)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.bottom.equalTo(productPriceView.snp.top)
         }
     }
     
+    private func configureNavigationBar() {
+        let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(showActivityView))
+        let editButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
+        
+        navigationItem.rightBarButtonItems = [editButton, shareButton]
+        navigationItem.title = "상품 상세"
+        navigationController?.navigationBar.backgroundColor = .white
+    }
     
+    @objc private func showActivityView() {
+        let activityViewController = UIActivityViewController(activityItems: ["오동나무"], applicationActivities: nil)
+        
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItems?.first
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 }
-
-//extension DetailViewController: UICollectionViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print("sroll!")
-//    }
-//}
-
 
 
 

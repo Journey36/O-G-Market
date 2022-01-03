@@ -18,7 +18,7 @@ class ProductPriceView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .brown
+        backgroundColor = .systemGray6
         
         priceLabel.text = "10000원"
         originalPriceLabel.text = "20000원"

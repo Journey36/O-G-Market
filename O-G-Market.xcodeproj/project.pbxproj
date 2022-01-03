@@ -25,6 +25,8 @@
 		DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CF127792C2A007454FC /* UIStackView+.swift */; };
 		DE9809A1277E789D0084E39A /* ProductImagePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809A0277E789D0084E39A /* ProductImagePageView.swift */; };
 		DE9809E7278227B50084E39A /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809E6278227B50084E39A /* ProductInfoView.swift */; };
+		DE9809E927823D4B0084E39A /* ProductEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809E827823D4B0084E39A /* ProductEditViewController.swift */; };
+		DE9809ED27823EC50084E39A /* AddProductImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809EC27823EC50084E39A /* AddProductImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +49,8 @@
 		DE4B8CF127792C2A007454FC /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DE9809A0277E789D0084E39A /* ProductImagePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductImagePageView.swift; sourceTree = "<group>"; };
 		DE9809E6278227B50084E39A /* ProductInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoView.swift; sourceTree = "<group>"; };
+		DE9809E827823D4B0084E39A /* ProductEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewController.swift; sourceTree = "<group>"; };
+		DE9809EC27823EC50084E39A /* AddProductImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,7 @@
 				3DD69BD627643C3A00F053E0 /* Views */,
 				342706D72764823F00C2EAC4 /* MainViewController */,
 				342706D62764823300C2EAC4 /* DetailViewController */,
+				DE9809EA27823D510084E39A /* ProductEditViewController */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -173,6 +178,23 @@
 				DE4B8CF127792C2A007454FC /* UIStackView+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		DE9809EA27823D510084E39A /* ProductEditViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DE9809EB27823E560084E39A /* View */,
+				DE9809E827823D4B0084E39A /* ProductEditViewController.swift */,
+				DE9809EC27823EC50084E39A /* AddProductImageView.swift */,
+			);
+			path = ProductEditViewController;
+			sourceTree = "<group>";
+		};
+		DE9809EB27823E560084E39A /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,6 +299,7 @@
 				3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
 				DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */,
+				DE9809E927823D4B0084E39A /* ProductEditViewController.swift in Sources */,
 				DE23F271277130AA00AD2249 /* ProductPriceView.swift in Sources */,
 				342706D1276481D800C2EAC4 /* ProductPriceLabel.swift in Sources */,
 				342706D52764820900C2EAC4 /* ProductCountLabel.swift in Sources */,
@@ -285,6 +308,7 @@
 				342706D3276481EC00C2EAC4 /* ProductSalePriceLabel.swift in Sources */,
 				DE9809E7278227B50084E39A /* ProductInfoView.swift in Sources */,
 				DE4B8CF02778C9A4007454FC /* ProductImageCollectionViewCell.swift in Sources */,
+				DE9809ED27823EC50084E39A /* AddProductImageView.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
 				342706C72764581D00C2EAC4 /* DetailViewController.swift in Sources */,
 				DE9809A1277E789D0084E39A /* ProductImagePageView.swift in Sources */,

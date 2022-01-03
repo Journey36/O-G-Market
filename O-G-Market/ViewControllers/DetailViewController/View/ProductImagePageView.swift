@@ -49,7 +49,7 @@ extension ProductImagePageView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.id, for: indexPath) as? ProductImageCollectionViewCell else { return UICollectionViewCell() }
-        cell.backgroundColor = .gray
+        cell.backgroundColor = .systemGray5
         return cell
     }
     
