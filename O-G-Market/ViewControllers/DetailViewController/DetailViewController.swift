@@ -8,7 +8,7 @@ import UIKit
 import SnapKit
 import SwiftUI
 
-let zeroSize = CGRect.zero
+fileprivate let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
     let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
@@ -53,10 +53,13 @@ class DetailViewController: UIViewController {
             make.bottom.equalTo(productPriceView.snp.top)
         }
     }
-    
+}
+
+// MARK: NavigationBar
+extension DetailViewController {
     private func configureNavigationBar() {
         let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(showActivityView))
-        let editButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: nil)
+        let editButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(showEditActionSheet))
         
         navigationItem.rightBarButtonItems = [editButton, shareButton]
         navigationItem.title = "상품 상세"
@@ -68,6 +71,17 @@ class DetailViewController: UIViewController {
         
         activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItems?.first
         self.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    @objc private func showEditActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
+        let editAction = UIAlertAction(title: "수정하기", style: .default, handler: nil)
+        let deleteAction = UIAlertAction(title: "삭제하기", style: .default, handler: nil)
+    
+        actionSheet.addAction(editAction)
+        actionSheet.addAction(deleteAction)
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
 }
 
