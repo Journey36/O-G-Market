@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D70A4D82776F70B0095F972 /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D70A4D72776F70B0095F972 /* ListItem.swift */; };
-		3DA37D8227713E0B00CC84C3 /* CarouselItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA37D8127713E0B00CC84C3 /* CarouselItem.swift */; };
+		3D32C3C32785AD79008B7B5B /* CarouselItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32C3C12785AD79008B7B5B /* CarouselItem.swift */; };
+		3D32C3C42785AD79008B7B5B /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32C3C22785AD79008B7B5B /* ListItem.swift */; };
+		3DD5BE172782F8EF000B89A8 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD5BE162782F8EF000B89A8 /* Product.swift */; };
 		3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD69B9327642DD900F053E0 /* AppDelegate.swift */; };
 		3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD69B9527642DD900F053E0 /* SceneDelegate.swift */; };
 		3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD69B9727642DD900F053E0 /* MainViewController.swift */; };
@@ -18,8 +19,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D70A4D72776F70B0095F972 /* ListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItem.swift; sourceTree = "<group>"; };
-		3DA37D8127713E0B00CC84C3 /* CarouselItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItem.swift; sourceTree = "<group>"; };
+		3D32C3C12785AD79008B7B5B /* CarouselItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselItem.swift; path = MainView/CarouselItem.swift; sourceTree = "<group>"; };
+		3D32C3C22785AD79008B7B5B /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListItem.swift; path = MainView/ListItem.swift; sourceTree = "<group>"; };
+		3DD5BE162782F8EF000B89A8 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		3DD69B9027642DD900F053E0 /* O-G-Market.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O-G-Market.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DD69B9327642DD900F053E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3DD69B9527642DD900F053E0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,8 +85,8 @@
 		3DD69BD627643C3A00F053E0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3DA37D8127713E0B00CC84C3 /* CarouselItem.swift */,
-				3D70A4D72776F70B0095F972 /* ListItem.swift */,
+				3D32C3C12785AD79008B7B5B /* CarouselItem.swift */,
+				3D32C3C22785AD79008B7B5B /* ListItem.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -92,6 +94,7 @@
 		3DD69BD827643C4C00F053E0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3DD5BE162782F8EF000B89A8 /* Product.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -203,11 +206,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D70A4D82776F70B0095F972 /* ListItem.swift in Sources */,
+				3D32C3C42785AD79008B7B5B /* ListItem.swift in Sources */,
 				3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
-				3DA37D8227713E0B00CC84C3 /* CarouselItem.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
+				3D32C3C32785AD79008B7B5B /* CarouselItem.swift in Sources */,
+				3DD5BE172782F8EF000B89A8 /* Product.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
