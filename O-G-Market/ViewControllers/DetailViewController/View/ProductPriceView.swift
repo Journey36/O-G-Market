@@ -57,7 +57,7 @@ extension ProductPriceView {
         totalStackView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.8)
+            make.width.equalToSuperview().multipliedBy(0.9)
             make.bottom.equalToSuperview().offset(-30)
         }
         
