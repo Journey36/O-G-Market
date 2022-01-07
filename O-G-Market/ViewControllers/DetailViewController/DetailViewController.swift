@@ -11,25 +11,27 @@ import SwiftUI
 fileprivate let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
+    let scrollView = UIScrollView()
     let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
-        
+
         addSubviews()
         configureNavigationBar()
         configureLayout()
     }
-    
+
     private func addSubviews() {
-        self.view.addSubview(productPriceView)
-        self.view.addSubview(productImagePageView)
-        self.view.addSubview(productInfoView)
+        view.addSubview(scrollView)
+        view.addSubview(productPriceView)
+        
+        scrollView.addSubview(productImagePageView)
+        scrollView.addSubview(productInfoView)
     }
-    
+
     private func configureLayout() {
         // Scroll View로 수정해야함.
         productPriceView.snp.makeConstraints { make in
@@ -38,18 +40,25 @@ class DetailViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
         }
-        
+
         productImagePageView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.3)
             make.centerX.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide)
         }
-        
+
         productInfoView.snp.makeConstraints { make in
             make.top.equalTo(productImagePageView.snp.bottom)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
+            make.bottom.equalTo(productPriceView.snp.top)
+        }
+        
+        scrollView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             make.bottom.equalTo(productPriceView.snp.top)
         }
     }
