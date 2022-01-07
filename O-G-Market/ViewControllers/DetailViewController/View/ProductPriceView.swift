@@ -9,8 +9,8 @@ import UIKit
 
 class ProductPriceView: UIView {
     let priceLabel = UILabel(textStyle: .title1)
-    let originalPriceLabel = UILabel(textStyle: .callout, textColor: .gray)
-    let remainingCountLabel = UILabel(textStyle: .callout, textColor: .gray)
+    let originalPriceLabel = UILabel(textStyle: .caption1, textColor: .gray)
+    let remainingCountLabel = UILabel(textStyle: .caption1, textColor: .gray)
     let buyButton = UIButton()
     let priceStackView = UIStackView(axis: .vertical, alignment: .leading, sapcing: 8)
     let buyStackView = UIStackView(axis: .vertical, alignment: .leading)
@@ -34,8 +34,8 @@ class ProductPriceView: UIView {
     }
     
     private func configureBuyButton() {
-        buyButton.titleLabel?.text = "Buy"
-        buyButton.backgroundColor = .green
+        buyButton.setTitle("구매하기", for: .normal)
+        buyButton.backgroundColor = .systemGray3
         buyButton.layer.cornerRadius = 10
     }
 }
@@ -60,5 +60,14 @@ extension ProductPriceView {
             make.width.equalToSuperview().multipliedBy(0.8)
             make.bottom.equalToSuperview().offset(-30)
         }
+        
+        priceStackView.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.6)
+        }
+        
+        buyButton.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+        }
+        
     }
 }
