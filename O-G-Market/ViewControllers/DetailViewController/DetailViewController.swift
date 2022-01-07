@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
 
         productImagePageView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.height.equalTo(self.view.safeAreaLayoutGuide.snp.height).multipliedBy(0.3)
+            make.height.equalTo(view.snp.width)
             make.centerX.equalToSuperview()
             make.top.equalToSuperview()
         }
@@ -58,9 +58,9 @@ class DetailViewController: UIViewController {
         }
         
         scrollView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
-            make.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
             make.bottom.equalTo(productPriceView.snp.top)
         }
     }
