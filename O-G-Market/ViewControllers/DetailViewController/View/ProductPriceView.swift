@@ -15,6 +15,7 @@ class ProductPriceView: UIView {
     let priceStackView = UIStackView(axis: .vertical, alignment: .leading, sapcing: 8)
     let buyStackView = UIStackView(axis: .vertical, alignment: .leading)
     let totalStackView = UIStackView(axis: .horizontal, alignment: .center)
+    let transparentBlankView = UIView(frame: CGRect.zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,14 +50,15 @@ extension ProductPriceView {
         totalStackView.addArrangedSubview(buyStackView)
         
         addSubview(totalStackView)
+        addSubview(transparentBlankView)
     }
     
     private func configureLayout() {
         totalStackView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.8)
-            make.height.equalToSuperview().multipliedBy(0.9)
+            make.bottom.equalToSuperview().offset(-30)
         }
     }
 }

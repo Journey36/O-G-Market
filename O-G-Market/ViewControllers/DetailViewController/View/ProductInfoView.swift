@@ -11,12 +11,11 @@ class ProductInfoView: UIView {
     let titleLabel = UILabel(textStyle: .largeTitle)
     let registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
     let descriptionLabel = UILabel(textStyle: .body)
-    let stackView = UIStackView(axis: .vertical, alignment: .leading, sapcing: 8)
+    let stackView = UIStackView(axis: .vertical, alignment: .leading, sapcing: 8, distribution: .equalSpacing)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        stackView.distribution = .fillEqually
         addSubviews()
         configureLayout()
         descriptionLabel.numberOfLines = 0

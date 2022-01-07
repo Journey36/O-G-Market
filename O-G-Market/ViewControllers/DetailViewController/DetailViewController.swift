@@ -15,9 +15,12 @@ class DetailViewController: UIViewController {
     let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
+    let contentsView = UIView(frame: zeroSize)
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
 
         addSubviews()
         configureNavigationBar()
@@ -33,7 +36,6 @@ class DetailViewController: UIViewController {
     }
 
     private func configureLayout() {
-        // Scroll View로 수정해야함.
         productPriceView.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.1)
@@ -43,16 +45,16 @@ class DetailViewController: UIViewController {
 
         productImagePageView.snp.makeConstraints { make in
             make.width.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.3)
+            make.height.equalTo(self.view.safeAreaLayoutGuide.snp.height).multipliedBy(0.3)
             make.centerX.equalToSuperview()
-            make.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalToSuperview()
         }
 
         productInfoView.snp.makeConstraints { make in
             make.top.equalTo(productImagePageView.snp.bottom)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(productPriceView.snp.top)
+            make.bottom.equalToSuperview()
         }
         
         scrollView.snp.makeConstraints { make in
