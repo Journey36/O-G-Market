@@ -27,6 +27,7 @@
 		DE9809E7278227B50084E39A /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809E6278227B50084E39A /* ProductInfoView.swift */; };
 		DE9809E927823D4B0084E39A /* ProductEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809E827823D4B0084E39A /* ProductEditViewController.swift */; };
 		DE9809ED27823EC50084E39A /* AddProductImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809EC27823EC50084E39A /* AddProductImageView.swift */; };
+		DE9A7F6F2788EA4200C8362D /* PixelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7F6E2788EA4200C8362D /* PixelLineView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		DE9809E6278227B50084E39A /* ProductInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoView.swift; sourceTree = "<group>"; };
 		DE9809E827823D4B0084E39A /* ProductEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewController.swift; sourceTree = "<group>"; };
 		DE9809EC27823EC50084E39A /* AddProductImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductImageView.swift; sourceTree = "<group>"; };
+		DE9A7F6E2788EA4200C8362D /* PixelLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelLineView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 		DE9809EB27823E560084E39A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DE9A7F6E2788EA4200C8362D /* PixelLineView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				DE23F271277130AA00AD2249 /* ProductPriceView.swift in Sources */,
 				342706D1276481D800C2EAC4 /* ProductPriceLabel.swift in Sources */,
 				342706D52764820900C2EAC4 /* ProductCountLabel.swift in Sources */,
+				DE9A7F6F2788EA4200C8362D /* PixelLineView.swift in Sources */,
 				DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */,
 				342706CF2764816900C2EAC4 /* ProductNameLabel.swift in Sources */,
 				342706D3276481EC00C2EAC4 /* ProductSalePriceLabel.swift in Sources */,
