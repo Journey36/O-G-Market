@@ -16,7 +16,7 @@
 
 import UIKit
 
-class AddProductImageViewController: UIViewController {
-    let addButton = UIButton()
+class AddProductImageScrollView: UIScrollView {
+    
 
 }
