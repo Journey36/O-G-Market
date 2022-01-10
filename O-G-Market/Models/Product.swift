@@ -12,22 +12,13 @@ struct Product: Codable {
     let descriptions: String
     let price: UInt
     let currency: Currency
-    var discountedPrice: UInt = 0
-    var stock: UInt = 0
+    let discountedPrice: UInt? = 0
+    let stock: UInt? = 0
+    let secret: String
+
 
     enum CodingKeys: String, CodingKey {
-        case name, descriptions, currency, stock
-        case price = "amount"
+        case name, descriptions, price, currency, stock, secret
         case discountedPrice = "discounted_price"
-    }
-}
-
-enum Currency: String, Codable {
-    case KRW
-    case USD
-    case unknown
-
-    init(from decoder: Decoder) throws {
-        self = try Currency(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
     }
 }
