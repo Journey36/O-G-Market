@@ -8,13 +8,17 @@
 import UIKit
 
 class ProductPriceEditView: UIView {
-    let currencyButton = UIButton()
+    let currencyPickerTextField = UITextField()
     let priceTextField = UITextField()
     let discountButton = UIButton()
     let stackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        addSubviews()
+        configureLayout()
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -22,13 +26,25 @@ class ProductPriceEditView: UIView {
     }
     
     private func addSubviews() {
-        addSubview(currencyButton)
-        addSubview(priceTextField)
-        addSubview(discountButton)
+        stackView.addArrangedSubview(currencyPickerTextField)
+        stackView.addArrangedSubview(priceTextField)
+        stackView.addArrangedSubview(discountButton)
+        addSubview(stackView)
     }
     
     private func configureLayout() {
-
+        stackView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.centerX.equalToSuperview()
+        }
+        
+        currencyPickerTextField.snp.makeConstraints { make in
+            make.width.equalTo(100)
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
     
 }
