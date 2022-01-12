@@ -9,7 +9,7 @@ import Foundation
 
 struct PostingInfo: Decodable {
     let id: Int
-    let venderID: Int
+    let vendorID: Int
     let name: String
     let thumbnail: String
     let currency: Currency
@@ -23,7 +23,7 @@ struct PostingInfo: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case id, name, thumbnail, currency, price, stock, images
-        case venderID = "vender_id"
+        case vendorID = "vendor_id"
         case bargainPrice = "bargain_price"
         case discountedPrice = "discounted_price"
         case createdAt = "created_at"
