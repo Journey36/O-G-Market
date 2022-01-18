@@ -44,11 +44,13 @@ class ProductEditViewController: UIViewController {
     }
     
     private func addSubviews() {
-        view.addSubview(addProductImageScrollView)
-        view.addSubview(nameTextView)
-        view.addSubview(priceEditView)
-        view.addSubview(stockTextView)
-        view.addSubview(descriptionTextView)
+        scrollView.addSubview(addProductImageScrollView)
+        scrollView.addSubview(nameTextView)
+        scrollView.addSubview(priceEditView)
+        scrollView.addSubview(stockTextView)
+        scrollView.addSubview(descriptionTextView)
+        
+        view.addSubview(scrollView)
     }
     
     private func configureLayout() {
@@ -57,11 +59,15 @@ class ProductEditViewController: UIViewController {
         let pixelLineView3 = PixelLineView(frame: CGRect.zero)
         let pixelLineView4 = PixelLineView(frame: CGRect.zero)
         let pixelLineView5 = PixelLineView(frame: CGRect.zero)
-        view.addSubview(pixelLineView1)
-        view.addSubview(pixelLineView2)
-        view.addSubview(pixelLineView3)
-        view.addSubview(pixelLineView4)
-        view.addSubview(pixelLineView5)
+        scrollView.addSubview(pixelLineView1)
+        scrollView.addSubview(pixelLineView2)
+        scrollView.addSubview(pixelLineView3)
+        scrollView.addSubview(pixelLineView4)
+        scrollView.addSubview(pixelLineView5)
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         addProductImageScrollView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
@@ -72,8 +78,7 @@ class ProductEditViewController: UIViewController {
         
         pixelLineView1.snp.makeConstraints { make in
             make.top.equalTo(addProductImageScrollView.snp.bottom)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.width.equalToSuperview()
             make.height.equalTo(40)
         }
         
@@ -87,8 +92,7 @@ class ProductEditViewController: UIViewController {
         
         pixelLineView2.snp.makeConstraints { make in
             make.top.equalTo(nameTextView.snp.bottom)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.width.equalToSuperview()
             make.height.equalTo(40)
         }
         
@@ -102,8 +106,7 @@ class ProductEditViewController: UIViewController {
         
         pixelLineView3.snp.makeConstraints { make in
             make.top.equalTo(priceEditView.snp.bottom)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.width.equalToSuperview()
             make.height.equalTo(40)
         }
         
@@ -117,8 +120,7 @@ class ProductEditViewController: UIViewController {
         
         pixelLineView4.snp.makeConstraints { make in
             make.top.equalTo(stockTextView.snp.bottom)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.width.equalToSuperview()
             make.height.equalTo(40)
         }
         
