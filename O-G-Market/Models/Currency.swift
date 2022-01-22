@@ -10,9 +10,4 @@ import Foundation
 enum Currency: String, Codable {
     case KRW
     case USD
-    case unknown
-
-    init(from decoder: Decoder) throws {
-        self = try Currency(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .unknown
-    }
 }
