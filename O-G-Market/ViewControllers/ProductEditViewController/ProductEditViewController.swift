@@ -10,7 +10,7 @@ import UIKit
 class ProductEditViewController: UIViewController {
     let scrollView = UIScrollView()
     let pixelLineView = PixelLineView(frame: CGRect.zero)
-    let addProductImageScrollView = AddProductImageScrollView()
+    let addProductImageCollectionViewController = AddProductImageCollectionViewController(images: [UIImage(systemName: "pencil")!, UIImage(systemName: "circle")!])
     let nameTextView = UITextView()
     let priceEditView = ProductPriceEditView()
     let stockTextView = UITextView()
@@ -19,7 +19,6 @@ class ProductEditViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        addProductImageScrollView.backgroundColor = .blue
         priceEditView.backgroundColor = .red
         
         navigationItem.title = "상품 등록"
@@ -44,7 +43,7 @@ class ProductEditViewController: UIViewController {
     }
     
     private func addSubviews() {
-        scrollView.addSubview(addProductImageScrollView)
+        scrollView.addSubview(addProductImageCollectionViewController.view)
         scrollView.addSubview(nameTextView)
         scrollView.addSubview(priceEditView)
         scrollView.addSubview(stockTextView)
@@ -69,7 +68,7 @@ class ProductEditViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        addProductImageScrollView.snp.makeConstraints { make in
+        addProductImageCollectionViewController.view.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
@@ -77,7 +76,7 @@ class ProductEditViewController: UIViewController {
         }
         
         pixelLineView1.snp.makeConstraints { make in
-            make.top.equalTo(addProductImageScrollView.snp.bottom)
+            make.top.equalTo(addProductImageCollectionViewController.view.snp.bottom)
             make.width.equalToSuperview()
             make.height.equalTo(40)
         }
