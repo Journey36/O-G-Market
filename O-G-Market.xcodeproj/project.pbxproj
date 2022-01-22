@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D1EC7AF279C5D4A00A23D1E /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */; };
 		3D2965D62790C29E00B90A51 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965D52790C29E00B90A51 /* Networking.swift */; };
 		3D2965DC2799B19000B90A51 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965DB2799B19000B90A51 /* Data+.swift */; };
 		3D32C3C32785AD79008B7B5B /* CarouselItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32C3C12785AD79008B7B5B /* CarouselItem.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
 		3D2965D52790C29E00B90A51 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		3D2965DB2799B19000B90A51 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		3D32C3C12785AD79008B7B5B /* CarouselItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselItem.swift; path = MainView/CarouselItem.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				3D52FF43278BDF36007E9F3C /* Request */,
 				3D52FF44278BDF4D007E9F3C /* Response */,
 				3D6B6037278987B300A292AF /* Image.swift */,
+				3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */,
 				3DD5BE162782F8EF000B89A8 /* Product.swift */,
 				3D6B60332789580100A292AF /* Currency.swift */,
 			);
@@ -271,6 +274,7 @@
 				3D52FF48278BE20B007E9F3C /* ProductListRead.swift in Sources */,
 				3D2965D62790C29E00B90A51 /* Networking.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
+				3D1EC7AF279C5D4A00A23D1E /* Vendor.swift in Sources */,
 				3D6B603C278A1BE500A292AF /* ProductRead.swift in Sources */,
 				3D6B6042278A1C1300A292AF /* PostingInfo.swift in Sources */,
 				3D2965DC2799B19000B90A51 /* Data+.swift in Sources */,
