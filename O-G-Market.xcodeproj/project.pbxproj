@@ -124,6 +124,7 @@
 				3DD69BD827643C4C00F053E0 /* Models */,
 				3DD69BD927643C5500F053E0 /* ViewControllers */,
 				3DD69BD527643B6600F053E0 /* SupportingFiles */,
+				3D2965DB2799B19000B90A51 /* Data+.swift */,
 				3DD69B9C27642DDA00F053E0 /* Assets.xcassets */,
 			);
 			path = "O-G-Market";
@@ -134,7 +135,6 @@
 			children = (
 				3DD69B9327642DD900F053E0 /* AppDelegate.swift */,
 				3DD69B9527642DD900F053E0 /* SceneDelegate.swift */,
-				3D2965DB2799B19000B90A51 /* Data+.swift */,
 				3DD69BA127642DDA00F053E0 /* Info.plist */,
 			);
 			path = SupportingFiles;
