@@ -73,6 +73,7 @@ final class Networking {
         task.resume()
     }
 
+    // MARK: - POST
     func requestPOST(with productID: Int, then completion: @escaping (Result<String, Error>) -> Void) {
         let url = manager.makeURL(secretOf: productID)
 
@@ -93,7 +94,7 @@ final class Networking {
 
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let error = error else {
+            guard error == nil else {
                 return
             }
 
@@ -102,7 +103,7 @@ final class Networking {
             }
 
             guard let data = data else {
-                return completion(.failure(error))
+                return completion(.failure(error!))
             }
 
             guard let productSecretKey = String(data: data, encoding: .utf8) else {
@@ -115,6 +116,7 @@ final class Networking {
         task.resume()
     }
 
+    // MARK: - PATCH
     func requestPATCH(with productID: Int, params: ProductUpdate, then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
         let url = manager.makeURL(referTo: productID)
 
@@ -137,6 +139,40 @@ final class Networking {
 
             guard let response = response as? HTTPURLResponse, (200...399).contains(response.statusCode) else {
                 print("Response error!")
+                return
+            }
+
+            do {
+                guard let data = data else {
+                    return
+                }
+
+                let decoder = JSONDecoder()
+                let decodedData = try decoder.decode(PostingInfo.self, from: data)
+                completion(.success(decodedData))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+
+        task.resume()
+    }
+
+    // MARK: - DELETE
+    func requestDELETE(at productID: Int, coincideWith productSecret: String, then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
+        let url = manager.makeURL(delete: productID, coincideWith: productSecret)
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("3424eb5f-660f-11ec-8eff-b53506094baa", forHTTPHeaderField: "identifier")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, (200...399).contains(response.statusCode) else {
                 return
             }
 
