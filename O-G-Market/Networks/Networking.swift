@@ -74,6 +74,58 @@ final class Networking {
     }
 
     // MARK: - POST
+    func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<Data, Error>) -> Void) {
+        let url = manager.makeURL()
+
+        let encoder = JSONEncoder()
+        guard let encodedData = try? encoder.encode(parameter) else {
+            return
+        }
+
+        let imageDatum = images.compactMap { $0.pngData() }
+
+        let boundary = UUID().uuidString.hashValue
+        var body = Data()
+        for index in 0..<imageDatum.count {
+            body.append("--\(boundary)\r\n")
+            body.append("Content-Disposition: form-data; name=\"images\"; filename=\"img\(index).png\"\r\n")
+            body.append("Content-Type: image/png\r\n\r\n")
+            body.append(imageDatum[index])
+            body.append("\r\n")
+        }
+
+        body.append("--\(boundary)\r\n")
+        body.append("Content-Disposition: form-data; name=\"params\"\r\n\r\n")
+        body.append(encodedData)
+        body.append("\r\n")
+        body.append("--\(boundary)--\r\n")
+
+        var request = URLRequest(url: url)
+
+        request.httpMethod = "POST"
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.setValue("3424eb5f-660f-11ec-8eff-b53506094baa", forHTTPHeaderField: "identifier")
+        request.httpBody = body
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, (200...399).contains(response.statusCode) else {
+                return
+            }
+
+            guard let data = data else {
+                return completion(.failure(error!))
+            }
+
+            completion(.success(data))
+        }
+
+        task.resume()
+    }
+
     func requestPOST(with productID: Int, then completion: @escaping (Result<String, Error>) -> Void) {
         let url = manager.makeURL(secretOf: productID)
 
