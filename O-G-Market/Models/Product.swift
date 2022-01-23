@@ -10,10 +10,10 @@ import Foundation
 struct Product: Codable {
     let name: String
     let descriptions: String
-    let price: UInt
+    let price: Int
     let currency: Currency
-    let discountedPrice: UInt? = 0
-    let stock: UInt? = 0
+    let discountedPrice: Int?
+    let stock: Int?
     let secret: String
 
 
