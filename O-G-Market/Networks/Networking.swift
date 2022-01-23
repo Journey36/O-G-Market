@@ -74,7 +74,7 @@ final class Networking {
     }
 
     // MARK: - POST
-    func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<Data, Error>) -> Void) {
+    func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
         let url = manager.makeURL()
 
         let encoder = JSONEncoder()
@@ -116,11 +116,17 @@ final class Networking {
                 return
             }
 
-            guard let data = data else {
-                return completion(.failure(error!))
-            }
+            do {
+                guard let data = data else {
+                    return
+                }
 
-            completion(.success(data))
+                let decoder = JSONDecoder()
+                let decodedData = try decoder.decode(PostingInfo.self, from: data)
+                completion(.success(decodedData))
+            } catch {
+                completion(.failure(error))
+            }
         }
 
         task.resume()
