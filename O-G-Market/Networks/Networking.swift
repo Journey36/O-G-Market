@@ -114,4 +114,45 @@ final class Networking {
 
         task.resume()
     }
+
+    func requestPATCH(with productID: Int, params: ProductUpdate, then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
+        let url = manager.makeURL(referTo: productID)
+
+        let encoder = JSONEncoder()
+        guard let encodedData = try? encoder.encode(params) else {
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "PATCH"
+        request.setValue("3424eb5f-660f-11ec-8eff-b53506094baa", forHTTPHeaderField: "identifier")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = encodedData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                print("Error!")
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, (200...399).contains(response.statusCode) else {
+                print("Response error!")
+                return
+            }
+
+            do {
+                guard let data = data else {
+                    return
+                }
+
+                let decoder = JSONDecoder()
+                let decodedData = try decoder.decode(PostingInfo.self, from: data)
+                completion(.success(decodedData))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+
+        task.resume()
+    }
 }
