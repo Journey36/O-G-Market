@@ -16,9 +16,14 @@
 
 import UIKit
 
+
+protocol DeleteDelegate {
+    func deleteCell(image: UIImage)
+}
+
 class AddProductImageCollectionViewController: UIViewController {
     var imageList = [UIImage]()
-    var numberOfCell = 5
+//    var numberOfCell = 5
     let layout = UICollectionViewFlowLayout()
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -33,8 +38,13 @@ class AddProductImageCollectionViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(AddImageCell.self, forCellWithReuseIdentifier: AddImageCell.id)
+        collectionView.register(AddedImageCollectionViewCell.self, forCellWithReuseIdentifier: AddedImageCollectionViewCell.id)
         layout.scrollDirection = .horizontal
         collectionView.collectionViewLayout = layout
+        
+        imageList.append(UIImage(systemName: "pencil")!)
+        imageList.append(UIImage(systemName: "circle")!)
+        imageList.append(UIImage(systemName: "xmark")!)
         
         addSubviews()
         configureLayout()
@@ -52,36 +62,27 @@ class AddProductImageCollectionViewController: UIViewController {
 
 }
 
-class MyCell: UICollectionViewCell {
-    static let id = "test"
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .red
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 extension AddProductImageCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return numberOfCell
+        return imageList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddImageCell.id, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddedImageCollectionViewCell.id, for: indexPath) as? AddedImageCollectionViewCell else { return UICollectionViewCell() }
+        
+        // 임시 코드
+//        cell.imageView.image = UIImage(systemName: "pencil")
+        cell.imageView.image = imageList[indexPath.row]
+        cell.backgroundColor = .lightGray
+        cell.deleteDelegate = self
         return cell
     }
-    
-    
 }
 
 extension AddProductImageCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        numberOfCell += 1
+//        numberOfCell += 1
         collectionView.reloadData()
     }
 }
@@ -89,5 +90,14 @@ extension AddProductImageCollectionViewController: UICollectionViewDelegate {
 extension AddProductImageCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 75, height: 75)
+    }
+}
+
+extension AddProductImageCollectionViewController: DeleteDelegate {
+    func deleteCell(image: UIImage) {
+        // 중복 사진 없다는 가정 하에
+        guard let index = imageList.firstIndex(of: image) else { return }
+        imageList.remove(at: index)
+        collectionView.reloadData()
     }
 }
