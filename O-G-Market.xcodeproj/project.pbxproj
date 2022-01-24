@@ -32,6 +32,7 @@
 		DE9A7F93278BA6AD00C8362D /* DiscountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7F92278BA6AD00C8362D /* DiscountButton.swift */; };
 		DE9A7FF3279BBD3D00C8362D /* AddImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7FF2279BBD3D00C8362D /* AddImageCollectionViewCell.swift */; };
 		DE9A7FF5279C500B00C8362D /* AddedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7FF4279C500B00C8362D /* AddedImageCollectionViewCell.swift */; };
+		DE9A8021279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A8020279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +62,7 @@
 		DE9A7F92278BA6AD00C8362D /* DiscountButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountButton.swift; sourceTree = "<group>"; };
 		DE9A7FF2279BBD3D00C8362D /* AddImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE9A7FF4279C500B00C8362D /* AddedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		DE9A8020279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				DE4B8CEC2778A0EA007454FC /* UILabel+.swift */,
+				DE9A8020279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift */,
 				DE4B8CF127792C2A007454FC /* UIStackView+.swift */,
 			);
 			path = Extension;
@@ -325,6 +328,7 @@
 				342706CF2764816900C2EAC4 /* ProductNameLabel.swift in Sources */,
 				342706D3276481EC00C2EAC4 /* ProductSalePriceLabel.swift in Sources */,
 				DE9809E7278227B50084E39A /* ProductInfoView.swift in Sources */,
+				DE9A8021279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift in Sources */,
 				DE4B8CF02778C9A4007454FC /* ProductImageCollectionViewCell.swift in Sources */,
 				DE9809ED27823EC50084E39A /* AddProductImageCollectionViewController.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,

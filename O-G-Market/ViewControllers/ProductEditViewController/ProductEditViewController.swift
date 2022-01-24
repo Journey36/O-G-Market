@@ -24,22 +24,6 @@ class ProductEditViewController: UIViewController {
         navigationItem.title = "상품 등록"
         addSubviews()
         configureLayout()
-        
-//        view.addSubview(pixelLineView)
-//        pixelLineView.snp.makeConstraints { make in
-//            make.center.equalToSuperview()
-//            make.width.equalToSuperview()
-//            make.height.equalTo(PixelLineView.height)
-//        }
-//
-//        view.addSubview(priceEditView)
-//        priceEditView.backgroundColor = .brown
-//        priceEditView.snp.makeConstraints { make in
-//            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.height.equalToSuperview().multipliedBy(0.3)
-//        }
     }
     
     private func addSubviews() {

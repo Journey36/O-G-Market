@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class AddImageCell: UICollectionViewCell {
+class AddImageCollectionViewCell: UICollectionViewCell {
     static let id = "AddImageCell"
     let cellColor = UIColor.gray
     let stackView = UIStackView(axis: .vertical, alignment: .center, sapcing: 8, distribution: .fill)

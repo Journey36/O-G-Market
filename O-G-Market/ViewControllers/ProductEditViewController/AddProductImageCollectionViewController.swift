@@ -23,9 +23,7 @@ protocol DeleteDelegate {
 
 class AddProductImageCollectionViewController: UIViewController {
     var imageList = [UIImage]()
-//    var numberOfCell = 5
-    let layout = UICollectionViewFlowLayout()
-    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout(scrollDirection: .horizontal))
     
     convenience init(images: [UIImage]) {
         self.init()
@@ -34,20 +32,10 @@ class AddProductImageCollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(AddImageCell.self, forCellWithReuseIdentifier: AddImageCell.id)
-        collectionView.register(AddedImageCollectionViewCell.self, forCellWithReuseIdentifier: AddedImageCollectionViewCell.id)
-        layout.scrollDirection = .horizontal
-        collectionView.collectionViewLayout = layout
-        
-        imageList.append(UIImage(systemName: "pencil")!)
-        imageList.append(UIImage(systemName: "circle")!)
-        imageList.append(UIImage(systemName: "xmark")!)
-        
+
         addSubviews()
         configureLayout()
+        configureCollectionView()
     }
     
     private func addSubviews() {
@@ -59,21 +47,32 @@ class AddProductImageCollectionViewController: UIViewController {
             make.edges.equalToSuperview()
         }
     }
-
+    
+    private func configureCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(AddImageCollectionViewCell.self, forCellWithReuseIdentifier: AddImageCollectionViewCell.id)
+        collectionView.register(AddedImageCollectionViewCell.self, forCellWithReuseIdentifier: AddedImageCollectionViewCell.id)
+    }
 }
 
 extension AddProductImageCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageList.count
+        return imageList.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
+        if indexPath.row == 0 {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddImageCollectionViewCell.id, for: indexPath) as? AddImageCollectionViewCell else { return UICollectionViewCell() }
+            
+            return cell
+        }
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddedImageCollectionViewCell.id, for: indexPath) as? AddedImageCollectionViewCell else { return UICollectionViewCell() }
         
         // 임시 코드
-//        cell.imageView.image = UIImage(systemName: "pencil")
-        cell.imageView.image = imageList[indexPath.row]
+        cell.imageView.image = imageList[indexPath.row - 1]
         cell.backgroundColor = .lightGray
         cell.deleteDelegate = self
         return cell
@@ -82,8 +81,13 @@ extension AddProductImageCollectionViewController: UICollectionViewDataSource {
 
 extension AddProductImageCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        numberOfCell += 1
-        collectionView.reloadData()
+        if indexPath.row == 0 {
+            print("openGalary")
+            imageList.append(UIImage(systemName: "pencil")!)
+            collectionView.reloadData()
+        }
+        
+        print("openImageViewer")
     }
 }
 
