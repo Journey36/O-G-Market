@@ -13,16 +13,15 @@ struct PostingInfo: Decodable {
     let name: String
     let thumbnail: String
     let currency: Currency
-    let price: UInt
-    let bargainPrice: UInt
+    let price: Int
+    let bargainPrice: Int
     let discountedPrice: Int
     let stock: Int
-    let images: [Image]
     let createdAt: String
     let issuedAt: String
 
     enum CodingKeys: String, CodingKey {
-        case id, name, thumbnail, currency, price, stock, images
+        case id, name, thumbnail, currency, price, stock
         case vendorID = "vendor_id"
         case bargainPrice = "bargain_price"
         case discountedPrice = "discounted_price"

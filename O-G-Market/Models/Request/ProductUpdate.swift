@@ -8,20 +8,17 @@
 import Foundation
 
 struct ProductUpdate: Encodable {
-    let identifier: String
-    let productID: Int
     let name: String?
     let descriptions: String?
     let thumbnailID: Int?
-    let price: UInt?
+    let price: Int?
     let currency: Currency?
-    let discountedPrice: Int? = 0
-    let stock: Int? = 0
+    let discountedPrice: Int?
+    let stock: Int?
     let secret: String
 
     enum CodingKeys: String, CodingKey {
-        case identifier, name, descriptions, price, currency, stock, secret
-        case productID = "product_id"
+        case name, descriptions, price, currency, stock, secret
         case thumbnailID = "thumbnail_id"
         case discountedPrice = "discounted_price"
     }
