@@ -10,7 +10,7 @@ import UIKit
 class ProductEditViewController: UIViewController {
     let scrollView = UIScrollView()
     let pixelLineView = PixelLineView(frame: CGRect.zero)
-    let addProductImageCollectionViewController = AddProductImageCollectionViewController(images: [UIImage(systemName: "pencil")!, UIImage(systemName: "circle")!])
+    let addProductImageCollectionViewController = AddProductImageCollectionViewController()
     let nameTextView = UITextView()
     let priceEditView = ProductPriceEditView()
     let stockTextView = UITextView()

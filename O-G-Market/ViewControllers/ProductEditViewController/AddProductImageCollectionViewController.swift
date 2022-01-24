@@ -15,7 +15,7 @@
  */
 
 import UIKit
-
+import PhotosUI
 
 protocol DeleteDelegate {
     func deleteCell(image: UIImage)
@@ -25,14 +25,9 @@ class AddProductImageCollectionViewController: UIViewController {
     var imageList = [UIImage]()
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout(scrollDirection: .horizontal))
     
-    convenience init(images: [UIImage]) {
-        self.init()
-        self.imageList = images
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         addSubviews()
         configureLayout()
         configureCollectionView()
@@ -56,6 +51,7 @@ class AddProductImageCollectionViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension AddProductImageCollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageList.count + 1
@@ -79,29 +75,66 @@ extension AddProductImageCollectionViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension AddProductImageCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            print("openGalary")
-            imageList.append(UIImage(systemName: "pencil")!)
-            collectionView.reloadData()
+            let picker = customPHPickerViewController()
+            present(picker, animated: true, completion: nil)
         }
         
         print("openImageViewer")
     }
+    
+    private func customPHPickerViewController() -> PHPickerViewController {
+        var phPickerConfiguration = PHPickerConfiguration()
+        phPickerConfiguration.selectionLimit = 5
+        
+        let imagePicker = PHPickerViewController(configuration: phPickerConfiguration)
+        imagePicker.delegate = self
+        
+        return imagePicker
+    }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension AddProductImageCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 75, height: 75)
     }
 }
 
+// MARK: - DeleteDelegate
 extension AddProductImageCollectionViewController: DeleteDelegate {
     func deleteCell(image: UIImage) {
         // 중복 사진 없다는 가정 하에
         guard let index = imageList.firstIndex(of: image) else { return }
         imageList.remove(at: index)
         collectionView.reloadData()
+    }
+}
+
+// MARK: - PHPickerViewControllerDelegate
+extension AddProductImageCollectionViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        let itemProviders = results.map { $0.itemProvider }
+        itemProviders.forEach { item in
+            handleSelectedImage(item)
+        }
+    }
+    
+    private func handleSelectedImage(_ item: NSItemProvider) {
+        guard item.canLoadObject(ofClass: UIImage.self) else { return }
+        
+        item.loadObject(ofClass: UIImage.self) { (image, error) in
+            guard let selectedImage = image as? UIImage else { return }
+            
+            DispatchQueue.main.async {
+                self.imageList.append(selectedImage)
+                self.collectionView.reloadData()
+            }
+        }
     }
 }
