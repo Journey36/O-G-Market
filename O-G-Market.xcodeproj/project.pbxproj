@@ -10,6 +10,7 @@
 		3D1EC7AF279C5D4A00A23D1E /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */; };
 		3D2965D62790C29E00B90A51 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965D52790C29E00B90A51 /* Networking.swift */; };
 		3D2965DC2799B19000B90A51 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965DB2799B19000B90A51 /* Data+.swift */; };
+		3D31E94C279ED944009D7E8A /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D31E94B279ED944009D7E8A /* Bundle+.swift */; };
 		3D32C3C32785AD79008B7B5B /* CarouselItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32C3C12785AD79008B7B5B /* CarouselItem.swift */; };
 		3D32C3C42785AD79008B7B5B /* ListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32C3C22785AD79008B7B5B /* ListItem.swift */; };
 		3D52FF46278BDFFE007E9F3C /* ProductList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D52FF45278BDFFE007E9F3C /* ProductList.swift */; };
@@ -35,6 +36,8 @@
 		3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
 		3D2965D52790C29E00B90A51 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		3D2965DB2799B19000B90A51 /* Data+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
+		3D31E94A279ED32D009D7E8A /* UserKeys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UserKeys.xcconfig; sourceTree = "<group>"; };
+		3D31E94B279ED944009D7E8A /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		3D32C3C12785AD79008B7B5B /* CarouselItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarouselItem.swift; path = MainView/CarouselItem.swift; sourceTree = "<group>"; };
 		3D32C3C22785AD79008B7B5B /* ListItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListItem.swift; path = MainView/ListItem.swift; sourceTree = "<group>"; };
 		3D52FF45278BDFFE007E9F3C /* ProductList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductList.swift; sourceTree = "<group>"; };
@@ -125,6 +128,7 @@
 				3DD69BD927643C5500F053E0 /* ViewControllers */,
 				3DD69BD527643B6600F053E0 /* SupportingFiles */,
 				3D2965DB2799B19000B90A51 /* Data+.swift */,
+				3D31E94B279ED944009D7E8A /* Bundle+.swift */,
 				3DD69B9C27642DDA00F053E0 /* Assets.xcassets */,
 			);
 			path = "O-G-Market";
@@ -135,6 +139,7 @@
 			children = (
 				3DD69B9327642DD900F053E0 /* AppDelegate.swift */,
 				3DD69B9527642DD900F053E0 /* SceneDelegate.swift */,
+				3D31E94A279ED32D009D7E8A /* UserKeys.xcconfig */,
 				3DD69BA127642DDA00F053E0 /* Info.plist */,
 			);
 			path = SupportingFiles;
@@ -278,6 +283,7 @@
 				3D6B603C278A1BE500A292AF /* ProductRead.swift in Sources */,
 				3D6B6042278A1C1300A292AF /* PostingInfo.swift in Sources */,
 				3D2965DC2799B19000B90A51 /* Data+.swift in Sources */,
+				3D31E94C279ED944009D7E8A /* Bundle+.swift in Sources */,
 				3D52FF4B278C1258007E9F3C /* URLManager.swift in Sources */,
 				3D6B60342789580100A292AF /* Currency.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
@@ -296,6 +302,7 @@
 /* Begin XCBuildConfiguration section */
 		3DD69BA227642DDA00F053E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D31E94A279ED32D009D7E8A /* UserKeys.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

@@ -104,7 +104,7 @@ final class Networking {
 
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.setValue("3424eb5f-660f-11ec-8eff-b53506094baa", forHTTPHeaderField: "identifier")
+        request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: "identifier")
         request.httpBody = body
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -147,7 +147,7 @@ final class Networking {
         }
 
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("3424eb5f-660f-11ec-8eff-b53506094baa", forHTTPHeaderField: "identifier")
+        request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: "identifier")
         request.httpBody = secretKey
 
 
@@ -185,7 +185,7 @@ final class Networking {
 
         var request = URLRequest(url: url)
         request.httpMethod = "PATCH"
-        request.setValue("3424eb5f-660f-11ec-8eff-b53506094baa", forHTTPHeaderField: "identifier")
+        request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: "identifier")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = encodedData
 
@@ -222,7 +222,7 @@ final class Networking {
 
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
-        request.setValue("3424eb5f-660f-11ec-8eff-b53506094baa", forHTTPHeaderField: "identifier")
+        request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: "identifier")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in

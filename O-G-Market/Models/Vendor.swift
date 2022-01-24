@@ -8,5 +8,5 @@
 import Foundation
 
 struct Vendor: Encodable {
-    let secret: String = "12345678"
+    let secret: String = Bundle.main.password
 }
