@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 extension UIStackView {
-    convenience init(axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment, sapcing: CGFloat = 0, distribution: UIStackView.Distribution = .fill) {
+    convenience init(axis: NSLayoutConstraint.Axis, alignment: UIStackView.Alignment, spacing: CGFloat = 0, distribution: UIStackView.Distribution = .fill) {
         self.init()
         
         self.axis = axis

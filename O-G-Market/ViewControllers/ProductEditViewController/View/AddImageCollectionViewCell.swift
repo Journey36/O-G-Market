@@ -11,7 +11,7 @@ import UIKit
 class AddImageCollectionViewCell: UICollectionViewCell {
     static let id = "AddImageCell"
     let cellColor = UIColor.gray
-    let stackView = UIStackView(axis: .vertical, alignment: .center, sapcing: 8, distribution: .fill)
+    let stackView = UIStackView(axis: .vertical, alignment: .center, spacing: 8, distribution: .fill)
     let imageView = UIImageView()
     let numberOfImageLabel = UILabel(textStyle: .callout, textColor: .gray)
     

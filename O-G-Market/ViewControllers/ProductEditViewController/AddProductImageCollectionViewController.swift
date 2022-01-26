@@ -100,7 +100,8 @@ extension AddProductImageCollectionViewController: UICollectionViewDelegate {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension AddProductImageCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 75, height: 75)
+        let height = view.frame.height * 0.8
+        return CGSize(width: height, height: height)
     }
 }
 

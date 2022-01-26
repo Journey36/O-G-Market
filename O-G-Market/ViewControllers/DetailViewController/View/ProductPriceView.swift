@@ -12,7 +12,7 @@ class ProductPriceView: UIView {
     let originalPriceLabel = UILabel(textStyle: .caption1, textColor: .gray)
     let remainingCountLabel = UILabel(textStyle: .caption1, textColor: .gray)
     let buyButton = UIButton()
-    let priceStackView = UIStackView(axis: .vertical, alignment: .leading, sapcing: 8)
+    let priceStackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 8)
     let buyStackView = UIStackView(axis: .vertical, alignment: .leading)
     let totalStackView = UIStackView(axis: .horizontal, alignment: .center)
     let transparentBlankView = UIView(frame: CGRect.zero)

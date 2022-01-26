@@ -8,125 +8,99 @@
 import UIKit
 
 class ProductEditViewController: UIViewController {
-    let scrollView = UIScrollView()
-    let pixelLineView = PixelLineView(frame: CGRect.zero)
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
-    let nameTextView = UITextView()
-    let priceEditView = ProductPriceEditView()
-    let stockTextView = UITextView()
-    let descriptionTextView = UITextView()
-
+    let productNameTextField = UITextField()
+    let productPriceTextField = UITextField()
+    let productStockTextField = UITextField()
+    let productDescriptionTextView = UITextView()
+    let currencySegmentControl = UISegmentedControl(items: ["KRW", "USD"])
+    let registerButton = UIButton()
+    let priceStackView = UIStackView(axis: .horizontal, alignment: .center, spacing: 10)
+    let contentsStackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 10, distribution: .fill)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        priceEditView.backgroundColor = .red
         
+        view.backgroundColor = .white
         navigationItem.title = "상품 등록"
         addSubviews()
+        setUpContents()
         configureLayout()
     }
     
     private func addSubviews() {
-        scrollView.addSubview(addProductImageCollectionViewController.view)
-        scrollView.addSubview(nameTextView)
-        scrollView.addSubview(priceEditView)
-        scrollView.addSubview(stockTextView)
-        scrollView.addSubview(descriptionTextView)
+        priceStackView.addArrangedSubview(productPriceTextField)
+        priceStackView.addArrangedSubview(currencySegmentControl)
         
-        view.addSubview(scrollView)
+        contentsStackView.addArrangedSubview(addProductImageCollectionViewController.view)
+        contentsStackView.addArrangedSubview(productNameTextField)
+        contentsStackView.addArrangedSubview(priceStackView)
+        contentsStackView.addArrangedSubview(productStockTextField)
+        contentsStackView.addArrangedSubview(productDescriptionTextView)
+        contentsStackView.addArrangedSubview(registerButton)
+        
+        view.addSubview(contentsStackView)
+    }
+    
+    private func setUpContents() {
+        registerButton.backgroundColor = .lightGray
+        registerButton.setTitle("상품 등록하기", for: .normal)
+        registerButton.titleLabel?.font = .preferredFont(forTextStyle: .title3)
+        registerButton.layer.cornerRadius = 10
+        productNameTextField.borderStyle = .roundedRect
+        productNameTextField.placeholder = "상품명을 입력해주세요."
+        productStockTextField.borderStyle = .roundedRect
+        productStockTextField.placeholder = "상품 갯수를 입력해주세요."
+        productPriceTextField.borderStyle = .roundedRect
+        productPriceTextField.placeholder = "상품 가격을 입력해주세요."
+        productDescriptionTextView.text = "상품 정보를 입력해주세요."
+        productDescriptionTextView.layer.borderWidth = 1
+        productDescriptionTextView.layer.borderColor = UIColor.systemGray5.cgColor
+        productDescriptionTextView.font = .preferredFont(forTextStyle: .body)
     }
     
     private func configureLayout() {
-        let pixelLineView1 = PixelLineView(frame: CGRect.zero)
-        let pixelLineView2 = PixelLineView(frame: CGRect.zero)
-        let pixelLineView3 = PixelLineView(frame: CGRect.zero)
-        let pixelLineView4 = PixelLineView(frame: CGRect.zero)
-        let pixelLineView5 = PixelLineView(frame: CGRect.zero)
-        scrollView.addSubview(pixelLineView1)
-        scrollView.addSubview(pixelLineView2)
-        scrollView.addSubview(pixelLineView3)
-        scrollView.addSubview(pixelLineView4)
-        scrollView.addSubview(pixelLineView5)
-        
-        scrollView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        addProductImageCollectionViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
+        contentsStackView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(100)
         }
         
-        pixelLineView1.snp.makeConstraints { make in
-            make.top.equalTo(addProductImageCollectionViewController.view.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(40)
+        addProductImageCollectionViewController.view.snp.makeConstraints({ make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.15)
+        })
+        
+        productNameTextField.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
         
-        nameTextView.snp.makeConstraints { make in
-            make.top.equalTo(pixelLineView1.snp.bottom)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(40)
-            // 텍스트 높이에 따라 동적으로 변해야함
+        productPriceTextField.snp.makeConstraints { make in
+            make.width.equalToSuperview().multipliedBy(0.7)
         }
         
-        pixelLineView2.snp.makeConstraints { make in
-            make.top.equalTo(nameTextView.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(40)
+        priceStackView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
         
-        priceEditView.snp.makeConstraints { make in
-            make.top.equalTo(pixelLineView2.snp.bottom)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(40)
-            // 할인 여부에 따라 동적으로 변해야함
+        productStockTextField.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
         
-        pixelLineView3.snp.makeConstraints { make in
-            make.top.equalTo(priceEditView.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(40)
+        productDescriptionTextView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
         
-        stockTextView.snp.makeConstraints { make in
-            make.top.equalTo(pixelLineView3.snp.bottom)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(40)
-            // 할인 여부에 따라 동적으로 변해야함
-        }
-        
-        pixelLineView4.snp.makeConstraints { make in
-            make.top.equalTo(stockTextView.snp.bottom)
-            make.width.equalToSuperview()
-            make.height.equalTo(40)
-        }
-        
-        descriptionTextView.snp.makeConstraints { make in
-            make.top.equalTo(pixelLineView4.snp.bottom)
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.9)
-            make.height.equalTo(40)
-            // 할인 여부에 따라 동적으로 변해야함
+        registerButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalToSuperview().multipliedBy(0.1)
         }
     }
-    
-
 }
-
-/*
- - 상품명
- - 가격
- - 할인률 1~100
- - 화폐
- - 남은 수량
- - 상품 상세
- 
- - 백버튼
- - 상품 등록/수정 버튼 (하단)
- */
