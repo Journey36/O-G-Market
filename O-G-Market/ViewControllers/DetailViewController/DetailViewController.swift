@@ -97,37 +97,3 @@ extension DetailViewController {
         self.present(actionSheet, animated: true, completion: nil)
     }
 }
-
-
-
-// Preview
-struct ViewControllerRepresentable: UIViewControllerRepresentable {
-    typealias UIViewControllerType = DetailViewController
-
-    func makeUIViewController(context: Context) -> DetailViewController {
-        return DetailViewController()
-    }
-
-    func updateUIViewController(_ uiViewController: DetailViewController, context: Context) {
-
-    }
-}
-
-@available(iOS 13.0.0, *)
-struct ViewPreview: PreviewProvider {
-    static var previews: some View {
-        ViewControllerRepresentable()
-    }
-    
-    struct Container: UIViewControllerRepresentable {
-        typealias UIViewControllerType = UIViewController
-        
-        func makeUIViewController(context: Context) -> UIViewController {
-            UINavigationController(rootViewController: DetailViewController())
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
-}
