@@ -15,8 +15,7 @@ opt_in_rules:
   - array_init
   - attributes
   - closure_end_indentation
-  - closure_spacing
-  - collection_alignment
+  - closure_spacing 
   - colon # promote to error
   - convenience_type
   - discouraged_object_literal
@@ -28,15 +27,9 @@ opt_in_rules:
   - first_where
   - force_unwrapping
   - implicitly_unwrapped_optional
-  - indentation_width
   - last_where
   - legacy_random
   - literal_expression_end_indentation
-  - multiline_arguments
-  - multiline_function_chains
-  - multiline_literal_brackets
-  - multiline_parameters
-  - multiline_parameters_brackets
   - operator_usage_whitespace
   - overridden_super_call
   - pattern_matching_keywords
@@ -83,13 +76,6 @@ identifier_name:
     - x
     - y
     - z
-
-indentation_width:
-  indentation_width: 2
-
-multiline_arguments:
-  first_argument_location: next_line
-  only_enforce_after_first_closure_on_first_line: true
 
 private_over_fileprivate:
   validate_extensions: true

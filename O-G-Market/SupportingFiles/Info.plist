@@ -19,5 +19,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>IDENTIFIER</key>
+	<string>$(IDENTIFIER)</string>
+	<key>PASSWORD</key>
+	<string>$(PASSWORD)</string>
 </dict>
 </plist>
