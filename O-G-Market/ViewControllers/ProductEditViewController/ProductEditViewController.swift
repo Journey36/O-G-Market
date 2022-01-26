@@ -20,11 +20,10 @@ class ProductEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        navigationItem.title = "상품 등록"
+
         addSubviews()
         setUpContents()
+        configureNavigationBar()
         configureLayout()
     }
     
@@ -43,6 +42,7 @@ class ProductEditViewController: UIViewController {
     }
     
     private func setUpContents() {
+        view.backgroundColor = .white
         registerButton.backgroundColor = .lightGray
         registerButton.setTitle("상품 등록하기", for: .normal)
         registerButton.titleLabel?.font = .preferredFont(forTextStyle: .title3)
@@ -57,6 +57,18 @@ class ProductEditViewController: UIViewController {
         productDescriptionTextView.layer.borderWidth = 1
         productDescriptionTextView.layer.borderColor = UIColor.systemGray5.cgColor
         productDescriptionTextView.font = .preferredFont(forTextStyle: .body)
+    }
+    
+    private func configureNavigationBar() {
+        let cancelButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissSelf))
+        cancelButton.tintColor = .lightGray
+        navigationItem.rightBarButtonItem = cancelButton
+        navigationItem.title = "상품 등록"
+    }
+    
+    @objc
+    func dismissSelf() {
+        dismiss(animated: true, completion: nil)
     }
     
     private func configureLayout() {

@@ -27,9 +27,6 @@
 		DE9809E7278227B50084E39A /* ProductInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809E6278227B50084E39A /* ProductInfoView.swift */; };
 		DE9809E927823D4B0084E39A /* ProductEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809E827823D4B0084E39A /* ProductEditViewController.swift */; };
 		DE9809ED27823EC50084E39A /* AddProductImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9809EC27823EC50084E39A /* AddProductImageCollectionViewController.swift */; };
-		DE9A7F6F2788EA4200C8362D /* PixelLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7F6E2788EA4200C8362D /* PixelLineView.swift */; };
-		DE9A7F71278AA97C00C8362D /* ProductPriceEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7F70278AA97C00C8362D /* ProductPriceEditView.swift */; };
-		DE9A7F93278BA6AD00C8362D /* DiscountButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7F92278BA6AD00C8362D /* DiscountButton.swift */; };
 		DE9A7FF3279BBD3D00C8362D /* AddImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7FF2279BBD3D00C8362D /* AddImageCollectionViewCell.swift */; };
 		DE9A7FF5279C500B00C8362D /* AddedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A7FF4279C500B00C8362D /* AddedImageCollectionViewCell.swift */; };
 		DE9A8021279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9A8020279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift */; };
@@ -57,9 +54,6 @@
 		DE9809E6278227B50084E39A /* ProductInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInfoView.swift; sourceTree = "<group>"; };
 		DE9809E827823D4B0084E39A /* ProductEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductEditViewController.swift; sourceTree = "<group>"; };
 		DE9809EC27823EC50084E39A /* AddProductImageCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductImageCollectionViewController.swift; sourceTree = "<group>"; };
-		DE9A7F6E2788EA4200C8362D /* PixelLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelLineView.swift; sourceTree = "<group>"; };
-		DE9A7F70278AA97C00C8362D /* ProductPriceEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPriceEditView.swift; sourceTree = "<group>"; };
-		DE9A7F92278BA6AD00C8362D /* DiscountButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountButton.swift; sourceTree = "<group>"; };
 		DE9A7FF2279BBD3D00C8362D /* AddImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE9A7FF4279C500B00C8362D /* AddedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		DE9A8020279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewFlowLayout+.swift"; sourceTree = "<group>"; };
@@ -208,9 +202,6 @@
 			children = (
 				DE9A7FF2279BBD3D00C8362D /* AddImageCollectionViewCell.swift */,
 				DE9A7FF4279C500B00C8362D /* AddedImageCollectionViewCell.swift */,
-				DE9A7F6E2788EA4200C8362D /* PixelLineView.swift */,
-				DE9A7F70278AA97C00C8362D /* ProductPriceEditView.swift */,
-				DE9A7F92278BA6AD00C8362D /* DiscountButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -314,7 +305,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DE9A7F71278AA97C00C8362D /* ProductPriceEditView.swift in Sources */,
 				3DD69B9827642DD900F053E0 /* MainViewController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
 				DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */,
@@ -323,7 +313,6 @@
 				342706D1276481D800C2EAC4 /* ProductPriceLabel.swift in Sources */,
 				342706D52764820900C2EAC4 /* ProductCountLabel.swift in Sources */,
 				DE9A7FF5279C500B00C8362D /* AddedImageCollectionViewCell.swift in Sources */,
-				DE9A7F6F2788EA4200C8362D /* PixelLineView.swift in Sources */,
 				DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */,
 				342706CF2764816900C2EAC4 /* ProductNameLabel.swift in Sources */,
 				342706D3276481EC00C2EAC4 /* ProductSalePriceLabel.swift in Sources */,
@@ -334,7 +323,6 @@
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
 				342706C72764581D00C2EAC4 /* DetailViewController.swift in Sources */,
 				DE9A7FF3279BBD3D00C8362D /* AddImageCollectionViewCell.swift in Sources */,
-				DE9A7F93278BA6AD00C8362D /* DiscountButton.swift in Sources */,
 				DE9809A1277E789D0084E39A /* ProductImagePageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
