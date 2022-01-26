@@ -1,0 +1,12 @@
+//
+//  UserKeys.xcconfig
+//  O-G-Market
+//
+//  Created by 재현 on 2022/01/24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+IDENTIFIER = 3424eb5f-660f-11ec-8eff-b53506094baa
+PASSWORD = 12345678
