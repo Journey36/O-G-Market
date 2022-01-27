@@ -10,6 +10,7 @@ final class MainViewController: UIViewController {
 
     // MARK: - Properties
     // FIXME: - 모델 생성 후 변경 `Int` -> `<ModelType>`
+    var coordinator: MainCoordinator?
     private var dataSource: UICollectionViewDiffableDataSource<Section, Int>?
 
     // MARK: - UI Componenets
