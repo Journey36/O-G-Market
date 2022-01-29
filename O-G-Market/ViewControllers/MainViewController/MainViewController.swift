@@ -155,6 +155,6 @@ final class MainViewController: UIViewController {
 // MARK: - Extensions
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: - 화면 전환
+        coordinator?.pushDetailViewController()
     }
 }

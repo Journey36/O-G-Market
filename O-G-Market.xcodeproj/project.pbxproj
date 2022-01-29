@@ -166,8 +166,8 @@
 			children = (
 				3D52FF49278C1235007E9F3C /* Networks */,
 				3DD69BD827643C4C00F053E0 /* Models */,
-				3DD69BD927643C5500F053E0 /* ViewControllers */,
 				DE61EBE027A2B3F700BD8A95 /* Coordinator */,
+				3DD69BD927643C5500F053E0 /* ViewControllers */,
 				DE4B8CEE2778A0ED007454FC /* Extension */,
 				3DD69BD527643B6600F053E0 /* SupportingFiles */,
 				3DD69B9C27642DDA00F053E0 /* Assets.xcassets */,

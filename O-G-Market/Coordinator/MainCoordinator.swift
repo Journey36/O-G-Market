@@ -20,4 +20,10 @@ class MainCoordinator: Coordinator {
         initialViewController.coordinator = self
         navigationController.pushViewController(initialViewController, animated: true)
     }
+    
+    func pushDetailViewController() {
+        let viewController = DetailViewController()
+        viewController.coordinator = self
+        navigationController.pushViewController(viewController, animated: true)
+    }
 }
