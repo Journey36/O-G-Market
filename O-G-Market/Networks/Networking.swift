@@ -16,7 +16,7 @@ final class Networking {
     private init() { }
 
     // MARK: - GET
-    func requestGET(with productID: Int, then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
+    func requestGET(with productID: Int, then completion: @escaping (Result<Post, Error>) -> Void) {
         let url = manager.makeURL(referTo: productID)
 
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -34,7 +34,7 @@ final class Networking {
                 }
 
                 let decoder = JSONDecoder()
-                let decodedData = try decoder.decode(PostingInfo.self, from: data)
+                let decodedData = try decoder.decode(Post.self, from: data)
 
                 completion(.success(decodedData))
             } catch {
@@ -74,7 +74,7 @@ final class Networking {
     }
 
     // MARK: - POST
-    func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
+    func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<Post, Error>) -> Void) {
         let url = manager.makeURL()
 
         let encoder = JSONEncoder()
@@ -122,7 +122,7 @@ final class Networking {
                 }
 
                 let decoder = JSONDecoder()
-                let decodedData = try decoder.decode(PostingInfo.self, from: data)
+                let decodedData = try decoder.decode(Post.self, from: data)
                 completion(.success(decodedData))
             } catch {
                 completion(.failure(error))
@@ -175,7 +175,7 @@ final class Networking {
     }
 
     // MARK: - PATCH
-    func requestPATCH(with productID: Int, params: ProductUpdate, then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
+    func requestPATCH(with productID: Int, params: ProductUpdate, then completion: @escaping (Result<Post, Error>) -> Void) {
         let url = manager.makeURL(referTo: productID)
 
         let encoder = JSONEncoder()
@@ -206,7 +206,7 @@ final class Networking {
                 }
 
                 let decoder = JSONDecoder()
-                let decodedData = try decoder.decode(PostingInfo.self, from: data)
+                let decodedData = try decoder.decode(Post.self, from: data)
                 completion(.success(decodedData))
             } catch {
                 completion(.failure(error))
@@ -217,7 +217,7 @@ final class Networking {
     }
 
     // MARK: - DELETE
-    func requestDELETE(at productID: Int, coincideWith productSecret: String, then completion: @escaping (Result<PostingInfo, Error>) -> Void) {
+    func requestDELETE(at productID: Int, coincideWith productSecret: String, then completion: @escaping (Result<Post, Error>) -> Void) {
         let url = manager.makeURL(delete: productID, coincideWith: productSecret)
 
         var request = URLRequest(url: url)
@@ -240,7 +240,7 @@ final class Networking {
                 }
 
                 let decoder = JSONDecoder()
-                let decodedData = try decoder.decode(PostingInfo.self, from: data)
+                let decodedData = try decoder.decode(Post.self, from: data)
                 completion(.success(decodedData))
             } catch {
                 completion(.failure(error))

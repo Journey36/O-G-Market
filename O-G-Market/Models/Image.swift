@@ -7,15 +7,16 @@
 
 import Foundation
 
-struct Image: Codable {
+struct Image: Decodable {
     let id: Int
     let url: String
     let thumbnailURL: String
-    let succeed: Bool
+    let isSucceed: Bool
     let issuedAt: String
 
     enum CodingKeys: String, CodingKey {
-        case id, url, succeed
+        case id, url
+        case isSucceed = "succeed"
         case thumbnailURL = "thumbnail_url"
         case issuedAt = "issued_at"
     }
