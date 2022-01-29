@@ -34,6 +34,7 @@
 		DE61EBBF27A1734500BD8A95 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBBE27A1734500BD8A95 /* Data+.swift */; };
 		DE61EBE227A2B43900BD8A95 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBE127A2B43900BD8A95 /* Coordinator.swift */; };
 		DE61EBE427A2B4A000BD8A95 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBE327A2B4A000BD8A95 /* MainCoordinator.swift */; };
+		DE61EBE627A51E9900BD8A95 /* ProductRegisterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBE527A51E9900BD8A95 /* ProductRegisterButton.swift */; };
 		DE8B1C0527A15BC000573454 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8B1C0427A15BC000573454 /* UITextField+.swift */; };
 		DE8B1C0E27A16E8600573454 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8B1C0727A16E8600573454 /* DetailViewController.swift */; };
 		DE8B1C0F27A16E8600573454 /* ProductImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8B1C0827A16E8600573454 /* ProductImagePageViewController.swift */; };
@@ -78,6 +79,7 @@
 		DE61EBBE27A1734500BD8A95 /* Data+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
 		DE61EBE127A2B43900BD8A95 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		DE61EBE327A2B4A000BD8A95 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		DE61EBE527A51E9900BD8A95 /* ProductRegisterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRegisterButton.swift; sourceTree = "<group>"; };
 		DE8B1C0427A15BC000573454 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		DE8B1C0727A16E8600573454 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE8B1C0827A16E8600573454 /* ProductImagePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagePageViewController.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 			children = (
 				3D32C3C12785AD79008B7B5B /* CarouselItem.swift */,
 				3D32C3C22785AD79008B7B5B /* ListItem.swift */,
+				DE61EBE527A51E9900BD8A95 /* ProductRegisterButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */,
 				DE9809E927823D4B0084E39A /* ProductEditViewController.swift in Sources */,
 				DE61EBBF27A1734500BD8A95 /* Data+.swift in Sources */,
+				DE61EBE627A51E9900BD8A95 /* ProductRegisterButton.swift in Sources */,
 				DE9A7FF5279C500B00C8362D /* AddedImageCollectionViewCell.swift in Sources */,
 				DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */,
 				DE8B1C0527A15BC000573454 /* UITextField+.swift in Sources */,

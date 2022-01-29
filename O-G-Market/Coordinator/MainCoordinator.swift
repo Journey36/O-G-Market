@@ -26,4 +26,12 @@ class MainCoordinator: Coordinator {
         viewController.coordinator = self
         navigationController.pushViewController(viewController, animated: true)
     }
+    
+    func presentEditViewController() {
+        let viewController = ProductEditViewController()
+        let newNavigationController = UINavigationController(rootViewController: viewController)
+        viewController.coordinator = self
+        newNavigationController.modalPresentationStyle = .overFullScreen
+        navigationController.present(newNavigationController, animated: true, completion: nil)
+    }
 }
