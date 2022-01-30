@@ -9,8 +9,7 @@ final class MainViewController: UIViewController {
     }
 
     // MARK: - Properties
-    // FIXME: - 모델 생성 후 변경 `Int` -> `<ModelType>`
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Int>?
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Post>?
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
@@ -24,6 +23,9 @@ final class MainViewController: UIViewController {
         productRegisterButton.backgroundColor = .systemBlue
         productRegisterButton.tintColor = .white
         productRegisterButton.layer.cornerRadius = 35
+        productRegisterButton.layer.shadowPath = UIBezierPath(rect: productRegisterButton.bounds).cgPath
+        productRegisterButton.layer.shouldRasterize = true
+        productRegisterButton.layer.rasterizationScale = UIScreen.main.scale
         productRegisterButton.layer.shadowColor = UIColor.systemGray.cgColor
         productRegisterButton.layer.shadowOpacity = 1.0
         productRegisterButton.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -38,7 +40,18 @@ final class MainViewController: UIViewController {
         productCollectionView.delegate = self
         configureConstraints()
         configureDataSource()
-        initializeSnapshot()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        Networking.default.requestGET { result in
+            switch result {
+            case .success(let data):
+                self.initializeSnapshot(with: data)
+            case .failure(let error):
+                preconditionFailure(error.localizedDescription)
+            }
+        }
     }
 
     // MARK: - Methods
@@ -70,26 +83,26 @@ final class MainViewController: UIViewController {
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
 
-    private func createGridCellRegistration() -> UICollectionView.CellRegistration<CarouselItem, Int> {
-        return UICollectionView.CellRegistration<CarouselItem, Int> { cell, _, _ in
-            cell.productImageView.image = UIImage(systemName: "bolt.car")
-            cell.productNameLabel.text = "MacBook Pro 14"
-            cell.productDiscountedPriceLabel.text = "3,000,000"
-            cell.productPriceLabel.text = "3,500,000"
-            cell.productStockLabel.text = "품절"
+    private func createGridCellRegistration() -> UICollectionView.CellRegistration<CarouselItem, Post> {
+        return UICollectionView.CellRegistration<CarouselItem, Post> { cell, _, product in
+            self.fetchImage(from: product.thumbnail, for: cell)
+            cell.productNameLabel.text = product.name
+            cell.productDiscountedPriceLabel.text = product.discountedPrice.description
+            cell.productPriceLabel.text = product.price.description
+            cell.productStockLabel.text = product.stock.description
             var background = UIBackgroundConfiguration.listPlainCell()
             background.cornerRadius = 10
             cell.backgroundConfiguration = background
         }
     }
 
-    private func createListCellRegistration() -> UICollectionView.CellRegistration<ListItem, Int> {
-        return UICollectionView.CellRegistration<ListItem, Int> { cell, _, _ in
-            cell.productImageView.image = UIImage(systemName: "bolt.car")
-            cell.productNameLabel.text = "MacBook Pro 14"
-            cell.productDiscountedPriceLabel.text = "3,000,000"
-            cell.productPriceLabel.text = "3,500,000"
-            cell.productStockLabel.text = "품절"
+    private func createListCellRegistration() -> UICollectionView.CellRegistration<ListItem, Post> {
+        return UICollectionView.CellRegistration<ListItem, Post> { cell, _, product in
+            self.fetchImage(from: product.thumbnail, for: cell)
+            cell.productNameLabel.text = product.name
+            cell.productDiscountedPriceLabel.text = product.discountedPrice.description
+            cell.productPriceLabel.text = product.price.description
+            cell.productStockLabel.text = product.stock.description
         }
     }
 
@@ -97,7 +110,7 @@ final class MainViewController: UIViewController {
         let gridCellRegistration = createGridCellRegistration()
         let listCellRegistration = createListCellRegistration()
 
-        dataSource = UICollectionViewDiffableDataSource<Section, Int>(collectionView: productCollectionView) { collectionView, indexPath, item -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView) { collectionView, indexPath, item -> UICollectionViewCell? in
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section") }
             switch section {
             case .carousel:
@@ -108,32 +121,32 @@ final class MainViewController: UIViewController {
         }
     }
 
-    private func initializeSnapshot() {
+    private func initializeSnapshot(with list: ProductList) {
         guard let dataSource = dataSource else { return }
 
         let sections = Section.allCases
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Post>()
         snapshot.appendSections(sections)
         dataSource.apply(snapshot, animatingDifferences: false)
 
-        var carouselItems: [Int] = []
-        for index in 1...10 {
-            carouselItems.append(index)
+        var carouselItems: [Post] = []
+        for index in 1...5 {
+            carouselItems.append(list.posts[index])
         }
 
-        var carouselSnapshot = NSDiffableDataSourceSectionSnapshot<Int>()
+        var listItems: [Post] = []
+        for index in 6...19 {
+            listItems.append(list.posts[index])
+        }
+
+        var carouselSnapshot = NSDiffableDataSourceSectionSnapshot<Post>()
         carouselSnapshot.append(carouselItems)
 
-        var allSnapshot = NSDiffableDataSourceSectionSnapshot<Int>()
-        var listItems: [Int] = []
-        for index in 11...30 {
-            listItems.append(index)
-        }
-
-        allSnapshot.append(listItems)
+        var listSnapshot = NSDiffableDataSourceSectionSnapshot<Post>()
+        listSnapshot.append(listItems)
 
         dataSource.apply(carouselSnapshot, to: .carousel, animatingDifferences: false)
-        dataSource.apply(allSnapshot, to: .list, animatingDifferences: false)
+        dataSource.apply(listSnapshot, to: .list, animatingDifferences: false)
     }
 
     private func configureConstraints() {
@@ -152,6 +165,33 @@ final class MainViewController: UIViewController {
 }
 
 // MARK: - Extensions
+extension MainViewController {
+    private func fetchImage(from imageURLString: String, for cell: UICollectionViewCell) {
+        let imageLoadQueue = DispatchQueue(label: "com.joruney36.o-g-market")
+        imageLoadQueue.async {
+            guard let imageURL = URL(string: imageURLString),
+                  let imageData = try? Data(contentsOf: imageURL),
+                  let image = UIImage(data: imageData) else {
+                      return
+                  }
+
+            DispatchQueue.main.async {
+                switch cell {
+                case let cell as CarouselItem:
+                    cell.productImageView.image = image
+                case let cell as ListItem:
+                    cell.productImageView.image = image
+                default:
+                    #if DEBUG
+                    assertionFailure("ADD NEW SECTION CELL")
+                    #endif
+                    break
+                }
+            }
+        }
+    }
+}
+
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // TODO: - 화면 전환
