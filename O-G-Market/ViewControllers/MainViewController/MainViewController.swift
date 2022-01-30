@@ -9,6 +9,7 @@ final class MainViewController: UIViewController {
     }
 
     // MARK: - Properties
+    var coordinator: MainCoordinator?
     private var dataSource: UICollectionViewDiffableDataSource<Section, Post>?
 
     // MARK: - UI Componenets
