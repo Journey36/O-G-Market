@@ -11,6 +11,8 @@ import SwiftUI
 fileprivate let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
+    var coordinator: Coordinator?
+    
     let scrollView = UIScrollView()
     let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
     let productPriceView = ProductPriceView(frame: zeroSize)

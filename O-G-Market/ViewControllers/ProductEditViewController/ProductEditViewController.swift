@@ -8,6 +8,8 @@
 import UIKit
 
 class ProductEditViewController: UIViewController {
+    var coordinator: MainCoordinator?
+    
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
     let productNameTextField = UITextField(placeholder: "상품명을 입력해주세요.")
     let productPriceTextField = UITextField(placeholder: "상품 가격을 입력해주세요.")
