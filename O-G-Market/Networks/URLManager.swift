@@ -10,7 +10,7 @@ import Foundation
 struct URLManager {
     private let hostAddress = "https://market-training.yagom-academy.kr/api/products"
 
-    // 상품 등록
+    // MARK: - 상품 등록
     mutating func makeURL() -> URL {
         guard let url = URL(string: hostAddress) else {
             preconditionFailure("Fail to make URL")
@@ -19,7 +19,7 @@ struct URLManager {
         return url
     }
 
-    // 상품 리스트 조회
+    // MARK: - 상품 리스트 조회
     mutating func makeURL(on page: Int) -> URL {
         var components = URLComponents(string: hostAddress)
         let pageNumber = URLQueryItem(name: "page-no", value: "\(page)")
@@ -32,7 +32,7 @@ struct URLManager {
         return url
     }
 
-    // 상품 상세 조회, 상품 수정
+    // MARK: - 상품 상세 조회, 상품 수정
     mutating func makeURL(referTo productID: Int) -> URL {
         guard let url = URL(string: hostAddress) else {
             preconditionFailure("Fail to make URL")
@@ -41,7 +41,7 @@ struct URLManager {
         return url.appendingPathComponent("\(productID)")
     }
 
-    // 상품 삭제 secret 조회
+    // MARK: - 상품 삭제 secret 조회
     mutating func makeURL(secretOf productID: Int) -> URL {
         guard let url = URL(string: hostAddress) else {
             preconditionFailure("Fail to make URL")
@@ -50,7 +50,7 @@ struct URLManager {
         return url.appendingPathComponent("\(productID)").appendingPathComponent("secret")
     }
 
-    // 상품 삭제
+    // MARK: - 상품 삭제
     mutating func makeURL(delete productID: Int, coincideWith productSecret: String) -> URL {
         guard let url = URL(string: hostAddress) else {
             preconditionFailure("Fail to make URL")

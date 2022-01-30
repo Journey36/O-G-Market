@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ListItem: UICollectionViewListCell {
-	static let identifier = String(describing: ListItem.self)
+class ProductCell: UICollectionViewListCell {
+	static let identifier = String(describing: ProductCell.self)
 	let productImageView: UIImageView = {
 		let productImageView = UIImageView()
 		productImageView.contentMode = .scaleAspectFit
