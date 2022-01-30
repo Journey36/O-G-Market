@@ -4,8 +4,8 @@ import UIKit
 import SnapKit
 
 final class MainViewController: UIViewController {
-    private enum Section: Int, CaseIterable {
-        case carousel, list
+    private enum Section {
+        case main
     }
 
     // MARK: - Properties
@@ -23,9 +23,6 @@ final class MainViewController: UIViewController {
         productRegisterButton.backgroundColor = .systemBlue
         productRegisterButton.tintColor = .white
         productRegisterButton.layer.cornerRadius = 35
-        productRegisterButton.layer.shadowPath = UIBezierPath(rect: productRegisterButton.bounds).cgPath
-        productRegisterButton.layer.shouldRasterize = true
-        productRegisterButton.layer.rasterizationScale = UIScreen.main.scale
         productRegisterButton.layer.shadowColor = UIColor.systemGray.cgColor
         productRegisterButton.layer.shadowOpacity = 1.0
         productRegisterButton.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -56,48 +53,12 @@ final class MainViewController: UIViewController {
 
     // MARK: - Methods
     private func configureCollectionViewLayout() -> UICollectionViewLayout {
-        let sectionProvider = { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            guard let sectionKind = Section(rawValue: sectionIndex) else { return nil }
-            let section: NSCollectionLayoutSection
-            switch sectionKind {
-            case .carousel:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(0.25))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
-                section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .continuousGroupLeadingBoundary
-                section.interGroupSpacing = 20
-                section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
-                section.contentInsetsReference = .safeArea
-            case .list:
-                let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-                section = NSCollectionLayoutSection.list(using: configuration, layoutEnvironment: layoutEnvironment)
-            }
-
-            return section
-        }
-
-        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+        let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+        return UICollectionViewCompositionalLayout.list(using: configuration)
     }
 
-    private func createGridCellRegistration() -> UICollectionView.CellRegistration<CarouselItem, Post> {
-        return UICollectionView.CellRegistration<CarouselItem, Post> { cell, _, product in
-            self.fetchImage(from: product.thumbnail, for: cell)
-            cell.productNameLabel.text = product.name
-            cell.productDiscountedPriceLabel.text = product.discountedPrice.description
-            cell.productPriceLabel.text = product.price.description
-            cell.productStockLabel.text = product.stock.description
-            var background = UIBackgroundConfiguration.listPlainCell()
-            background.cornerRadius = 10
-            cell.backgroundConfiguration = background
-        }
-    }
-
-    private func createListCellRegistration() -> UICollectionView.CellRegistration<ListItem, Post> {
-        return UICollectionView.CellRegistration<ListItem, Post> { cell, _, product in
+    private func createListCellRegistration() -> UICollectionView.CellRegistration<ProductCell, Post> {
+        return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, product in
             self.fetchImage(from: product.thumbnail, for: cell)
             cell.productNameLabel.text = product.name
             cell.productDiscountedPriceLabel.text = product.discountedPrice.description
@@ -107,46 +68,22 @@ final class MainViewController: UIViewController {
     }
 
     private func configureDataSource() {
-        let gridCellRegistration = createGridCellRegistration()
-        let listCellRegistration = createListCellRegistration()
+        let cellRegistration = createListCellRegistration()
 
-        dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView) { collectionView, indexPath, item -> UICollectionViewCell? in
-            guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section") }
-            switch section {
-            case .carousel:
-                return collectionView.dequeueConfiguredReusableCell(using: gridCellRegistration, for: indexPath, item: item)
-            case .list:
-                return collectionView.dequeueConfiguredReusableCell(using: listCellRegistration, for: indexPath, item: item)
-            }
+        dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
+            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: id)
         }
     }
 
     private func initializeSnapshot(with list: ProductList) {
-        guard let dataSource = dataSource else { return }
-
-        let sections = Section.allCases
         var snapshot = NSDiffableDataSourceSnapshot<Section, Post>()
-        snapshot.appendSections(sections)
-        dataSource.apply(snapshot, animatingDifferences: false)
-
-        var carouselItems: [Post] = []
-        for index in 1...5 {
-            carouselItems.append(list.posts[index])
-        }
-
+        snapshot.appendSections([.main])
         var listItems: [Post] = []
-        for index in 6...19 {
+        for index in 0..<list.itemsPerPage {
             listItems.append(list.posts[index])
         }
-
-        var carouselSnapshot = NSDiffableDataSourceSectionSnapshot<Post>()
-        carouselSnapshot.append(carouselItems)
-
-        var listSnapshot = NSDiffableDataSourceSectionSnapshot<Post>()
-        listSnapshot.append(listItems)
-
-        dataSource.apply(carouselSnapshot, to: .carousel, animatingDifferences: false)
-        dataSource.apply(listSnapshot, to: .list, animatingDifferences: false)
+        snapshot.appendItems(listItems)
+        dataSource?.apply(snapshot, animatingDifferences: false)
     }
 
     private func configureConstraints() {
@@ -166,7 +103,7 @@ final class MainViewController: UIViewController {
 
 // MARK: - Extensions
 extension MainViewController {
-    private func fetchImage(from imageURLString: String, for cell: UICollectionViewCell) {
+    private func fetchImage(from imageURLString: String, for cell: ProductCell) {
         let imageLoadQueue = DispatchQueue(label: "com.joruney36.o-g-market")
         imageLoadQueue.async {
             guard let imageURL = URL(string: imageURLString),
@@ -176,17 +113,7 @@ extension MainViewController {
                   }
 
             DispatchQueue.main.async {
-                switch cell {
-                case let cell as CarouselItem:
-                    cell.productImageView.image = image
-                case let cell as ListItem:
-                    cell.productImageView.image = image
-                default:
-                    #if DEBUG
-                    assertionFailure("ADD NEW SECTION CELL")
-                    #endif
-                    break
-                }
+                cell.productImageView.image = image
             }
         }
     }
@@ -194,6 +121,7 @@ extension MainViewController {
 
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         // TODO: - 화면 전환
     }
 }
