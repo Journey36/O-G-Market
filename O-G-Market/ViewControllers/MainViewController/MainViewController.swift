@@ -49,11 +49,7 @@ final class MainViewController: UIViewController {
 
     private func createListCellRegistration() -> UICollectionView.CellRegistration<ProductCell, Post> {
         return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, product in
-            self.fetchImage(from: product.thumbnail, for: cell)
-            cell.productNameLabel.text = product.name
-            cell.productDiscountedPriceLabel.text = product.discountedPrice.description
-            cell.productPriceLabel.text = product.price.description
-            cell.productStockLabel.text = product.stock.description
+            cell.setUpComponentsData(of: product)
         }
     }
 
@@ -87,24 +83,6 @@ final class MainViewController: UIViewController {
         productRegisterButton.snp.makeConstraints { make in
             make.width.height.equalTo(70)
             make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
-        }
-    }
-}
-
-// MARK: - Extensions
-extension MainViewController {
-    private func fetchImage(from imageURLString: String, for cell: ProductCell) {
-        let imageLoadQueue = DispatchQueue(label: "com.joruney36.o-g-market")
-        imageLoadQueue.async {
-            guard let imageURL = URL(string: imageURLString),
-                  let imageData = try? Data(contentsOf: imageURL),
-                  let image = UIImage(data: imageData) else {
-                      return
-                  }
-
-            DispatchQueue.main.async {
-                cell.productImageView.image = image
-            }
         }
     }
 }
