@@ -8,6 +8,14 @@
 import Foundation
 
 struct Post: Decodable, Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(images)
+    }
+
+    static func == (lhs: Post, rhs: Post) -> Bool {
+        return lhs.images == rhs.images
+    }
+
     let id: Int
     let vendorID: Int
     let name: String
@@ -16,12 +24,13 @@ struct Post: Decodable, Hashable {
     let price: Int
     let bargainPrice: Int
     let discountedPrice: Int
+    let images: [Image]
     let stock: Int
     let createdAt: String
     let issuedAt: String
 
     enum CodingKeys: String, CodingKey {
-        case id, name, thumbnail, currency, price, stock
+        case id, name, thumbnail, currency, price, stock, images
         case vendorID = "vendor_id"
         case bargainPrice = "bargain_price"
         case discountedPrice = "discounted_price"
