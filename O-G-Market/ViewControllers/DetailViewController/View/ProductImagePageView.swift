@@ -8,11 +8,11 @@
 import UIKit
 
 class ProductImagePageView: UICollectionView {
-//    var images: [UIImage]?
+    var images: [UIImage]?
     
     init(frame: CGRect, images: [UIImage]) {
         super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
-//        self.images = images
+        self.images = images
         
         self.register(ProductImageCollectionViewCell.self, forCellWithReuseIdentifier: ProductImageCollectionViewCell.id)
         
