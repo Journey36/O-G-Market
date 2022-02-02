@@ -6,38 +6,46 @@
 //
 
 import UIKit
+import SwiftUI
 
 class ImageViewerController: UIViewController {
     var images: [UIImage]?
-    let imageCollectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewLayout())
     let imageView = UIImageView()
-    let xButton = UIButton()
+    
+    let xButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = .lightGray
+        button.imageView?.contentMode = .scaleAspectFit
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        
+        return button
+    }()
+    
+    let imageCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .black
+        collectionView.isPagingEnabled = true
+        collectionView.register(ZoomableCollectionViewCell.self, forCellWithReuseIdentifier: ZoomableCollectionViewCell.id)
+        
+        return collectionView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .black
-        imageCollectionView.backgroundColor = .black
         imageCollectionView.dataSource = self
         imageCollectionView.delegate = self
-        imageCollectionView.isPagingEnabled = true
-        imageCollectionView.collectionViewLayout = createLayout()
-        
-        imageCollectionView.register(ZoomableCollectionViewCell.self, forCellWithReuseIdentifier: ZoomableCollectionViewCell.id)
-        
-        xButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-        xButton.tintColor = .lightGray
-        
+
         addSubviews()
         configureLayout()
-    }
-    
-    private func createLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        return layout
     }
     
     private func addSubviews() {
@@ -46,13 +54,13 @@ class ImageViewerController: UIViewController {
     }
     
     private func configureLayout() {
-        self.imageCollectionView.snp.makeConstraints({
-            $0.size.equalTo(self.view.safeAreaLayoutGuide)
-            $0.center.equalTo(self.view.safeAreaLayoutGuide)
+        self.imageCollectionView.snp.makeConstraints({ make in
+            make.size.equalTo(self.view.safeAreaLayoutGuide)
+            make.center.equalTo(self.view.safeAreaLayoutGuide)
         })
         
         self.xButton.snp.makeConstraints { make in
-            make.size.equalTo(CGSize(width: 50, height: 50))
+            make.size.equalTo(CGSize(width: 40, height: 40))
             make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
@@ -66,7 +74,7 @@ extension ImageViewerController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ZoomableCollectionViewCell.id, for: indexPath) as? ZoomableCollectionViewCell else { return UICollectionViewCell() }
-        cell.imageView.image = UIImage(systemName: "pencil")
+        cell.imageView.image = images?[indexPath.row]
         return cell
     }
 }
@@ -74,7 +82,6 @@ extension ImageViewerController: UICollectionViewDataSource {
 extension ImageViewerController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         var size = collectionView.frame.size
-        
         size.height = view.safeAreaLayoutGuide.layoutFrame.height
         
         return size

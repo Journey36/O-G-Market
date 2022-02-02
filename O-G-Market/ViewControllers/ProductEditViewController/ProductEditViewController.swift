@@ -15,17 +15,33 @@ class ProductEditViewController: UIViewController {
     let productPriceTextField = UITextField(placeholder: "상품 가격을 입력해주세요.")
     let productDiscountedPriceTextField = UITextField(placeholder: "할인 가격을 입력해주세요.")
     let productStockTextField = UITextField(placeholder: "상품 갯수를 입력해주세요.")
-    let productDescriptionTextView = UITextView()
     let currencySegmentControl = UISegmentedControl(items: ["KRW", "USD"])
-    let registerButton = UIButton()
     let priceStackView = UIStackView(axis: .horizontal, alignment: .center, spacing: 10)
     let contentsStackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 10, distribution: .fill)
+    let registerButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .lightGray
+        button.setTitle("상품 등록하기", for: .normal)
+        button.titleLabel?.font = .preferredFont(forTextStyle: .title3)
+        button.layer.cornerRadius = 10
+        
+        return button
+    }()
+    let productDescriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "상품 정보를 입력해주세요."
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.systemGray5.cgColor
+        textView.font = .preferredFont(forTextStyle: .body)
+        
+        return textView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
 
         addSubviews()
-        setUpContents()
         configureNavigationBar()
         configureLayout()
     }
@@ -43,19 +59,6 @@ class ProductEditViewController: UIViewController {
         contentsStackView.addArrangedSubview(registerButton)
         
         view.addSubview(contentsStackView)
-    }
-    
-    private func setUpContents() {
-        view.backgroundColor = .white
-        registerButton.backgroundColor = .lightGray
-        registerButton.setTitle("상품 등록하기", for: .normal)
-        registerButton.titleLabel?.font = .preferredFont(forTextStyle: .title3)
-        registerButton.layer.cornerRadius = 10
-
-        productDescriptionTextView.text = "상품 정보를 입력해주세요."
-        productDescriptionTextView.layer.borderWidth = 1
-        productDescriptionTextView.layer.borderColor = UIColor.systemGray5.cgColor
-        productDescriptionTextView.font = .preferredFont(forTextStyle: .body)
     }
     
     private func configureNavigationBar() {

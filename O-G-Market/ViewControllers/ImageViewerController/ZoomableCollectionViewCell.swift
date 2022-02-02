@@ -14,7 +14,6 @@ class ZoomableCollectionViewCell: UICollectionViewCell {
        let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
-        
         scrollView.maximumZoomScale = 4
         scrollView.minimumZoomScale = 1
         
@@ -32,24 +31,32 @@ class ZoomableCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.scrollView.delegate = self
         self.backgroundColor = .black
-        self.contentView.addSubview(scrollView)
+        self.scrollView.delegate = self
         
+        addSubviews()
+        configureLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func addSubviews() {
+        self.contentView.addSubview(scrollView)
+        self.scrollView.addSubview(imageView)
+    }
+    
+    private func configureLayout() {
         self.scrollView.snp.makeConstraints { make in
             make.size.equalToSuperview()
             make.edges.equalToSuperview()
         }
         
-        self.scrollView.addSubview(imageView)
         self.imageView.snp.makeConstraints { make in
             make.size.equalToSuperview()
             make.edges.equalTo(self.scrollView.contentLayoutGuide)
         }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }
@@ -57,7 +64,6 @@ class ZoomableCollectionViewCell: UICollectionViewCell {
 // MARK: ScrollViewDelegate
 extension ZoomableCollectionViewCell: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        
         return self.imageView
     }
     
