@@ -94,12 +94,17 @@ extension DetailViewController {
             newNavigationController.modalPresentationStyle = .overFullScreen
             self.present(newNavigationController, animated: true, completion: nil)
         }
-        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: nil)
-        let cancelButton = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
+        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
+            // 임시 코드
+            let sample = ProductDeletion(productID: 19, productSecret: "19")
+            let alert = DeleteAlertController(productDeletionInfo: sample)
+            self.present(alert, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
     
         actionSheet.addAction(editAction)
         actionSheet.addAction(deleteAction)
-        actionSheet.addAction(cancelButton)
+        actionSheet.addAction(cancelAction)
         
         self.present(actionSheet, animated: true, completion: nil)
     }

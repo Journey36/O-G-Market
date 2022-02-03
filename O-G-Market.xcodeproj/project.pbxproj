@@ -36,6 +36,7 @@
 		DE61EBE627A51E9900BD8A95 /* ProductRegisterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBE527A51E9900BD8A95 /* ProductRegisterButton.swift */; };
 		DE61EBED27AA397700BD8A95 /* ImageViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBEC27AA397700BD8A95 /* ImageViewerController.swift */; };
 		DE61EBEF27AA5B9600BD8A95 /* ZoomableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBEE27AA5B9600BD8A95 /* ZoomableCollectionViewCell.swift */; };
+		DE61EBF227AC98B100BD8A95 /* DeleteAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBF127AC98B100BD8A95 /* DeleteAlertController.swift */; };
 		DE8B1C0527A15BC000573454 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8B1C0427A15BC000573454 /* UITextField+.swift */; };
 		DE8B1C0E27A16E8600573454 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8B1C0727A16E8600573454 /* DetailViewController.swift */; };
 		DE8B1C0F27A16E8600573454 /* ProductImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8B1C0827A16E8600573454 /* ProductImagePageViewController.swift */; };
@@ -82,6 +83,7 @@
 		DE61EBE527A51E9900BD8A95 /* ProductRegisterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductRegisterButton.swift; sourceTree = "<group>"; };
 		DE61EBEC27AA397700BD8A95 /* ImageViewerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewerController.swift; sourceTree = "<group>"; };
 		DE61EBEE27AA5B9600BD8A95 /* ZoomableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableCollectionViewCell.swift; sourceTree = "<group>"; };
+		DE61EBF127AC98B100BD8A95 /* DeleteAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAlertController.swift; sourceTree = "<group>"; };
 		DE8B1C0427A15BC000573454 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		DE8B1C0727A16E8600573454 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		DE8B1C0827A16E8600573454 /* ProductImagePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagePageViewController.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 			children = (
 				DE8B1C0927A16E8600573454 /* View */,
 				DE8B1C0727A16E8600573454 /* DetailViewController.swift */,
+				DE61EBF127AC98B100BD8A95 /* DeleteAlertController.swift */,
 				DE8B1C0827A16E8600573454 /* ProductImagePageViewController.swift */,
 			);
 			path = DetailViewController;
@@ -423,6 +426,7 @@
 				DE61EBE427A2B4A000BD8A95 /* MainCoordinator.swift in Sources */,
 				3D6B603A278A1B6200A292AF /* ProductCreation.swift in Sources */,
 				DE61EBE227A2B43900BD8A95 /* Coordinator.swift in Sources */,
+				DE61EBF227AC98B100BD8A95 /* DeleteAlertController.swift in Sources */,
 				3DD5BE172782F8EF000B89A8 /* Product.swift in Sources */,
 				3D6B6040278A1C0700A292AF /* ProductDeletion.swift in Sources */,
 				3D52FF46278BDFFE007E9F3C /* ProductList.swift in Sources */,
