@@ -10,7 +10,7 @@ final class MainViewController: UIViewController {
 
     // MARK: - Properties
     var coordinator: MainCoordinator?
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Post>?
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ListItem>?
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
@@ -47,8 +47,8 @@ final class MainViewController: UIViewController {
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
 
-    private func createListCellRegistration() -> UICollectionView.CellRegistration<ProductCell, Post> {
-        return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, product in
+    private func createListCellRegistration() -> UICollectionView.CellRegistration<ProductCell, ListItem> {
+        return UICollectionView.CellRegistration<ProductCell, ListItem> { cell, _, product in
             self.fetchImage(from: product.thumbnail, for: cell)
             cell.productNameLabel.text = product.name
             cell.productDiscountedPriceLabel.text = product.discountedPrice.description
@@ -60,15 +60,15 @@ final class MainViewController: UIViewController {
     private func configureDataSource() {
         let cellRegistration = createListCellRegistration()
 
-        dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, ListItem>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: id)
         }
     }
 
     private func initializeSnapshot(with list: ProductList) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Post>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ListItem>()
         snapshot.appendSections([.main])
-        var listItems: [Post] = []
+        var listItems: [ListItem] = []
         for index in 0..<list.itemsPerPage {
             listItems.append(list.posts[index])
         }
