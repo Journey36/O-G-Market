@@ -14,7 +14,7 @@ class DetailViewController: UIViewController {
     var coordinator: Coordinator?
     
     let scrollView = UIScrollView()
-    let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
+    let productImagePageView = ProductImagePageView(frame: zeroSize, images: [UIImage(systemName: "pencil")!, UIImage(systemName: "xmark")!])
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
     let contentsView = UIView(frame: zeroSize)

@@ -16,8 +16,8 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let initialViewController = ImageViewerController()
-//        initialViewController.coordinator = self
+        let initialViewController = MainViewController()
+        initialViewController.coordinator = self
         navigationController.pushViewController(initialViewController, animated: true)
     }
     
@@ -25,6 +25,7 @@ class MainCoordinator: Coordinator {
         let viewController = DetailViewController()
         viewController.coordinator = self
         navigationController.pushViewController(viewController, animated: true)
+        viewController.productImagePageView.coordinator = self
     }
     
     func presentEditViewController() {
@@ -33,5 +34,14 @@ class MainCoordinator: Coordinator {
         viewController.coordinator = self
         newNavigationController.modalPresentationStyle = .overFullScreen
         navigationController.present(newNavigationController, animated: true, completion: nil)
+    }
+    
+    func presentImageViewerController(images: [UIImage]?) {
+        let viewController = ImageViewerController()
+        viewController.images = images
+        viewController.coordinator = self
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        navigationController.present(viewController, animated: true, completion: nil)
     }
 }

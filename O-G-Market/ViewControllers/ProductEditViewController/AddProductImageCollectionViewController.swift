@@ -5,15 +5,6 @@
 //  Created by odongnamu on 2022/01/03.
 //
 
-/*
- Feature
- - 이미지 추가시 레이아웃 업데이트
- - 첫 번째 버튼은 add 버튼
- - 뒤에 나열되는 이미지 탭할 경우 이미지 확대 보기
- - 이미지 삭제 버튼
- - 이미지 용량 제한
- */
-
 import UIKit
 import PhotosUI
 
@@ -22,6 +13,8 @@ protocol DeleteDelegate {
 }
 
 class AddProductImageCollectionViewController: UIViewController {
+    var coordinator: MainCoordinator?
+    
     var imageList = [UIImage]()
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout(scrollDirection: .horizontal))
     
@@ -81,9 +74,14 @@ extension AddProductImageCollectionViewController: UICollectionViewDelegate {
         if indexPath.row == 0 {
             let picker = customPHPickerViewController()
             present(picker, animated: true, completion: nil)
+        } else {
+            let vc = ImageViewerController()
+            vc.images = imageList
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationStyle = .overFullScreen
+            present(vc, animated: true, completion: nil)
+//            coordinator?.presentImageViewerController(images: imageList)
         }
-        
-        print("openImageViewer")
     }
     
     private func customPHPickerViewController() -> PHPickerViewController {

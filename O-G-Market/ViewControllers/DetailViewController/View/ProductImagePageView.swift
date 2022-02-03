@@ -8,6 +8,7 @@
 import UIKit
 
 class ProductImagePageView: UICollectionView {
+    var coordinator: MainCoordinator?
     var images: [UIImage]?
     
     init(frame: CGRect, images: [UIImage]) {
@@ -39,26 +40,26 @@ class ProductImagePageView: UICollectionView {
 extension ProductImagePageView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 임시 값 3
-//        if let images = images {
-//            return images.count
-//        } else {
-//            return 3
-//        }
-        return 4
+        if let images = images {
+            return images.count
+        } else {
+            return 3
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.id, for: indexPath) as? ProductImageCollectionViewCell else { return UICollectionViewCell() }
         cell.backgroundColor = .systemGray5
+        cell.imageView.image = images![indexPath.row]
         return cell
     }
     
 }
 
 extension ProductImagePageView: UICollectionViewDelegate {
-    override func selectItem(at indexPath: IndexPath?, animated: Bool, scrollPosition: UICollectionView.ScrollPosition) {
-        // 임시 코드
-        print(indexPath)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: 화면 전환 후 현재 이미지 먼저 보여주기
+        coordinator?.presentImageViewerController(images: images)
     }
 }
 

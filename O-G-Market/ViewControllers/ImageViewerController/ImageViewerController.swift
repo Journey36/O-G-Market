@@ -9,6 +9,8 @@ import UIKit
 import SwiftUI
 
 class ImageViewerController: UIViewController {
+    var coordinator: MainCoordinator?
+    
     var images: [UIImage]?
     let imageView = UIImageView()
     
@@ -19,6 +21,7 @@ class ImageViewerController: UIViewController {
         button.imageView?.contentMode = .scaleAspectFit
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill
+        button.addTarget(self, action: #selector(dismissSelf), for: .touchUpInside)
         
         return button
     }()
@@ -65,6 +68,11 @@ class ImageViewerController: UIViewController {
             make.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
     }
+    
+    @objc
+    private func dismissSelf() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension ImageViewerController: UICollectionViewDataSource {
@@ -74,9 +82,7 @@ extension ImageViewerController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ZoomableCollectionViewCell.id, for: indexPath) as? ZoomableCollectionViewCell else { return UICollectionViewCell() }
-//        cell.imageView.image = images?[indexPath.row]
-        // 임시 코드
-        cell.imageView.image = UIImage(systemName: "pencil")
+        cell.imageView.image = images?[indexPath.row]
         return cell
     }
 }
