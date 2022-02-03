@@ -29,7 +29,7 @@ class MainCoordinator: Coordinator {
     }
     
     func presentEditViewController() {
-        let viewController = ProductEditViewController()
+        let viewController = ProductEditViewController(type: .regist)
         let newNavigationController = UINavigationController(rootViewController: viewController)
         viewController.coordinator = self
         newNavigationController.modalPresentationStyle = .overFullScreen

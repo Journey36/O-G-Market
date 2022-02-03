@@ -8,12 +8,27 @@
 import UIKit
 
 class ProductEditViewController: UIViewController {
+    enum ViewType {
+        case regist
+        case edit
+        
+        var title: String {
+            switch self {
+            case .regist:
+                return "상품 등록"
+            case .edit:
+                return "상품 수정"
+            }
+        }
+    }
+    
     var coordinator: MainCoordinator? {
         didSet {
             addProductImageCollectionViewController.coordinator = self.coordinator
         }
     }
     
+    var type: ViewType
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
     let productNameTextField = UITextField(placeholder: "상품명을 입력해주세요.")
     let productPriceTextField = UITextField(placeholder: "상품 가격을 입력해주세요.")
@@ -25,7 +40,6 @@ class ProductEditViewController: UIViewController {
     let registerButton: UIButton = {
        let button = UIButton()
         button.backgroundColor = .lightGray
-        button.setTitle("상품 등록하기", for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .title3)
         button.layer.cornerRadius = 10
         
@@ -40,6 +54,18 @@ class ProductEditViewController: UIViewController {
         
         return textView
     }()
+    
+    init(type: ViewType) {
+        self.type = type
+        super.init(nibName: nil, bundle: nil)
+        
+        registerButton.setTitle("\(type.title)하기", for: .normal)
+        navigationItem.title = type.title
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +95,6 @@ class ProductEditViewController: UIViewController {
         let cancelButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissSelf))
         cancelButton.tintColor = .lightGray
         navigationItem.rightBarButtonItem = cancelButton
-        navigationItem.title = "상품 등록"
     }
     
     @objc
@@ -125,5 +150,13 @@ class ProductEditViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.1)
         }
+    }
+}
+
+extension ProductEditViewController {
+    private func setUpProductInfo() {
+        guard type == .edit else { return }
+        
+        // TODO: 데이터 받아오기
     }
 }

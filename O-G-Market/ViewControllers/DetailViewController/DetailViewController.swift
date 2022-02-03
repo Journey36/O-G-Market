@@ -88,7 +88,12 @@ extension DetailViewController {
     
     @objc private func showEditActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
-        let editAction = UIAlertAction(title: "수정하기", style: .default, handler: nil)
+        let editAction = UIAlertAction(title: "수정하기", style: .default) { _ in
+            let viewController = ProductEditViewController(type: .edit)
+            let newNavigationController = UINavigationController(rootViewController: viewController)
+            newNavigationController.modalPresentationStyle = .overFullScreen
+            self.present(newNavigationController, animated: true, completion: nil)
+        }
         let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: nil)
         let cancelButton = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
     
