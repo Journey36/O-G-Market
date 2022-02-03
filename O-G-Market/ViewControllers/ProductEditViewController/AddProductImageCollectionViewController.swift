@@ -54,7 +54,7 @@ extension AddProductImageCollectionViewController: UICollectionViewDataSource {
         
         if indexPath.row == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddImageCollectionViewCell.id, for: indexPath) as? AddImageCollectionViewCell else { return UICollectionViewCell() }
-            
+            cell.numberOfImageLabel.text = "\(imageList.count)/5"
             return cell
         }
         
