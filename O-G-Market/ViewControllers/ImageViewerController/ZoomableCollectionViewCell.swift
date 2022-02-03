@@ -11,7 +11,7 @@ class ZoomableCollectionViewCell: UICollectionViewCell {
     static let id = "ZoomableCollectionViewCell"
     
     let scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.maximumZoomScale = 4
@@ -33,9 +33,11 @@ class ZoomableCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         self.backgroundColor = .black
         self.scrollView.delegate = self
+
         
         addSubviews()
         configureLayout()
+        addDoubleTapGestureRecognizer()
     }
     
     required init?(coder: NSCoder) {
@@ -59,6 +61,11 @@ class ZoomableCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    private func addDoubleTapGestureRecognizer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        tap.numberOfTapsRequired = 2
+        self.addGestureRecognizer(tap)
+    }
 }
 
 // MARK: ScrollViewDelegate
@@ -90,13 +97,32 @@ extension ZoomableCollectionViewCell: UIScrollViewDelegate {
             leftInset = leftInset * 0.5
             
             let topCondition = imageHeight * scrollView.zoomScale > self.imageView.frame.height
-                var topInset = topCondition ? imageHeight - self.imageView.frame.height : scrollView.frame.height - scrollView.contentSize.height
-
-                topInset = topInset * 0.5
-                
+            var topInset = topCondition ? imageHeight - self.imageView.frame.height : scrollView.frame.height - scrollView.contentSize.height
+            
+            topInset = topInset * 0.5
+            
             scrollView.contentInset = UIEdgeInsets(top: topInset, left: leftInset, bottom: topInset, right: leftInset)
         } else {
             scrollView.contentInset = .zero
+        }
+    }
+}
+
+// MARK: UIGestureRecognizer
+extension ZoomableCollectionViewCell {
+    @objc
+    private func doubleTapped(_ recognzier: UITapGestureRecognizer) {
+        if scrollView.zoomScale > 1 {
+            scrollView.zoom(to: imageView.frame, animated: true)
+        } else {
+            let point = recognzier.location(in: imageView)
+            let scrollSize = scrollView.frame.size
+            let size = CGSize(width: scrollSize.width / scrollView.maximumZoomScale ,
+                              height: scrollSize.height / scrollView.maximumZoomScale)
+            let origin = CGPoint(x: point.x - size.width / 2,
+                                 y: point.y - size.height / 2)
+            
+            scrollView.zoom(to: CGRect(origin: origin, size: size), animated: true)
         }
     }
 }

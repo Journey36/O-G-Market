@@ -74,7 +74,9 @@ extension ImageViewerController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: ZoomableCollectionViewCell.id, for: indexPath) as? ZoomableCollectionViewCell else { return UICollectionViewCell() }
-        cell.imageView.image = images?[indexPath.row]
+//        cell.imageView.image = images?[indexPath.row]
+        // 임시 코드
+        cell.imageView.image = UIImage(systemName: "pencil")
         return cell
     }
 }
