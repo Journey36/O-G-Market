@@ -119,16 +119,6 @@
 			path = Request;
 			sourceTree = "<group>";
 		};
-		3D52FF44278BDF4D007E9F3C /* Response */ = {
-			isa = PBXGroup;
-			children = (
-				3D6B6041278A1C1300A292AF /* Post.swift */,
-				3D52FF45278BDFFE007E9F3C /* ProductList.swift */,
-				3DA0C9D427AC066A006C0DF7 /* ListItem.swift */,
-			);
-			path = Response;
-			sourceTree = "<group>";
-		};
 		3D52FF49278C1235007E9F3C /* Networks */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,7 +192,9 @@
 			isa = PBXGroup;
 			children = (
 				3D52FF43278BDF36007E9F3C /* Request */,
-				3D52FF44278BDF4D007E9F3C /* Response */,
+				3D6B6041278A1C1300A292AF /* Post.swift */,
+				3D52FF45278BDFFE007E9F3C /* ProductList.swift */,
+				3DA0C9D427AC066A006C0DF7 /* ListItem.swift */,
 				3D6B6037278987B300A292AF /* Image.swift */,
 				3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */,
 				3DD5BE162782F8EF000B89A8 /* Product.swift */,
