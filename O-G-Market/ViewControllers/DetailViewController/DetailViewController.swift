@@ -97,7 +97,7 @@ extension DetailViewController {
         let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
             // 임시 코드
             let sample = ProductDeletion(productID: 19, productSecret: "19")
-            let alert = DeleteAlertController(productDeletionInfo: sample)
+            let alert = ProductDeleteAlertController(productDeletionInfo: sample)
             self.present(alert, animated: true, completion: nil)
         }
         let cancelAction = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)

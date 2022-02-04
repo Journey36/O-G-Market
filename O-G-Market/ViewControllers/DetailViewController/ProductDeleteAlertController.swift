@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DeleteAlertController: UIAlertController {
+class ProductDeleteAlertController: UIAlertController {
     var productDeletionInfo: ProductDeletion?
     
     convenience init(productDeletionInfo: ProductDeletion) {
@@ -18,12 +18,12 @@ class DeleteAlertController: UIAlertController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addActions()
+        addDeleteAction()
+        addCancelAction()
         addPasswordTextField()
     }
     
-    private func addActions() {
-        let cancelAction = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
+    private func addDeleteAction() {
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { alert in
             // TODO: 상품 삭제 요청
             self.deleteProduct()
@@ -31,6 +31,11 @@ class DeleteAlertController: UIAlertController {
         }
         
         self.addAction(deleteAction)
+    }
+    
+    private func addCancelAction() {
+        let cancelAction = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
+        
         self.addAction(cancelAction)
     }
     
