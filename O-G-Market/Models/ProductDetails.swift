@@ -7,15 +7,7 @@
 
 import Foundation
 
-struct Post: Decodable, Hashable {
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(images)
-    }
-
-    static func == (lhs: Post, rhs: Post) -> Bool {
-        return lhs.images == rhs.images
-    }
-
+struct ProductDetails: Decodable {
     let id: Int
     let vendorID: Int
     let name: String

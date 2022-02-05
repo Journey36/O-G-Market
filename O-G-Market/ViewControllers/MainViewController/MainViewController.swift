@@ -10,7 +10,7 @@ final class MainViewController: UIViewController {
 
     // MARK: - Properties
     var coordinator: MainCoordinator?
-    private var dataSource: UICollectionViewDiffableDataSource<Section, ListItem>?
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ListProduct>?
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
@@ -47,8 +47,8 @@ final class MainViewController: UIViewController {
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
 
-    private func createListCellRegistration() -> UICollectionView.CellRegistration<ProductCell, ListItem> {
-        return UICollectionView.CellRegistration<ProductCell, ListItem> { cell, _, product in
+    private func createListCellRegistration() -> UICollectionView.CellRegistration<ProductCell, ListProduct> {
+        return UICollectionView.CellRegistration<ProductCell, ListProduct> { cell, _, product in
             self.fetchImage(from: product.thumbnail, for: cell)
             cell.productNameLabel.text = product.name
             cell.productDiscountedPriceLabel.text = product.discountedPrice.description
@@ -60,17 +60,17 @@ final class MainViewController: UIViewController {
     private func configureDataSource() {
         let cellRegistration = createListCellRegistration()
 
-        dataSource = UICollectionViewDiffableDataSource<Section, ListItem>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, ListProduct>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
             return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: id)
         }
     }
 
-    private func initializeSnapshot(with list: ProductList) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, ListItem>()
+    private func initializeSnapshot(with list: Pages) {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ListProduct>()
         snapshot.appendSections([.main])
-        var listItems: [ListItem] = []
+        var listItems: [ListProduct] = []
         for index in 0..<list.itemsPerPage {
-            listItems.append(list.posts[index])
+            listItems.append(list.items[index])
         }
         snapshot.appendItems(listItems)
         dataSource?.apply(snapshot, animatingDifferences: false)
