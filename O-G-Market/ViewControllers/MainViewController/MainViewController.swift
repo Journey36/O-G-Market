@@ -11,6 +11,7 @@ final class MainViewController: UIViewController {
     // MARK: - Properties
     var coordinator: MainCoordinator?
     private var dataSource: UICollectionViewDiffableDataSource<Section, ListProduct>?
+    private var snapshot = NSDiffableDataSourceSnapshot<Section, ListProduct>()
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
@@ -66,7 +67,6 @@ final class MainViewController: UIViewController {
     }
 
     private func initializeSnapshot(with list: Pages) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, ListProduct>()
         snapshot.appendSections([.main])
         var listItems: [ListProduct] = []
         for index in 0..<list.itemsPerPage {
