@@ -11,10 +11,10 @@ import SwiftUI
 fileprivate let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
-    var coordinator: Coordinator?
+    var coordinator: MainCoordinator?
     
     let scrollView = UIScrollView()
-    let productImagePageView = ProductImagePageView(frame: zeroSize, images: [UIImage(systemName: "pencil")!, UIImage(systemName: "xmark")!])
+    let productImagePageViewController = ProductImagePageViewController()
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
     let contentsView = UIView(frame: zeroSize)
@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
         view.addSubview(scrollView)
         view.addSubview(productPriceView)
         
-        scrollView.addSubview(productImagePageView)
+        scrollView.addSubview(productImagePageViewController.view)
         scrollView.addSubview(productInfoView)
     }
 
@@ -45,7 +45,7 @@ class DetailViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
 
-        productImagePageView.snp.makeConstraints { make in
+        productImagePageViewController.view.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(view.snp.width)
             make.centerX.equalToSuperview()
@@ -53,7 +53,7 @@ class DetailViewController: UIViewController {
         }
 
         productInfoView.snp.makeConstraints { make in
-            make.top.equalTo(productImagePageView.snp.bottom)
+            make.top.equalTo(productImagePageViewController.view.snp.bottom)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -89,10 +89,7 @@ extension DetailViewController {
     @objc private func showEditActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정하기", style: .default) { _ in
-            let viewController = ProductEditViewController(type: .edit)
-            let newNavigationController = UINavigationController(rootViewController: viewController)
-            newNavigationController.modalPresentationStyle = .overFullScreen
-            self.present(newNavigationController, animated: true, completion: nil)
+            self.coordinator?.presentEditViewController()
         }
         let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
             // 임시 코드

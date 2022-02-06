@@ -75,12 +75,7 @@ extension AddProductImageCollectionViewController: UICollectionViewDelegate {
             let picker = customPHPickerViewController()
             present(picker, animated: true, completion: nil)
         } else {
-            let vc = ImageViewerController()
-            vc.images = imageList
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .overFullScreen
-            present(vc, animated: true, completion: nil)
-//            coordinator?.presentImageViewerController(images: imageList)
+            coordinator?.presentImageViewerController(sender: self, images: imageList)
         }
     }
     

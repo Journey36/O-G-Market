@@ -22,11 +22,7 @@ class ProductEditViewController: UIViewController {
         }
     }
     
-    var coordinator: MainCoordinator? {
-        didSet {
-            addProductImageCollectionViewController.coordinator = self.coordinator
-        }
-    }
+    var coordinator: MainCoordinator?
     
     var type: ViewType
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
