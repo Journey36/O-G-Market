@@ -11,10 +11,11 @@ import SwiftUI
 fileprivate let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
-    var coordinator: Coordinator?
+    var coordinator: MainCoordinator?
+    var product: ProductDetails?
     
     let scrollView = UIScrollView()
-    let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
+    let productImagePageViewController = ProductImagePageViewController()
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
     let contentsView = UIView(frame: zeroSize)
@@ -33,7 +34,7 @@ class DetailViewController: UIViewController {
         view.addSubview(scrollView)
         view.addSubview(productPriceView)
         
-        scrollView.addSubview(productImagePageView)
+        scrollView.addSubview(productImagePageViewController.view)
         scrollView.addSubview(productInfoView)
     }
 
@@ -45,7 +46,7 @@ class DetailViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
 
-        productImagePageView.snp.makeConstraints { make in
+        productImagePageViewController.view.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(view.snp.width)
             make.centerX.equalToSuperview()
@@ -53,7 +54,7 @@ class DetailViewController: UIViewController {
         }
 
         productInfoView.snp.makeConstraints { make in
-            make.top.equalTo(productImagePageView.snp.bottom)
+            make.top.equalTo(productImagePageViewController.view.snp.bottom)
             make.width.equalToSuperview()
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -65,6 +66,14 @@ class DetailViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.bottom.equalTo(productPriceView.snp.top)
         }
+    }
+    
+    func setUpComponentsData(product: ProductDetails) {
+        self.product = product
+        
+        productInfoView.setUpComponentsData(product: product)
+        productPriceView.setUpComponentsData(product: product)
+        productImagePageViewController.setUpComponentsData(product: product)
     }
 }
 
@@ -80,22 +89,10 @@ extension DetailViewController {
     }
     
     @objc private func showActivityView() {
-        let activityViewController = UIActivityViewController(activityItems: ["오동나무"], applicationActivities: nil)
-        
-        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItems?.first
-        self.present(activityViewController, animated: true, completion: nil)
+        coordinator?.presentActivityViewController(sender: self)
     }
     
     @objc private func showEditActionSheet() {
-        let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
-        let editAction = UIAlertAction(title: "수정하기", style: .default, handler: nil)
-        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: nil)
-        let cancelButton = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
-    
-        actionSheet.addAction(editAction)
-        actionSheet.addAction(deleteAction)
-        actionSheet.addAction(cancelButton)
-        
-        self.present(actionSheet, animated: true, completion: nil)
+        coordinator?.presentEditActionSheet(product: product, images: productImagePageViewController.images)
     }
 }

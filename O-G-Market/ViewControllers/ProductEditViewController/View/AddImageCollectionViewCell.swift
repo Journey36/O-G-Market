@@ -51,6 +51,5 @@ class AddImageCollectionViewCell: UICollectionViewCell {
         
         imageView.image = UIImage(systemName: "camera.fill")
         imageView.tintColor = cellColor
-        numberOfImageLabel.text = "0/5"
     }
 }

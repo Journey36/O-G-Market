@@ -72,6 +72,28 @@ final class Networking {
 
         task.resume()
     }
+    
+    func getProductImages(url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        let task = URLSession.shared.dataTask(with: url) {
+            data, response, error in
+            guard error == nil else {
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse, (200...399).contains(response.statusCode) else {
+                return
+            }
+            
+            guard let data = data else {
+                return
+            }
+            
+            guard let image = UIImage(data: data) else { return }
+            completion(.success(image))
+        }
+        
+        task.resume()
+    }
 
     // MARK: - POST
     func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<ProductDetails, Error>) -> Void) {

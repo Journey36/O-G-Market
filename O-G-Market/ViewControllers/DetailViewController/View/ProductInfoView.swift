@@ -11,8 +11,8 @@ class ProductInfoView: UIView {
     let titleLabel = UILabel(textStyle: .largeTitle)
     let registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
     let descriptionLabel = UILabel(textStyle: .body)
-    let stackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 8, distribution: .equalSpacing)
-    let containerView = UIView()
+    private let stackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 8, distribution: .equalSpacing)
+    private let containerView = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,13 +20,6 @@ class ProductInfoView: UIView {
         addSubviews()
         configureLayout()
         descriptionLabel.numberOfLines = 0
-        
-        // 임시 설정
-        self.backgroundColor = .systemGray4
-
-        titleLabel.text = "오동나무의 뿌리"
-        registrationDateLabel.text = "등록일자: 2021. 12. 25"
-        descriptionLabel.text = "오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ오동나무의 뿌리 팝니다. 먼저 사는 사람이 임자!! 하나 밖에 안남았대요 ㅜ"
     }
     
     required init?(coder: NSCoder) {
@@ -34,12 +27,6 @@ class ProductInfoView: UIView {
     }
     
     private func configureLayout() {
-//        stackView.snp.makeConstraints { make in
-//            make.width.equalToSuperview().multipliedBy(0.8)
-//            make.height.equalToSuperview().multipliedBy(0.8)
-//            make.center.equalToSuperview()
-//        }
-        
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
@@ -68,14 +55,15 @@ class ProductInfoView: UIView {
     }
     
     private func addSubviews() {
-//        stackView.addArrangedSubview(titleLabel)
-//        stackView.addArrangedSubview(registrationDateLabel)
-//        stackView.addArrangedSubview(descriptionLabel)
-//        addSubview(stackView)
-        
         containerView.addSubview(titleLabel)
         containerView.addSubview(registrationDateLabel)
         containerView.addSubview(descriptionLabel)
         addSubview(containerView)
+    }
+    
+    func setUpComponentsData(product: ProductDetails) {
+        titleLabel.text = product.name
+        descriptionLabel.text = product.description
+        registrationDateLabel.text = product.createdAt
     }
 }
