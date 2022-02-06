@@ -30,6 +30,7 @@
 		3DD69BDC27643E9100F053E0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3DD69BDB27643E9100F053E0 /* SnapKit */; };
 		3DD69BDF27643F0900F053E0 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 3DD69BDE27643F0900F053E0 /* Alamofire */; };
 		DE2BB52527AFFFA1007047FA /* AddProductImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2BB52427AFFFA1007047FA /* AddProductImageCollectionViewController.swift */; };
+		DE2BB53227B06356007047FA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2BB53127B06356007047FA /* UIColor+.swift */; };
 		DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEC2778A0EA007454FC /* UILabel+.swift */; };
 		DE4B8CF227792C2A007454FC /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CF127792C2A007454FC /* UIStackView+.swift */; };
 		DE61EBBF27A1734500BD8A95 /* Data+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61EBBE27A1734500BD8A95 /* Data+.swift */; };
@@ -77,6 +78,7 @@
 		3DD69BA127642DDA00F053E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DD69BA827642EEB00F053E0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		DE2BB52427AFFFA1007047FA /* AddProductImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductImageCollectionViewController.swift; sourceTree = "<group>"; };
+		DE2BB53127B06356007047FA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		DE4B8CEC2778A0EA007454FC /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		DE4B8CF127792C2A007454FC /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DE61EBBE27A1734500BD8A95 /* Data+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+.swift"; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				DE8B1C0427A15BC000573454 /* UITextField+.swift */,
 				DE61EBBE27A1734500BD8A95 /* Data+.swift */,
 				3D31E94B279ED944009D7E8A /* Bundle+.swift */,
+				DE2BB53127B06356007047FA /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				DE61EBEF27AA5B9600BD8A95 /* ZoomableCollectionViewCell.swift in Sources */,
 				DE9A7FF5279C500B00C8362D /* AddedImageCollectionViewCell.swift in Sources */,
 				DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */,
+				DE2BB53227B06356007047FA /* UIColor+.swift in Sources */,
 				DE8B1C0527A15BC000573454 /* UITextField+.swift in Sources */,
 				DE9A8021279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift in Sources */,
 				DE8B1C1327A16E8600573454 /* ProductInfoView.swift in Sources */,

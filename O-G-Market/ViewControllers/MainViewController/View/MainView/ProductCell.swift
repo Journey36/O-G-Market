@@ -36,7 +36,7 @@ class ProductCell: UICollectionViewListCell {
 		let textAttributes = NSMutableAttributedString(string: productDiscountedPriceLabel.text ?? "nil")
 		let textRange = NSRange(location: 0, length: textAttributes.length)
 		textAttributes.addAttributes([.font: UIFont.preferredFont(forTextStyle: .subheadline),
-                                      .foregroundColor: UIColor.systemRed,
+                                      .foregroundColor: UIColor(hex: "#cc0000"),
                                       .strikethroughStyle: 1], range: textRange)
 		productDiscountedPriceLabel.attributedText = textAttributes
 		return productDiscountedPriceLabel

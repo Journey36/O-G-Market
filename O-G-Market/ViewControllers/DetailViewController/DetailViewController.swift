@@ -71,9 +71,9 @@ class DetailViewController: UIViewController {
     
     func setUpComponentsData(product: ProductDetails) {
         self.product = product
-        productInfoView.titleLabel.text = product.name
-        productInfoView.descriptionLabel.text = product.description
-        productInfoView.registrationDateLabel.text = product.createdAt
+        
+        productInfoView.setUpComponentsData(product: product)
+        productPriceView.setUpComponentsData(product: product)
     }
 }
 
