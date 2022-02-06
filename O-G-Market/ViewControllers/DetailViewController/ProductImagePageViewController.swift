@@ -69,8 +69,6 @@ class ProductImagePageViewController: UIViewController {
 
 extension ProductImagePageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        guard let images = images else { return 0 }
-//
         return images.count
     }
     

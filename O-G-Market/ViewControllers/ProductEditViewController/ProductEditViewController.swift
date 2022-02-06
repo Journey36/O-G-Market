@@ -23,6 +23,7 @@ class ProductEditViewController: UIViewController {
     }
     
     var coordinator: MainCoordinator?
+    var product: ProductDetails?
     
     var type: ViewType
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
@@ -35,9 +36,10 @@ class ProductEditViewController: UIViewController {
     let contentsStackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 10, distribution: .fill)
     let registerButton: UIButton = {
        let button = UIButton()
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor(hex: "#736047")
         button.titleLabel?.font = .preferredFont(forTextStyle: .title3)
         button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(postProduct), for: .touchUpInside)
         
         return button
     }()
@@ -98,6 +100,33 @@ class ProductEditViewController: UIViewController {
         coordinator?.dismissModal(sender: self)
     }
     
+    @objc
+    func postProduct() {
+        isAllComponentsFull()
+        
+        // TODO: Post, Patch 하기
+    }
+    
+    private func isAllComponentsFull() {
+        guard addProductImageCollectionViewController.imageList.count > 0 else {
+            coordinator?.presentBasicAlert(sender: self, message: "이미지는 1장 이상 등록해야 합니다.")
+            return
+        }
+        
+        guard (10...1000).contains(productDescriptionTextView.text.count) else {
+            coordinator?.presentBasicAlert(sender: self, message: "상품 설명은 10자 이상, 1000자 이하로 작성해야 합니다.")
+            return
+        }
+        
+        guard !(productNameTextField.text?.isEmpty ?? false),
+              !(productPriceTextField.text?.isEmpty ?? false),
+              !(productStockTextField.text?.isEmpty ?? false),
+              !(productDiscountedPriceTextField.text?.isEmpty ?? false) else {
+                  coordinator?.presentBasicAlert(sender: self, message: "모든 항목을 입력해주세요.")
+                  return
+              }
+    }
+    
     private func configureLayout() {
         contentsStackView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -150,9 +179,15 @@ class ProductEditViewController: UIViewController {
 }
 
 extension ProductEditViewController {
-    private func setUpProductInfo() {
-        guard type == .edit else { return }
+    func setUpComponentsData(product: ProductDetails?, images: [UIImage]) {
+        guard type == .edit, let product = product else { return }
         
-        // TODO: 데이터 받아오기
+        productNameTextField.text = product.name
+        productPriceTextField.text = String(product.price)
+        productDiscountedPriceTextField.text = String(product.bargainPrice)
+        productDescriptionTextView.text = product.description
+        productStockTextField.text = String(product.stock)
+        currencySegmentControl.selectedSegmentIndex = product.currency == .KRW ? 0 : 1
+        addProductImageCollectionViewController.imageList = images
     }
 }

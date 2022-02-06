@@ -41,11 +41,21 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(viewController, animated: true)
     }
     
-    func presentEditViewController() {
+    func presentRegistViewController() {
         let viewController = ProductEditViewController(type: .regist)
         let newNavigationController = UINavigationController(rootViewController: viewController)
         viewController.coordinator = self
         viewController.addProductImageCollectionViewController.coordinator = self
+        newNavigationController.modalPresentationStyle = .overFullScreen
+        navigationController.topViewController?.present(newNavigationController, animated: true, completion: nil)
+    }
+    
+    func presentEditViewController(product: ProductDetails?, images: [UIImage]) {
+        let viewController = ProductEditViewController(type: .edit)
+        let newNavigationController = UINavigationController(rootViewController: viewController)
+        viewController.coordinator = self
+        viewController.addProductImageCollectionViewController.coordinator = self
+        viewController.setUpComponentsData(product: product, images: images)
         newNavigationController.modalPresentationStyle = .overFullScreen
         navigationController.topViewController?.present(newNavigationController, animated: true, completion: nil)
     }
@@ -59,10 +69,10 @@ class MainCoordinator: Coordinator {
         sender.present(viewController, animated: true, completion: nil)
     }
     
-    func presentEditActionSheet() {
+    func presentEditActionSheet(product: ProductDetails?, images: [UIImage]) {
         let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정하기", style: .default) { _ in
-            self.presentEditViewController()
+            self.presentEditViewController(product: product, images: images)
         }
         let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
             self.presentDeleteAlert()

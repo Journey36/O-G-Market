@@ -28,7 +28,6 @@ class DetailViewController: UIViewController {
         addSubviews()
         configureNavigationBar()
         configureLayout()
-//        setUpComponentsData()
     }
 
     private func addSubviews() {
@@ -94,6 +93,6 @@ extension DetailViewController {
     }
     
     @objc private func showEditActionSheet() {
-        coordinator?.presentEditActionSheet()
+        coordinator?.presentEditActionSheet(product: product, images: productImagePageViewController.images)
     }
 }

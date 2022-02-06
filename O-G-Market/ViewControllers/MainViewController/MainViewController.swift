@@ -93,7 +93,7 @@ final class MainViewController: UIViewController {
     
     @objc
     private func presentProductRegisterViewController() {
-        coordinator?.presentEditViewController()
+        coordinator?.presentRegistViewController()
     }
 }
 
