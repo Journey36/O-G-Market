@@ -74,6 +74,7 @@ class DetailViewController: UIViewController {
         
         productInfoView.setUpComponentsData(product: product)
         productPriceView.setUpComponentsData(product: product)
+        productImagePageViewController.setUpComponentsData(product: product)
     }
 }
 

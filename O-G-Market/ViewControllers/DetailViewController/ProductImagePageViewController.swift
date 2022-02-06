@@ -9,7 +9,7 @@ import UIKit
 
 class ProductImagePageViewController: UIViewController {
     var coordinator: MainCoordinator?
-    var images: [UIImage]?
+    var images: [UIImage] = []
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout(scrollDirection: .horizontal))
     
     override func viewDidLoad() {
@@ -18,9 +18,6 @@ class ProductImagePageViewController: UIViewController {
         addSubviews()
         configureLayout()
         configureCollectionView()
-        
-        // 임시코드
-        images = [UIImage(systemName: "pencil")!, UIImage(systemName: "xmark")!]
     }
     
     private func addSubviews() {
@@ -50,25 +47,39 @@ class ProductImagePageViewController: UIViewController {
         collectionView.delegate = self
         collectionView.collectionViewLayout = createLayout()
     }
+    
+    func setUpComponentsData(product: ProductDetails) {
+        product.images.forEach { image in
+            guard let url = URL(string: image.url) else { return }
+            Networking.default.getProductImages(url: url) { result in
+                switch result {
+                case .success(let image):
+                    self.images.append(image)
+                    
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                case .failure(let error):
+                    return
+                }
+            }
+        }
+    }
 }
 
 extension ProductImagePageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // 임시 값 3
-        if let images = images {
-            return images.count
-        } else {
-            return 3
-        }
+//        guard let images = images else { return 0 }
+//
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.id, for: indexPath) as? ProductImageCollectionViewCell else { return UICollectionViewCell() }
         cell.backgroundColor = .systemGray5
-        cell.imageView.image = images?[indexPath.row]
+        cell.imageView.image = images[indexPath.row]
         return cell
     }
-    
 }
 
 extension ProductImagePageViewController: UICollectionViewDelegate {
