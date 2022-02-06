@@ -12,6 +12,7 @@ fileprivate let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
     var coordinator: MainCoordinator?
+    var product: ProductDetails?
     
     let scrollView = UIScrollView()
     let productImagePageViewController = ProductImagePageViewController()
@@ -27,6 +28,7 @@ class DetailViewController: UIViewController {
         addSubviews()
         configureNavigationBar()
         configureLayout()
+//        setUpComponentsData()
     }
 
     private func addSubviews() {
@@ -65,6 +67,13 @@ class DetailViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.bottom.equalTo(productPriceView.snp.top)
         }
+    }
+    
+    func setUpComponentsData(product: ProductDetails) {
+        self.product = product
+        productInfoView.titleLabel.text = product.name
+        productInfoView.descriptionLabel.text = product.description
+        productInfoView.registrationDateLabel.text = product.createdAt
     }
 }
 

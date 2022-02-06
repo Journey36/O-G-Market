@@ -22,11 +22,23 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(initialViewController, animated: true)
     }
     
-    func pushDetailViewController() {
+    func pushDetailViewController(productId: Int) {
         let viewController = DetailViewController()
         viewController.coordinator = self
-        navigationController.pushViewController(viewController, animated: true)
         viewController.productImagePageViewController.coordinator = self
+        
+        Networking.default.requestGET(with: productId) { result in
+            switch result {
+            case .success(let product):
+                DispatchQueue.main.async {
+                    viewController.setUpComponentsData(product: product)
+                }
+            case .failure(let error):
+                self.dismissModal(sender: viewController)
+                return
+            }
+        }
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func presentEditViewController() {

@@ -99,7 +99,11 @@ final class MainViewController: UIViewController {
 
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let productId = (productCollectionView.cellForItem(at: indexPath) as? ProductCell)?.productId else {
+            return
+        }
         collectionView.deselectItem(at: indexPath, animated: true)
-        coordinator?.pushDetailViewController()
+        
+        coordinator?.pushDetailViewController(productId: productId)
     }
 }
