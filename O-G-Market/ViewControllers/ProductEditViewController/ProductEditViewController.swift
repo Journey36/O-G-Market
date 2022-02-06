@@ -95,7 +95,7 @@ class ProductEditViewController: UIViewController {
     
     @objc
     func dismissSelf() {
-        dismiss(animated: true, completion: nil)
+        coordinator?.dismissModal(sender: self)
     }
     
     private func configureLayout() {

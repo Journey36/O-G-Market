@@ -71,7 +71,7 @@ class ImageViewerController: UIViewController {
     
     @objc
     private func dismissSelf() {
-        self.dismiss(animated: true, completion: nil)
+        coordinator?.dismissModal(sender: self)
     }
 }
 

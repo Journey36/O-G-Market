@@ -86,4 +86,8 @@ class MainCoordinator: Coordinator {
         imagePickerViewcontroller.delegate = sender as? PHPickerViewControllerDelegate
         sender.present(imagePickerViewcontroller, animated: true, completion: nil)
     }
+    
+    func dismissModal(sender: UIViewController) {
+        sender.dismiss(animated: true, completion: nil)
+    }
 }
