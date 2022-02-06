@@ -72,7 +72,13 @@ extension AddProductImageCollectionViewController: UICollectionViewDataSource {
 extension AddProductImageCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            coordinator?.presentPHPickerViewController(sender: self)
+            guard (0...4).contains(imageList.count) else {
+                coordinator?.presentBasicAlert(sender: self, message: "이미지는 최대 5개까지 등록 가능합니다.")
+                return
+            }
+            let selectableNumber = 5 - imageList.count
+
+            coordinator?.presentPHPickerViewController(sender: self, selectionLimit: selectableNumber)
         } else {
             coordinator?.presentImageViewerController(sender: self, images: imageList)
         }

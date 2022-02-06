@@ -78,9 +78,9 @@ class MainCoordinator: Coordinator {
         navigationController.topViewController?.present(activityViewController, animated: true, completion: nil)
     }
     
-    func presentPHPickerViewController(sender: UIViewController) {
+    func presentPHPickerViewController(sender: UIViewController, selectionLimit: Int) {
         var phPickerConfiguration = PHPickerConfiguration()
-        phPickerConfiguration.selectionLimit = 5
+        phPickerConfiguration.selectionLimit = selectionLimit
         
         let imagePickerViewcontroller = PHPickerViewController(configuration: phPickerConfiguration)
         imagePickerViewcontroller.delegate = sender as? PHPickerViewControllerDelegate
@@ -89,5 +89,13 @@ class MainCoordinator: Coordinator {
     
     func dismissModal(sender: UIViewController) {
         sender.dismiss(animated: true, completion: nil)
+    }
+    
+    func presentBasicAlert(sender: UIViewController, message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        
+        alert.addAction(okAction)
+        sender.present(alert, animated: true, completion: nil)
     }
 }
