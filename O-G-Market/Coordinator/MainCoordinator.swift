@@ -25,13 +25,23 @@ class MainCoordinator: Coordinator {
         let viewController = DetailViewController()
         viewController.coordinator = self
         navigationController.pushViewController(viewController, animated: true)
+        viewController.productImagePageView.coordinator = self
     }
     
     func presentEditViewController() {
-        let viewController = ProductEditViewController()
+        let viewController = ProductEditViewController(type: .regist)
         let newNavigationController = UINavigationController(rootViewController: viewController)
         viewController.coordinator = self
         newNavigationController.modalPresentationStyle = .overFullScreen
         navigationController.present(newNavigationController, animated: true, completion: nil)
+    }
+    
+    func presentImageViewerController(images: [UIImage]?) {
+        let viewController = ImageViewerController()
+        viewController.images = images
+        viewController.coordinator = self
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        navigationController.present(viewController, animated: true, completion: nil)
     }
 }

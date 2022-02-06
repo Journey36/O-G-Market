@@ -8,24 +8,70 @@
 import UIKit
 
 class ProductEditViewController: UIViewController {
-    var coordinator: MainCoordinator?
+    enum ViewType {
+        case regist
+        case edit
+        
+        var title: String {
+            switch self {
+            case .regist:
+                return "상품 등록"
+            case .edit:
+                return "상품 수정"
+            }
+        }
+    }
     
+    var coordinator: MainCoordinator? {
+        didSet {
+            addProductImageCollectionViewController.coordinator = self.coordinator
+        }
+    }
+    
+    var type: ViewType
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
     let productNameTextField = UITextField(placeholder: "상품명을 입력해주세요.")
     let productPriceTextField = UITextField(placeholder: "상품 가격을 입력해주세요.")
     let productDiscountedPriceTextField = UITextField(placeholder: "할인 가격을 입력해주세요.")
     let productStockTextField = UITextField(placeholder: "상품 갯수를 입력해주세요.")
-    let productDescriptionTextView = UITextView()
     let currencySegmentControl = UISegmentedControl(items: ["KRW", "USD"])
-    let registerButton = UIButton()
     let priceStackView = UIStackView(axis: .horizontal, alignment: .center, spacing: 10)
     let contentsStackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 10, distribution: .fill)
+    let registerButton: UIButton = {
+       let button = UIButton()
+        button.backgroundColor = .lightGray
+        button.titleLabel?.font = .preferredFont(forTextStyle: .title3)
+        button.layer.cornerRadius = 10
+        
+        return button
+    }()
+    let productDescriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "상품 정보를 입력해주세요."
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.systemGray5.cgColor
+        textView.font = .preferredFont(forTextStyle: .body)
+        
+        return textView
+    }()
+    
+    init(type: ViewType) {
+        self.type = type
+        super.init(nibName: nil, bundle: nil)
+        
+        registerButton.setTitle("\(type.title)하기", for: .normal)
+        navigationItem.title = type.title
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
 
         addSubviews()
-        setUpContents()
         configureNavigationBar()
         configureLayout()
     }
@@ -45,24 +91,10 @@ class ProductEditViewController: UIViewController {
         view.addSubview(contentsStackView)
     }
     
-    private func setUpContents() {
-        view.backgroundColor = .white
-        registerButton.backgroundColor = .lightGray
-        registerButton.setTitle("상품 등록하기", for: .normal)
-        registerButton.titleLabel?.font = .preferredFont(forTextStyle: .title3)
-        registerButton.layer.cornerRadius = 10
-
-        productDescriptionTextView.text = "상품 정보를 입력해주세요."
-        productDescriptionTextView.layer.borderWidth = 1
-        productDescriptionTextView.layer.borderColor = UIColor.systemGray5.cgColor
-        productDescriptionTextView.font = .preferredFont(forTextStyle: .body)
-    }
-    
     private func configureNavigationBar() {
         let cancelButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissSelf))
         cancelButton.tintColor = .lightGray
         navigationItem.rightBarButtonItem = cancelButton
-        navigationItem.title = "상품 등록"
     }
     
     @objc
@@ -118,5 +150,13 @@ class ProductEditViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.1)
         }
+    }
+}
+
+extension ProductEditViewController {
+    private func setUpProductInfo() {
+        guard type == .edit else { return }
+        
+        // TODO: 데이터 받아오기
     }
 }

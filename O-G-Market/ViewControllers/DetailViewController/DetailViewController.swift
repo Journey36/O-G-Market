@@ -14,7 +14,7 @@ class DetailViewController: UIViewController {
     var coordinator: Coordinator?
     
     let scrollView = UIScrollView()
-    let productImagePageView = ProductImagePageView(frame: zeroSize, images: [])
+    let productImagePageView = ProductImagePageView(frame: zeroSize, images: [UIImage(systemName: "pencil")!, UIImage(systemName: "xmark")!])
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
     let contentsView = UIView(frame: zeroSize)
@@ -88,13 +88,23 @@ extension DetailViewController {
     
     @objc private func showEditActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
-        let editAction = UIAlertAction(title: "수정하기", style: .default, handler: nil)
-        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive, handler: nil)
-        let cancelButton = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
+        let editAction = UIAlertAction(title: "수정하기", style: .default) { _ in
+            let viewController = ProductEditViewController(type: .edit)
+            let newNavigationController = UINavigationController(rootViewController: viewController)
+            newNavigationController.modalPresentationStyle = .overFullScreen
+            self.present(newNavigationController, animated: true, completion: nil)
+        }
+        let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
+            // 임시 코드
+            let sample = ProductDeletion(productID: 19, productSecret: "19")
+            let alert = ProductDeleteAlertController(productDeletionInfo: sample)
+            self.present(alert, animated: true, completion: nil)
+        }
+        let cancelAction = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
     
         actionSheet.addAction(editAction)
         actionSheet.addAction(deleteAction)
-        actionSheet.addAction(cancelButton)
+        actionSheet.addAction(cancelAction)
         
         self.present(actionSheet, animated: true, completion: nil)
     }

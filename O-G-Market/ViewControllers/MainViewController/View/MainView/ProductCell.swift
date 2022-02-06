@@ -9,6 +9,7 @@ import UIKit
 
 class ProductCell: UICollectionViewListCell {
 	static let identifier = String(describing: ProductCell.self)
+    var productId: Int?
 	let productImageView: UIImageView = {
 		let productImageView = UIImageView()
 		productImageView.contentMode = .scaleAspectFit
@@ -106,4 +107,31 @@ class ProductCell: UICollectionViewListCell {
 			make.trailing.equalToSuperview().offset(-20)
 		}
 	}
+}
+
+// MARK: - Set UI Components
+extension ProductCell {
+    private func fetchImage(from imageURLString: String) {
+        let imageLoadQueue = DispatchQueue(label: "com.joruney36.o-g-market")
+        imageLoadQueue.async {
+            guard let imageURL = URL(string: imageURLString),
+                  let imageData = try? Data(contentsOf: imageURL),
+                  let image = UIImage(data: imageData) else {
+                      return
+                  }
+
+            DispatchQueue.main.async {
+                self.productImageView.image = image
+            }
+        }
+    }
+    
+    func setUpComponentsData(of product: ListProduct) {
+        self.fetchImage(from: product.thumbnail)
+        self.productNameLabel.text = product.name
+        self.productDiscountedPriceLabel.text = product.discountedPrice.description
+        self.productPriceLabel.text = product.price.description
+        self.productStockLabel.text = product.stock.description
+        self.productId = product.id
+    }
 }
