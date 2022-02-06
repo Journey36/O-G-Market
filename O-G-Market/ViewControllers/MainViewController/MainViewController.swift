@@ -17,7 +17,11 @@ final class MainViewController: UIViewController {
         let productCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureCollectionViewLayout())
         return productCollectionView
     }()
-    private lazy var productRegisterButton: UIButton = ProductRegisterButton(coordinator: coordinator)
+    private lazy var productRegisterButton: UIButton = {
+        let button = ProductRegisterButton(frame: CGRect.zero)
+        button.addTarget(self, action: #selector(presentProductRegisterViewController), for: .touchUpInside)
+        return button
+    }()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -85,6 +89,11 @@ final class MainViewController: UIViewController {
             make.width.height.equalTo(70)
             make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
         }
+    }
+    
+    @objc
+    private func presentProductRegisterViewController() {
+        coordinator?.presentEditViewController()
     }
 }
 

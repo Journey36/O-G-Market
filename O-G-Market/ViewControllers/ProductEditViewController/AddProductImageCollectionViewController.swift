@@ -72,21 +72,10 @@ extension AddProductImageCollectionViewController: UICollectionViewDataSource {
 extension AddProductImageCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let picker = customPHPickerViewController()
-            present(picker, animated: true, completion: nil)
+            coordinator?.presentPHPickerViewController(sender: self)
         } else {
             coordinator?.presentImageViewerController(sender: self, images: imageList)
         }
-    }
-    
-    private func customPHPickerViewController() -> PHPickerViewController {
-        var phPickerConfiguration = PHPickerConfiguration()
-        phPickerConfiguration.selectionLimit = 5
-        
-        let imagePicker = PHPickerViewController(configuration: phPickerConfiguration)
-        imagePicker.delegate = self
-        
-        return imagePicker
     }
 }
 

@@ -254,6 +254,7 @@
 			children = (
 				DE8B1C0927A16E8600573454 /* View */,
 				DE8B1C0727A16E8600573454 /* DetailViewController.swift */,
+				DE8B1C0A27A16E8600573454 /* ProductImagePageViewController.swift */,
 				DE61EBF127AC98B100BD8A95 /* ProductDeleteAlertController.swift */,
 			);
 			path = DetailViewController;
@@ -262,7 +263,6 @@
 		DE8B1C0927A16E8600573454 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DE8B1C0A27A16E8600573454 /* ProductImagePageViewController.swift */,
 				DE8B1C0B27A16E8600573454 /* ProductPriceView.swift */,
 				DE8B1C0C27A16E8600573454 /* ProductImageCollectionViewCell.swift */,
 				DE8B1C0D27A16E8600573454 /* ProductInfoView.swift */,
