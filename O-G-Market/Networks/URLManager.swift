@@ -22,8 +22,8 @@ struct URLManager {
     // MARK: - 상품 리스트 조회
     mutating func makeURL(on page: Int) -> URL {
         var components = URLComponents(string: hostAddress)
-        let pageNumber = URLQueryItem(name: "page-no", value: "\(page)")
-        let itemsPerPage = URLQueryItem(name: "items-per-page", value: "10")
+        let pageNumber = URLQueryItem(name: "page_no", value: "\(page)")
+        let itemsPerPage = URLQueryItem(name: "items_per_page", value: "20")
         components?.queryItems = [pageNumber, itemsPerPage]
         guard let url = components?.url else {
             preconditionFailure("Fail to make URL")

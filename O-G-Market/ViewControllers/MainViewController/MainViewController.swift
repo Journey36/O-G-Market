@@ -11,6 +11,9 @@ final class MainViewController: UIViewController {
     // MARK: - Properties
     var coordinator: MainCoordinator?
     private var dataSource: UICollectionViewDiffableDataSource<Section, ListProduct>?
+    private var snapshot = NSDiffableDataSourceSnapshot<Section, ListProduct>()
+    private var currentPage: Int = 1
+    private var fetchingIndexPathRow = 18
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
@@ -29,20 +32,10 @@ final class MainViewController: UIViewController {
         view.backgroundColor = .systemBackground
         navigationItem.title = "O.G Market"
         productCollectionView.delegate = self
+        productCollectionView.prefetchDataSource = self
         configureConstraints()
-        configureDataSource()
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        Networking.default.requestGET { result in
-            switch result {
-            case .success(let data):
-                self.initializeSnapshot(with: data)
-            case .failure(let error):
-                preconditionFailure(error.localizedDescription)
-            }
-        }
+        configureDiffableDataSource()
+        fetchList()
     }
 
     // MARK: - Methods
@@ -51,30 +44,29 @@ final class MainViewController: UIViewController {
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
 
-
-    private func createListCellRegistration() -> UICollectionView.CellRegistration<ProductCell, ListProduct> {
+    private func configureProductCell() -> UICollectionView.CellRegistration<ProductCell, ListProduct> {
         return UICollectionView.CellRegistration<ProductCell, ListProduct> { cell, _, product in
             cell.setUpComponentsData(of: product)
         }
     }
 
-    private func configureDataSource() {
-        let cellRegistration = createListCellRegistration()
+    private func configureDiffableDataSource() {
+        let productCell = configureProductCell()
 
         dataSource = UICollectionViewDiffableDataSource<Section, ListProduct>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
-            return collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: id)
+            collectionView.dequeueConfiguredReusableCell(using: productCell, for: indexPath, item: id)
         }
     }
 
-    private func initializeSnapshot(with list: Pages) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, ListProduct>()
+    private func takeInitialSnapshot(with list: Pages) {
         snapshot.appendSections([.main])
-        var listItems: [ListProduct] = []
-        for index in 0..<list.itemsPerPage {
-            listItems.append(list.items[index])
-        }
-        snapshot.appendItems(listItems)
+        snapshot.appendItems(list.items)
         dataSource?.apply(snapshot, animatingDifferences: false)
+    }
+
+    private func takeOtherSnapshot(with list: Pages) {
+        snapshot.appendItems(list.items)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 
     private func configureConstraints() {
@@ -95,6 +87,21 @@ final class MainViewController: UIViewController {
     private func presentProductRegisterViewController() {
         coordinator?.presentRegistViewController()
     }
+
+    private func fetchList() {
+        Networking.default.requestGET(on: currentPage) { result in
+            switch result {
+            case .success(let data):
+                self.currentPage == 1 ? self.takeInitialSnapshot(with: data) : self.takeOtherSnapshot(with: data)
+                guard !data.hasNextPage else {
+                    self.currentPage += 1
+                    return
+                }
+            case .failure(let error):
+                preconditionFailure(error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension MainViewController: UICollectionViewDelegate {
@@ -105,5 +112,14 @@ extension MainViewController: UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
         
         coordinator?.pushDetailViewController(productId: productId)
+    }
+}
+
+extension MainViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        for indexPath in indexPaths where indexPath.row == fetchingIndexPathRow {
+            fetchList()
+            fetchingIndexPathRow += 20
+        }
     }
 }
