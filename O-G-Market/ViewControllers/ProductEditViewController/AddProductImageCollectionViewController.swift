@@ -5,15 +5,6 @@
 //  Created by odongnamu on 2022/01/03.
 //
 
-/*
- Feature
- - 이미지 추가시 레이아웃 업데이트
- - 첫 번째 버튼은 add 버튼
- - 뒤에 나열되는 이미지 탭할 경우 이미지 확대 보기
- - 이미지 삭제 버튼
- - 이미지 용량 제한
- */
-
 import UIKit
 import PhotosUI
 
@@ -22,6 +13,8 @@ protocol DeleteDelegate {
 }
 
 class AddProductImageCollectionViewController: UIViewController {
+    var coordinator: MainCoordinator?
+    
     var imageList = [UIImage]()
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout(scrollDirection: .horizontal))
     
@@ -61,7 +54,7 @@ extension AddProductImageCollectionViewController: UICollectionViewDataSource {
         
         if indexPath.row == 0 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AddImageCollectionViewCell.id, for: indexPath) as? AddImageCollectionViewCell else { return UICollectionViewCell() }
-            
+            cell.numberOfImageLabel.text = "\(imageList.count)/5"
             return cell
         }
         
@@ -79,21 +72,16 @@ extension AddProductImageCollectionViewController: UICollectionViewDataSource {
 extension AddProductImageCollectionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let picker = customPHPickerViewController()
-            present(picker, animated: true, completion: nil)
+            guard (0...4).contains(imageList.count) else {
+                coordinator?.presentBasicAlert(sender: self, message: "이미지는 최대 5개까지 등록 가능합니다.")
+                return
+            }
+            let selectableNumber = 5 - imageList.count
+
+            coordinator?.presentPHPickerViewController(sender: self, selectionLimit: selectableNumber)
+        } else {
+            coordinator?.presentImageViewerController(sender: self, images: imageList)
         }
-        
-        print("openImageViewer")
-    }
-    
-    private func customPHPickerViewController() -> PHPickerViewController {
-        var phPickerConfiguration = PHPickerConfiguration()
-        phPickerConfiguration.selectionLimit = 5
-        
-        let imagePicker = PHPickerViewController(configuration: phPickerConfiguration)
-        imagePicker.delegate = self
-        
-        return imagePicker
     }
 }
 

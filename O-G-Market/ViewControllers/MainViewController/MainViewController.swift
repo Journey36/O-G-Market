@@ -20,7 +20,11 @@ final class MainViewController: UIViewController {
         let productCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureCollectionViewLayout())
         return productCollectionView
     }()
-    private lazy var productRegisterButton: UIButton = ProductRegisterButton(coordinator: coordinator)
+    private lazy var productRegisterButton: UIButton = {
+        let button = ProductRegisterButton(frame: CGRect.zero)
+        button.addTarget(self, action: #selector(presentProductRegisterViewController), for: .touchUpInside)
+        return button
+    }()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -42,11 +46,7 @@ final class MainViewController: UIViewController {
 
     private func configureProductCell() -> UICollectionView.CellRegistration<ProductCell, ListProduct> {
         return UICollectionView.CellRegistration<ProductCell, ListProduct> { cell, _, product in
-            self.fetchImage(from: product.thumbnail, for: cell)
-            cell.productNameLabel.text = product.name
-            cell.productDiscountedPriceLabel.text = product.discountedPrice.description
-            cell.productPriceLabel.text = product.price.description
-            cell.productStockLabel.text = product.stock.description
+            cell.setUpComponentsData(of: product)
         }
     }
 
@@ -82,23 +82,10 @@ final class MainViewController: UIViewController {
             make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
         }
     }
-}
-
-// MARK: - Extensions
-extension MainViewController {
-    private func fetchImage(from imageURLString: String, for cell: ProductCell) {
-        let imageLoadQueue = DispatchQueue(label: "com.joruney36.o-g-market")
-        imageLoadQueue.async {
-            guard let imageURL = URL(string: imageURLString),
-                  let imageData = try? Data(contentsOf: imageURL),
-                  let image = UIImage(data: imageData) else {
-                      return
-                  }
-
-            DispatchQueue.main.async {
-                cell.productImageView.image = image
-            }
-        }
+    
+    @objc
+    private func presentProductRegisterViewController() {
+        coordinator?.presentRegistViewController()
     }
 
     private func fetchList() {
@@ -119,8 +106,12 @@ extension MainViewController {
 
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let productId = (productCollectionView.cellForItem(at: indexPath) as? ProductCell)?.productId else {
+            return
+        }
         collectionView.deselectItem(at: indexPath, animated: true)
-        coordinator?.pushDetailViewController()
+        
+        coordinator?.pushDetailViewController(productId: productId)
     }
 }
 
