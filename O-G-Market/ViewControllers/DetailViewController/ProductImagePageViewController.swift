@@ -11,25 +11,25 @@ class ProductImagePageViewController: UIViewController {
     var coordinator: MainCoordinator?
     var images: [UIImage] = []
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout(scrollDirection: .horizontal))
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         addSubviews()
         configureLayout()
         configureCollectionView()
     }
-    
+
     private func addSubviews() {
         view.addSubview(collectionView)
     }
-    
+
     private func configureLayout() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
     }
-    
+
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -37,29 +37,29 @@ class ProductImagePageViewController: UIViewController {
         layout.minimumInteritemSpacing = 0
         return layout
     }
-    
+
     private func configureCollectionView() {
         collectionView.register(ProductImageCollectionViewCell.self, forCellWithReuseIdentifier: ProductImageCollectionViewCell.id)
-        
+
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.collectionViewLayout = createLayout()
     }
-    
+
     func setUpComponentsData(product: ProductDetails) {
         product.images.forEach { image in
             guard let url = URL(string: image.url) else { return }
-            Networking.default.getProductImages(url: url) { result in
+            Networking.default.getProductImages(from: url) { result in
                 switch result {
                 case .success(let image):
                     self.images.append(image)
-                    
+
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
                     }
-                case .failure(let error):
+                case .failure:
                     return
                 }
             }
@@ -71,7 +71,7 @@ extension ProductImagePageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductImageCollectionViewCell.id, for: indexPath) as? ProductImageCollectionViewCell else { return UICollectionViewCell() }
         cell.backgroundColor = .systemGray5
@@ -82,7 +82,7 @@ extension ProductImagePageViewController: UICollectionViewDataSource {
 
 extension ProductImagePageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: 화면 전환 후 현재 이미지 먼저 보여주기
+            // TODO: 화면 전환 후 현재 이미지 먼저 보여주기
         coordinator?.presentImageViewerController(sender: self, images: images)
     }
 }

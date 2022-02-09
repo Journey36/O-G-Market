@@ -82,9 +82,8 @@ final class MainViewController: UIViewController {
             make.trailing.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
         }
     }
-    
-    @objc
-    private func presentProductRegisterViewController() {
+
+    @objc private func presentProductRegisterViewController() {
         coordinator?.presentRegistViewController()
     }
 
@@ -110,7 +109,7 @@ extension MainViewController: UICollectionViewDelegate {
             return
         }
         collectionView.deselectItem(at: indexPath, animated: true)
-        
+
         coordinator?.pushDetailViewController(productId: productId)
     }
 }

@@ -8,12 +8,12 @@ import UIKit
 import SnapKit
 import SwiftUI
 
-fileprivate let zeroSize = CGRect.zero
+private let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
     var coordinator: MainCoordinator?
     var product: ProductDetails?
-    
+
     let scrollView = UIScrollView()
     let productImagePageViewController = ProductImagePageViewController()
     let productPriceView = ProductPriceView(frame: zeroSize)
@@ -22,7 +22,7 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .white
 
         addSubviews()
@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(scrollView)
         view.addSubview(productPriceView)
-        
+
         scrollView.addSubview(productImagePageViewController.view)
         scrollView.addSubview(productInfoView)
     }
@@ -59,7 +59,7 @@ class DetailViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview()
         }
-        
+
         scrollView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
@@ -67,10 +67,10 @@ class DetailViewController: UIViewController {
             make.bottom.equalTo(productPriceView.snp.top)
         }
     }
-    
+
     func setUpComponentsData(product: ProductDetails) {
         self.product = product
-        
+
         productInfoView.setUpComponentsData(product: product)
         productPriceView.setUpComponentsData(product: product)
         productImagePageViewController.setUpComponentsData(product: product)
@@ -82,16 +82,16 @@ extension DetailViewController {
     private func configureNavigationBar() {
         let shareButton = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(showActivityView))
         let editButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action: #selector(showEditActionSheet))
-        
+
         navigationItem.rightBarButtonItems = [editButton, shareButton]
         navigationItem.title = "상품 상세"
         navigationController?.navigationBar.backgroundColor = .white
     }
-    
+
     @objc private func showActivityView() {
         coordinator?.presentActivityViewController(sender: self)
     }
-    
+
     @objc private func showEditActionSheet() {
         coordinator?.presentEditActionSheet(product: product, images: productImagePageViewController.images)
     }

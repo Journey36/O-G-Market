@@ -72,10 +72,9 @@ final class Networking {
 
         task.resume()
     }
-    
-    func getProductImages(url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) {
-        let task = URLSession.shared.dataTask(with: url) {
-            data, response, error in
+
+    func getProductImages(from url: URL, then completion: @escaping (Result<UIImage, Error>) -> Void) {
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
                 return
             }
@@ -83,19 +82,19 @@ final class Networking {
             guard let response = response as? HTTPURLResponse, (200...399).contains(response.statusCode) else {
                 return
             }
-            
+
             guard let data = data else {
                 return
             }
-            
+
             guard let image = UIImage(data: data) else { return }
             completion(.success(image))
         }
-        
+
         task.resume()
     }
 
-    // MARK: - POST
+        // MARK: - POST
     func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
         let url = manager.makeURL()
 
@@ -196,7 +195,7 @@ final class Networking {
         task.resume()
     }
 
-    // MARK: - PATCH
+        // MARK: - PATCH
     func requestPATCH(with productID: Int, params: ProductUpdate, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
         let url = manager.makeURL(referTo: productID)
 
@@ -238,7 +237,7 @@ final class Networking {
         task.resume()
     }
 
-    // MARK: - DELETE
+        // MARK: - DELETE
     func requestDELETE(at productID: Int, coincideWith productSecret: String, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
         let url = manager.makeURL(delete: productID, coincideWith: productSecret)
 
