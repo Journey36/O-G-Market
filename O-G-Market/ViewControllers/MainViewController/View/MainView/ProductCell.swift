@@ -125,7 +125,7 @@ extension ProductCell {
             }
         }
     }
-    
+
     func setUpComponentsData(of product: ListProduct) {
         self.fetchImage(from: product.thumbnail)
         self.productNameLabel.text = product.name

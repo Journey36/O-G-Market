@@ -12,14 +12,14 @@ class ProductRegisterButton: UIButton {
         super.init(frame: frame)
         configureButton()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func configureButton() {
         let buttonImage = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 35, weight: .bold))
-    
+
         self.setImage(buttonImage, for: .normal)
         self.backgroundColor = .systemBlue
         self.tintColor = .white
