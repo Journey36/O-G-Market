@@ -14,7 +14,7 @@ class ImageViewerController: UIViewController {
     var images: [UIImage]?
     let imageView = UIImageView()
 
-    let xButton: UIButton = {
+    lazy var xButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = .lightGray

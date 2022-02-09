@@ -13,7 +13,7 @@ class AddedImageCollectionViewCell: UICollectionViewCell {
     static let id = "AddedImageCollectionViewCell"
     let imageView = UIImageView()
     let deleteButton = UIButton()
-    var deleteDelegate: DeleteDelegate?
+    weak var deleteDelegate: DeleteDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
