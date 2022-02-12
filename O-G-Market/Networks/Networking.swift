@@ -95,23 +95,21 @@ final class Networking {
     }
 
         // MARK: - POST
-    func requestPOST(with parameter: Product, images: [UIImage], then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
+    func requestPOST(with parameter: ProductCreation, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
         let url = manager.makeURL()
 
         let encoder = JSONEncoder()
-        guard let encodedData = try? encoder.encode(parameter) else {
+        guard let encodedData = try? encoder.encode(parameter.product) else {
             return
         }
 
-        let imageDatum = images.compactMap { $0.pngData() }
-
         let boundary = UUID().uuidString.hashValue
         var body = Data()
-        for index in 0..<imageDatum.count {
+        for index in 0..<parameter.images.count {
             body.append("--\(boundary)\r\n")
-            body.append("Content-Disposition: form-data; name=\"images\"; filename=\"img\(index).png\"\r\n")
-            body.append("Content-Type: image/png\r\n\r\n")
-            body.append(imageDatum[index])
+            body.append("Content-Disposition: form-data; name=\"images\"; filename=\"img\(index).jpeg\"\r\n")
+            body.append("Content-Type: image/jpeg\r\n\r\n")
+            body.append(parameter.images[index])
             body.append("\r\n")
         }
 

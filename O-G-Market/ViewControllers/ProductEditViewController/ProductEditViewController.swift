@@ -39,7 +39,7 @@ final class ProductEditViewController: UIViewController {
         button.backgroundColor = UIColor(hex: "#736047")
         button.titleLabel?.font = .preferredFont(forTextStyle: .title3)
         button.layer.cornerRadius = 10
-        button.addTarget(self, action: #selector(postProduct), for: .touchUpInside)
+        button.addTarget(self, action: #selector(enrollProduct), for: .touchUpInside)
 
         return button
     }()
@@ -99,13 +99,53 @@ final class ProductEditViewController: UIViewController {
         coordinator?.dismissModal(sender: self)
     }
 
-    @objc func postProduct() {
+    @objc func enrollProduct() {
         isAllComponentsFull()
-            // TODO: Post, Patch 하기
+
+        guard let product = package() else { return }
+        Networking.default.requestPOST(with: product) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    self.coordinator?.dismissModal(sender: self)
+                    // TODO: MainViewController reload at completion handler
+                }
+            case .failure(let error):
+                dump(error.localizedDescription)
+            }
+        }
+    }
+
+    private func package() -> ProductCreation? {
+        guard let name = productNameTextField.text else {
+            return nil
+        }
+
+        guard let priceText = productPriceTextField.text, let price = Double(priceText) else {
+            return nil
+        }
+
+        let currency = currencySegmentControl.selectedSegmentIndex == 0 ? Currency.KRW : Currency.USD
+        guard let text = productDiscountedPriceTextField.text, let discountedPrice = Double(text) else {
+            return nil
+        }
+
+        guard let stockText = productStockTextField.text, let stock = Int(stockText) else {
+            return nil
+        }
+
+        guard let description = productDescriptionTextView.text else {
+            return nil
+        }
+
+        let product = Product(name: name, descriptions: description, price: price, currency: currency, discountedPrice: discountedPrice, stock: stock, secret: Bundle.main.password)
+        let images = addProductImageCollectionViewController.imageList.compactMap { $0.jpegData(compressionQuality: 0.1) }
+
+        return ProductCreation(product: product, images: images)
     }
 
     private func isAllComponentsFull() {
-        guard addProductImageCollectionViewController.imageList.isEmpty else {
+        guard !addProductImageCollectionViewController.imageList.isEmpty else {
             coordinator?.presentBasicAlert(sender: self, message: "이미지는 1장 이상 등록해야 합니다.")
             return
         }
