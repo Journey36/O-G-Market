@@ -9,7 +9,7 @@ import Foundation
 
 struct ProductCreation: Encodable {
     let product: Product
-    let images: Data
+    let images: [Data]
 
     enum CodingKeys: String, CodingKey {
         case images
