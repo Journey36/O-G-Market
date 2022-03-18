@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Then
 
 final class ProductEditViewController: UIViewController {
     enum ViewType {
@@ -14,24 +15,27 @@ final class ProductEditViewController: UIViewController {
 
         var title: String {
             switch self {
-            case .regist:
-                return "상품 등록"
-            case .edit:
-                return "상품 수정"
+            case .regist: return "상품 등록"
+            case .edit: return "상품 수정"
             }
         }
     }
 
     var coordinator: MainCoordinator?
     private var product: ProductDetails?
-
+    private var productID: Int?
+    private var capturedValue: [String: Any] = [:]
     private var type: ViewType
+
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
-    private let productNameTextField = UITextField(placeholder: "상품명을 입력해주세요.")
+    private let productNameTextField = UITextField()
     private let productPriceTextField = UITextField(placeholder: "상품 가격을 입력해주세요.")
     private let productDiscountedPriceTextField = UITextField(placeholder: "할인 가격을 입력해주세요.")
     private let productStockTextField = UITextField(placeholder: "상품 갯수를 입력해주세요.")
-    private let currencySegmentControl = UISegmentedControl(items: ["KRW", "USD"])
+    private let currencySegmentControl: UISegmentedControl = {
+        let currencySegmentControl = UISegmentedControl(items: ["KRW", "USD"])
+        return currencySegmentControl
+    }()
     private let priceStackView = UIStackView(axis: .horizontal, alignment: .center, spacing: 10)
     private let contentsStackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 10, distribution: .fill)
     private lazy var registerButton: UIButton = {
@@ -72,6 +76,7 @@ final class ProductEditViewController: UIViewController {
         addSubviews()
         configureNavigationBar()
         configureLayout()
+        captureValue()
     }
 
     private func addSubviews() {
@@ -100,22 +105,72 @@ final class ProductEditViewController: UIViewController {
     }
 
     @objc func enrollProduct() {
-        isAllComponentsFull()
-
-        guard let product = package() else { return }
-        Networking.default.requestPOST(with: product) { result in
-            switch result {
-            case .success:
-                DispatchQueue.main.async {
-                    self.coordinator?.dismissModal(sender: self)
-                    // TODO: MainViewController reload at completion handler
+        guard isAllComponentsFull() else { return }
+        switch type {
+        case .regist:
+            guard let product = package() else { return }
+            Networking.default.requestPOST(with: product) { result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self.coordinator?.dismissModal(sender: self)
+                        // TODO: MainViewController reload at completion handler
+                    }
+                case .failure(let error):
+                    dump(error.localizedDescription)
                 }
-            case .failure(let error):
-                dump(error.localizedDescription)
+            }
+        case .edit:
+            guard let parameters = revise(), let productID = self.productID else { return }
+            Networking.default.requestPATCH(with: productID, params: parameters) { result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self.coordinator?.dismissModal(sender: self)
+                        // TODO: MainViewController reload at completion handler
+                    }
+                case .failure(let error):
+                    dump(error.localizedDescription)
+                }
             }
         }
     }
 
+    // MARK: - 수정
+    private func revise() -> ProductUpdate? {
+        guard let name = productNameTextField.text else { return nil }
+        guard let description = productDescriptionTextView.text else { return nil }
+        guard let priceText = productPriceTextField.text, let price = Double(priceText) else { return nil }
+        let currency = currencySegmentControl.selectedSegmentIndex == 0 ? Currency.KRW : Currency.USD
+        guard let discountedPriceText = productDiscountedPriceTextField.text, let discountedPrice = Double(discountedPriceText) else { return nil }
+        guard let stockText = productStockTextField.text, let stock = Int(stockText) else { return nil }
+
+        return ProductUpdate(name: name == capturedValue["productNameTextField"] as? String ? nil : name,
+                             descriptions: description == capturedValue["productDescriptionTextView"] as? String ? nil : description,
+                             thumbnailID: nil,
+                             price: price == capturedValue["productPriceTextField"] as? Double ? nil : price,
+                             currency: currency == capturedValue["currencySegmentControl"] as? Currency ? nil : currency,
+                             discountedPrice: discountedPrice == capturedValue["productDiscountedPriceTextField"] as? Double ? nil : discountedPrice,
+                             stock: stock == capturedValue["productStockTextField"] as? Int ? nil : stock,
+                             secret: Bundle.main.password)
+    }
+
+    private func captureValue() {
+        guard let name = productNameTextField.text else { return }
+        guard let description = productDescriptionTextView.text else { return }
+        guard let priceText = productPriceTextField.text, let price = Double(priceText) else { return }
+        guard let discountedPriceText = productDiscountedPriceTextField.text, let discountedPrice = Double(discountedPriceText) else { return }
+        guard let stockText = productStockTextField.text, let stock = Int(stockText) else { return }
+
+        capturedValue["productNameTextField"] = name
+        capturedValue["productDescriptionTextView"] = description
+        capturedValue["productPriceTextField"] = price
+        capturedValue["currencySegmentControl"] = currencySegmentControl.selectedSegmentIndex == 0 ? Currency.KRW : Currency.USD
+        capturedValue["productDiscountedPriceTextField"] = discountedPrice
+        capturedValue["productStockTextField"] = stock
+    }
+
+    // MARK: - 생성
     private func package() -> ProductCreation? {
         guard let name = productNameTextField.text else {
             return nil
@@ -144,24 +199,31 @@ final class ProductEditViewController: UIViewController {
         return ProductCreation(product: product, images: images)
     }
 
-    private func isAllComponentsFull() {
+    private func isAllComponentsFull() -> Bool {
         guard !addProductImageCollectionViewController.imageList.isEmpty else {
             coordinator?.presentBasicAlert(sender: self, message: "이미지는 1장 이상 등록해야 합니다.")
-            return
+            return false
         }
 
         guard (10...1000).contains(productDescriptionTextView.text.count) else {
             coordinator?.presentBasicAlert(sender: self, message: "상품 설명은 10자 이상, 1000자 이하로 작성해야 합니다.")
-            return
+            return false
+        }
+
+        guard currencySegmentControl.selectedSegmentIndex >= 0 && currencySegmentControl.selectedSegmentIndex <= currencySegmentControl.numberOfSegments else {
+            coordinator?.presentBasicAlert(sender: self, message: "통화를 선택해주세요.")
+            return false
         }
 
         guard !(productNameTextField.text?.isEmpty ?? false),
               !(productPriceTextField.text?.isEmpty ?? false),
               !(productStockTextField.text?.isEmpty ?? false),
               !(productDiscountedPriceTextField.text?.isEmpty ?? false) else {
-                  coordinator?.presentBasicAlert(sender: self, message: "모든 항목을 입력해주세요.")
-                  return
+                  coordinator?.presentBasicAlert(sender: self, message: "모든 필드를 채워주세요.")
+                  return false
               }
+
+        return true
     }
 
     private func configureLayout() {
@@ -219,6 +281,7 @@ extension ProductEditViewController {
     func setUpComponentsData(product: ProductDetails?, images: [UIImage]) {
         guard type == .edit, let product = product else { return }
 
+        productID = product.id
         productNameTextField.text = product.name
         productPriceTextField.text = String(product.price)
         productDiscountedPriceTextField.text = String(product.bargainPrice)

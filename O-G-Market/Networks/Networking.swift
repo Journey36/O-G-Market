@@ -215,7 +215,6 @@ final class Networking {
             }
 
             guard let response = response as? HTTPURLResponse, (200...399).contains(response.statusCode) else {
-                print("Response error!")
                 return
             }
 
