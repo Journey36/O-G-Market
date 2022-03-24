@@ -151,24 +151,22 @@ final class Networking {
         task.resume()
     }
 
-    func requestPOST(with productID: Int, then completion: @escaping (Result<String, Error>) -> Void) {
+    func requestPOST(with productID: Int, userSecret: String, then completion: @escaping (Result<String, Error>) -> Void) {
         let url = manager.makeURL(secretOf: productID)
 
-        let vendor = Vendor()
+        let vendor = Vendor(secret: userSecret)
 
         let encoder = JSONEncoder()
-        guard let secretKey = try? encoder.encode(vendor) else {
+        guard let userSecretKey = try? encoder.encode(vendor) else {
             return
         }
 
-        guard var request = try? URLRequest(url: url, method: .post) else {
-            return
-        }
+        var request = URLRequest(url: url)
 
+        request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: "identifier")
-        request.httpBody = secretKey
-
+        request.setValue(Bundle.main.identifier, forHTTPHeaderField: "identifier")
+        request.httpBody = userSecretKey
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard error == nil else {

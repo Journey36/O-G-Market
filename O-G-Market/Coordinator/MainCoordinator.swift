@@ -11,6 +11,7 @@ import PhotosUI
 final class MainCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
+    private var productID: Int?
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -22,17 +23,19 @@ final class MainCoordinator: Coordinator {
         navigationController.pushViewController(initialViewController, animated: true)
     }
 
-    func pushDetailViewController(productId: Int) {
+    func pushDetailViewController(productID: Int) {
         let viewController = DetailViewController()
         viewController.coordinator = self
         viewController.productImagePageViewController.coordinator = self
 
-        Networking.default.requestGET(with: productId) { result in
+        Networking.default.requestGET(with: productID) { result in
             switch result {
             case .success(let product):
                 DispatchQueue.main.async {
                     viewController.setUpComponentsData(product: product)
                 }
+
+                self.productID = product.id
             case .failure:
                 self.dismissModal(sender: viewController)
                 return
@@ -87,8 +90,11 @@ final class MainCoordinator: Coordinator {
     }
 
     func presentDeleteAlert() {
-        let sample = ProductDeletion(productID: 19, productSecret: "19")
-        let alert = ProductDeleteAlertController(productDeletionInfo: sample)
+        guard let productID = self.productID else {
+            return
+        }
+
+        let alert = ProductDeleteAlertController(productID: productID)
         self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
     }
 

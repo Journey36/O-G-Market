@@ -9,7 +9,7 @@ import UIKit
 
 class ProductCell: UICollectionViewListCell {
 	static let identifier = String(describing: ProductCell.self)
-    var productId: Int?
+    var productID: Int?
 	let productImageView: UIImageView = {
 		let productImageView = UIImageView()
 		productImageView.contentMode = .scaleAspectFit
@@ -132,6 +132,6 @@ extension ProductCell {
         self.productDiscountedPriceLabel.text = product.discountedPrice.description
         self.productPriceLabel.text = product.price.description
         self.productStockLabel.text = product.stock.description
-        self.productId = product.id
+        self.productID = product.id
     }
 }
