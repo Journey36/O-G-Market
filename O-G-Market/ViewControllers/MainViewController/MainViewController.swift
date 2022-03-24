@@ -105,12 +105,12 @@ final class MainViewController: UIViewController {
 
 extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let productId = (productCollectionView.cellForItem(at: indexPath) as? ProductCell)?.productId else {
+        guard let productID = (productCollectionView.cellForItem(at: indexPath) as? ProductCell)?.productID else {
             return
         }
         collectionView.deselectItem(at: indexPath, animated: true)
 
-        coordinator?.pushDetailViewController(productId: productId)
+        coordinator?.pushDetailViewController(productID: productID)
     }
 }
 
