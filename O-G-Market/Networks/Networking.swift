@@ -17,7 +17,7 @@ final class Networking {
 
     // MARK: - GET
     func requestGET(with productID: Int, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
-        let url = manager.makeURL(referTo: productID)
+        let url = manager.generateURL(toInquireAndModify: productID)
 
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
@@ -46,7 +46,7 @@ final class Networking {
     }
 
     func requestGET(on page: Int = 1, then completion: @escaping (Result<Pages, Error>) -> Void) {
-        let url = manager.makeURL(on: page)
+        let url = manager.generateURL(toInquire: page)
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard error == nil else {
                 return
@@ -96,7 +96,7 @@ final class Networking {
 
         // MARK: - POST
     func requestPOST(with parameter: ProductCreation, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
-        let url = manager.makeURL()
+        let url = manager.generateURL()
 
         let encoder = JSONEncoder()
         guard let encodedData = try? encoder.encode(parameter.product) else {
@@ -152,7 +152,7 @@ final class Networking {
     }
 
     func requestPOST(with productID: Int, userSecret: String, then completion: @escaping (Result<String, Error>) -> Void) {
-        let url = manager.makeURL(secretOf: productID)
+        let url = manager.generateURL(toInquireSecretOf: productID)
 
         let vendor = Vendor(secret: userSecret)
 
@@ -193,7 +193,7 @@ final class Networking {
 
         // MARK: - PATCH
     func requestPATCH(with productID: Int, params: ProductUpdate, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
-        let url = manager.makeURL(referTo: productID)
+        let url = manager.generateURL(toInquireAndModify: productID)
 
         let encoder = JSONEncoder()
         guard let encodedData = try? encoder.encode(params) else {
@@ -234,7 +234,7 @@ final class Networking {
 
         // MARK: - DELETE
     func requestDELETE(at productID: Int, coincideWith productSecret: String, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
-        let url = manager.makeURL(delete: productID, coincideWith: productSecret)
+        let url = manager.generateURL(toDelete: productID, coincidingWith: productSecret)
 
         var request = URLRequest(url: url)
         request.httpMethod = "DELETE"
