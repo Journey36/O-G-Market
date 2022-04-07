@@ -88,7 +88,7 @@ final class MainViewController: UIViewController {
     }
 
     private func fetchList() {
-        Networking.default.requestGET(on: currentPage) { result in
+        Network.shared.requestGET(on: currentPage) { result in
             switch result {
             case .success(let data):
                 self.currentPage == 1 ? self.takeInitialSnapshot(with: data) : self.takeOtherSnapshot(with: data)

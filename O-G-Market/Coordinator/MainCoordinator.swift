@@ -28,7 +28,7 @@ final class MainCoordinator: Coordinator {
         viewController.coordinator = self
         viewController.productImagePageViewController.coordinator = self
 
-        Networking.default.requestGET(with: productID) { result in
+        Network.shared.requestGET(with: productID) { result in
             switch result {
             case .success(let product):
                 DispatchQueue.main.async {

@@ -51,7 +51,7 @@ class ProductImagePageViewController: UIViewController {
     func setUpComponentsData(product: ProductDetails) {
         product.images.forEach { image in
             guard let url = URL(string: image.url) else { return }
-            Networking.default.getProductImages(from: url) { result in
+            Network.shared.getProductImages(from: url) { result in
                 switch result {
                 case .success(let image):
                     self.images.append(image)

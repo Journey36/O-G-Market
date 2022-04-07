@@ -109,7 +109,7 @@ final class ProductEditViewController: UIViewController {
         switch type {
         case .regist:
             guard let product = package() else { return }
-            Networking.default.requestPOST(with: product) { result in
+            Network.shared.requestPOST(with: product) { result in
                 switch result {
                 case .success:
                     DispatchQueue.main.async {
@@ -122,7 +122,7 @@ final class ProductEditViewController: UIViewController {
             }
         case .edit:
             guard let parameters = revise(), let productID = self.productID else { return }
-            Networking.default.requestPATCH(with: productID, params: parameters) { result in
+            Network.shared.requestPATCH(with: productID, params: parameters) { result in
                 switch result {
                 case .success:
                     DispatchQueue.main.async {

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D1EC7AF279C5D4A00A23D1E /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */; };
-		3D2965D62790C29E00B90A51 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965D52790C29E00B90A51 /* Networking.swift */; };
+		3D2965D62790C29E00B90A51 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965D52790C29E00B90A51 /* Network.swift */; };
 		3D31E94C279ED944009D7E8A /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D31E94B279ED944009D7E8A /* Bundle+.swift */; };
 		3D32C3C42785AD79008B7B5B /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32C3C22785AD79008B7B5B /* ProductCell.swift */; };
 		3D52FF46278BDFFE007E9F3C /* Pages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D52FF45278BDFFE007E9F3C /* Pages.swift */; };
@@ -54,7 +54,7 @@
 
 /* Begin PBXFileReference section */
 		3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
-		3D2965D52790C29E00B90A51 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		3D2965D52790C29E00B90A51 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		3D31E94A279ED32D009D7E8A /* UserKeys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UserKeys.xcconfig; sourceTree = "<group>"; };
 		3D31E94B279ED944009D7E8A /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		3D32C3C22785AD79008B7B5B /* ProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCell.swift; path = MainView/ProductCell.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				3D52FF4A278C1258007E9F3C /* URLManager.swift */,
-				3D2965D52790C29E00B90A51 /* Networking.swift */,
+				3D2965D52790C29E00B90A51 /* Network.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -406,7 +406,7 @@
 				DE9A7FF3279BBD3D00C8362D /* AddImageCollectionViewCell.swift in Sources */,
 				3D32C3C42785AD79008B7B5B /* ProductCell.swift in Sources */,
 				3D52FF48278BE20B007E9F3C /* ProductListRead.swift in Sources */,
-				3D2965D62790C29E00B90A51 /* Networking.swift in Sources */,
+				3D2965D62790C29E00B90A51 /* Network.swift in Sources */,
 				DE61EBED27AA397700BD8A95 /* ImageViewerController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
 				3D1EC7AF279C5D4A00A23D1E /* Vendor.swift in Sources */,

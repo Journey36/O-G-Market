@@ -50,7 +50,7 @@ extension ProductDeleteAlertController {
         guard let productID = productID else { return }
         guard let userSecretKeyTextField = textFields?.first, let userSecretKey = userSecretKeyTextField.text else { return }
 
-        Networking.default.requestPOST(with: productID, userSecret: userSecretKey) { result in
+        Network.shared.requestPOST(with: productID, userSecret: userSecretKey) { result in
             switch result {
             case .success(let productSecretKey):
                 self.deleteProduct(productSecretKey: productSecretKey)
@@ -65,7 +65,7 @@ extension ProductDeleteAlertController {
         guard let productID = productID else { return }
         let productDeletion = ProductDeletion(productID: productID, productSecret: productSecretKey)
 
-        Networking.default.requestDELETE(at: productID, coincideWith: productSecretKey) { result in
+        Network.shared.requestDELETE(at: productID, coincideWith: productSecretKey) { result in
             switch result {
             case .success(let response):
                 dump(response)
