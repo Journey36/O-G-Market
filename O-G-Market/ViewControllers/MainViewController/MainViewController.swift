@@ -12,8 +12,9 @@ final class MainViewController: UIViewController {
     var coordinator: MainCoordinator?
     private var dataSource: UICollectionViewDiffableDataSource<Section, ListProduct>?
     private var snapshot = NSDiffableDataSourceSnapshot<Section, ListProduct>()
-    private var currentPage: Int = 1
+    private var startPage: Int = 1
     private var fetchingIndexPathRow = 18
+    private let communicator = Network()
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
@@ -88,16 +89,12 @@ final class MainViewController: UIViewController {
     }
 
     private func fetchList() {
-        Network.shared.requestGET(on: currentPage) { result in
-            switch result {
-            case .success(let data):
-                self.currentPage == 1 ? self.takeInitialSnapshot(with: data) : self.takeOtherSnapshot(with: data)
-                guard !data.hasNextPage else {
-                    self.currentPage += 1
-                    return
-                }
-            case .failure(let error):
-                preconditionFailure(error.localizedDescription)
+        Task {
+            guard let page = try? await communicator.fetchPages(from: startPage) else { throw Network.NetworkError.badRequest }
+            startPage == 1 ? takeInitialSnapshot(with: page) : takeOtherSnapshot(with: page)
+            guard !page.hasNextPage else {
+                startPage += 1
+                return
             }
         }
     }

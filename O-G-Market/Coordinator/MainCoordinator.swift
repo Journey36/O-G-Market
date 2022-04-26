@@ -11,7 +11,7 @@ import PhotosUI
 final class MainCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
-    private var productID: Int?
+    private let communicator = Network()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -28,19 +28,15 @@ final class MainCoordinator: Coordinator {
         viewController.coordinator = self
         viewController.productImagePageViewController.coordinator = self
 
-        Network.shared.requestGET(with: productID) { result in
-            switch result {
-            case .success(let product):
-                DispatchQueue.main.async {
-                    viewController.setUpComponentsData(product: product)
-                }
-
-                self.productID = product.id
-            case .failure:
+        Task {
+            guard let productDetails = try? await communicator.fetchDetails(of: productID) else {
                 self.dismissModal(sender: viewController)
-                return
+                throw Network.NetworkError.badRequest
             }
+
+            await viewController.setUpComponentsData(product: productDetails)
         }
+
         navigationController.pushViewController(viewController, animated: true)
     }
 
@@ -72,13 +68,13 @@ final class MainCoordinator: Coordinator {
         sender.present(viewController, animated: true, completion: nil)
     }
 
-    func presentEditActionSheet(product: ProductDetails?, images: [UIImage]) {
+    func presentEditActionSheet(product: ProductDetails, images: [UIImage]) {
         let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정하기", style: .default) { _ in
             self.presentEditViewController(product: product, images: images)
         }
         let deleteAction = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
-            self.presentDeleteAlert()
+            self.presentDeleteAlert(product.id)
         }
         let cancelAction = UIAlertAction(title: "취소하기", style: .cancel, handler: nil)
 
@@ -89,11 +85,7 @@ final class MainCoordinator: Coordinator {
         navigationController.topViewController?.present(actionSheet, animated: true, completion: nil)
     }
 
-    func presentDeleteAlert() {
-        guard let productID = self.productID else {
-            return
-        }
-
+    func presentDeleteAlert(_ productID: Int) {
         let alert = ProductDeleteAlertController(productID: productID)
         self.navigationController.topViewController?.present(alert, animated: true, completion: nil)
     }

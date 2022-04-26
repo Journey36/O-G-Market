@@ -8,13 +8,7 @@
 import UIKit
 
 final class Network {
-    typealias DataTaskCompletion = (Data?, URLResponse?, Error?) -> Void
-
-    static var shared = Network()
-
     private var manager = URLManager()
-
-    private init() {  }
 
     private enum HTTPRequestMethods: CustomStringConvertible {
         case get
@@ -41,104 +35,71 @@ final class Network {
         static let contentType = "Content-Type"
     }
 
+    // FIXME: 임시 에러 코드
+    enum NetworkError: Error {
+        case badRequest
+    }
+
     // MARK: - GET
-    func requestGET(with productID: Int, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
-        let url = manager.generateURL(toInquireAndModify: productID)
+    func fetchDetails(of productID: Int) async throws -> ProductDetails {
+        let url = manager.generateURL(toInquireOrUpdate: productID)
 
-        let taskCompletion: DataTaskCompletion = { data, response, error in
-            if error != nil, let response = response as? HTTPURLResponse {
-                guard (200...399).contains(response.statusCode) else {
-                    dump(response.statusCode)
-                    return
-                }
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let productDetails = try JSONDecoder().decode(ProductDetails.self, from: data)
-                completion(.success(productDetails))
-            } catch {
-                completion(.failure(error))
-            }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        if let response = response as? HTTPURLResponse {
+            guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        URLSession.shared.dataTask(with: url, completionHandler: taskCompletion).resume()
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(ProductDetails.self, from: data)
+        } catch { throw error }
     }
 
-    func requestGET(on page: Int, then completion: @escaping (Result<Pages, Error>) -> Void) {
-        let url = manager.generateURL(toInquire: page)
+    func fetchPages(from startPage: Int) async throws -> Pages {
+        let url = manager.generateURL(toInquireFrom: startPage)
 
-        let taskCompletion: DataTaskCompletion = { data, response, error in
-            if error != nil, let response = response as? HTTPURLResponse {
-                guard (200...399).contains(response.statusCode) else {
-                    dump(response.statusCode)
-                    return
-                }
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let pages = try JSONDecoder().decode(Pages.self, from: data)
-                completion(.success(pages))
-            } catch {
-                completion(.failure(error))
-            }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        if let response = response as? HTTPURLResponse {
+            guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        URLSession.shared.dataTask(with: url, completionHandler: taskCompletion).resume()
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(Pages.self, from: data)
+        } catch { throw error }
     }
 
-    func getProductImages(from url: URL, then completion: @escaping (Result<UIImage, Error>) -> Void) {
-        let taskCompletion: DataTaskCompletion = { data, response, error in
-            if error != nil, let response = response as? HTTPURLResponse {
-                guard (200...399).contains(response.statusCode) else {
-                    dump(response.statusCode)
-                    return
-                }
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            if let image = UIImage(data: data) {
-                completion(.success(image))
-            } else {
-                // FIXME: Error - Image Converting Error
-                completion(.failure(error!))
-            }
+    func fetchProductImages(from url: URL) async throws -> UIImage {
+        let (data, response) = try await URLSession.shared.data(from: url)
+        if let response = response as? HTTPURLResponse {
+            guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        URLSession.shared.dataTask(with: url, completionHandler: taskCompletion).resume()
+        if let image = UIImage(data: data) {
+            return image
+        } else { throw NetworkError.badRequest }
     }
 
     // MARK: - POST
-    func requestPOST(with parameter: ProductCreation, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
+    func registerProduct(with info: ProductCreation) async throws -> ProductDetails {
         let url = manager.generateURL()
 
-        guard let encodedData = try? JSONEncoder().encode(parameter.product) else {
-            return
-        }
+        let encoder = JSONEncoder()
+        guard let product = try? encoder.encode(info.product) else { throw NetworkError.badRequest }
 
         let boundary = UUID().uuidString.hashValue
         var body = Data()
-        for index in 0..<parameter.images.count {
+        for index in 0..<info.images.count {
             body.append("--\(boundary)\r\n")
             body.append("Content-Disposition: form-data; name=\"images\"; filename=\"img\(index).jpeg\"\r\n")
             body.append("Content-Type: image/jpeg\r\n\r\n")
-            body.append(parameter.images[index])
+            body.append(info.images[index])
             body.append("\r\n")
         }
 
         body.append("--\(boundary)\r\n")
         body.append("Content-Disposition: form-data; name=\"params\"\r\n\r\n")
-        body.append(encodedData)
+        body.append(product)
         body.append("\r\n")
         body.append("--\(boundary)--\r\n")
 
@@ -149,137 +110,80 @@ final class Network {
         request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: HTTPHeaders.identifier)
         request.httpBody = body
 
-        let taskCompletion: DataTaskCompletion = { data, response, error in
-            if error != nil, let response = response as? HTTPURLResponse {
-                guard (200...399).contains(response.statusCode) else {
-                    dump(response.statusCode)
-                    return
-                }
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let decodedData = try JSONDecoder().decode(ProductDetails.self, from: data)
-                completion(.success(decodedData))
-            } catch {
-                completion(.failure(error))
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let response = response as? HTTPURLResponse {
+            guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        URLSession.shared.dataTask(with: request, completionHandler: taskCompletion).resume()
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(ProductDetails.self, from: data)
+        } catch { throw error }
     }
 
-    func requestPOST(with productID: Int, userSecret: String, then completion: @escaping (Result<String, Error>) -> Void) {
+    func inquireSecretKey(of productID: Int, with userPassword: String) async throws -> String {
         let url = manager.generateURL(toInquireSecretOf: productID)
 
-        let vendor = Vendor(secret: userSecret)
-
-        guard let userSecretKey = try? JSONEncoder().encode(vendor) else {
-            return
-        }
+        let vendor = Vendor(secret: userPassword)
+        let encoder = JSONEncoder()
+        guard let userSecretKey = try? encoder.encode(vendor) else { throw NetworkError.badRequest }
 
         var request = URLRequest(url: url)
-
         request.httpMethod = String(describing: HTTPRequestMethods.post)
         request.setValue("application/json", forHTTPHeaderField: HTTPHeaders.contentType)
         request.setValue(Bundle.main.identifier, forHTTPHeaderField: HTTPHeaders.identifier)
         request.httpBody = userSecretKey
 
-        let taskCompletion: DataTaskCompletion = { data, response, error in
-            if error != nil, let response = response as? HTTPURLResponse {
-                guard (200...399).contains(response.statusCode) else {
-                    dump(response.statusCode)
-                    return
-                }
-            }
-
-            guard let data = data else {
-                // FIXME: Error - Key가 맞지 않음
-                completion(.failure(error!))
-                return
-            }
-
-            guard let productSecretKey = String(data: data, encoding: .utf8) else {
-                return
-            }
-
-            completion(.success(productSecretKey))
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let response = response as? HTTPURLResponse {
+            guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        URLSession.shared.dataTask(with: request, completionHandler: taskCompletion).resume()
+        if let productSecretKey = String(data: data, encoding: .utf8) { return productSecretKey }
+        else { throw NetworkError.badRequest }
     }
 
     // MARK: - PATCH
-    func requestPATCH(with productID: Int, params: ProductUpdate, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
-        let url = manager.generateURL(toInquireAndModify: productID)
+    func updateInfo(of productID: Int, to newInfo: ProductUpdate) async throws -> ProductDetails {
+        let url = manager.generateURL(toInquireOrUpdate: productID)
 
         let encoder = JSONEncoder()
-        guard let encodedData = try? encoder.encode(params) else {
-            return
-        }
+        guard let newInfo = try? encoder.encode(newInfo) else { throw NetworkError.badRequest }
 
         var request = URLRequest(url: url)
         request.httpMethod = String(describing: HTTPRequestMethods.patch)
-        request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: HTTPHeaders.identifier)
         request.setValue("application/json", forHTTPHeaderField: HTTPHeaders.contentType)
-        request.httpBody = encodedData
+        request.setValue(Bundle.main.identifier, forHTTPHeaderField: HTTPHeaders.identifier)
+        request.httpBody = newInfo
 
-        let taskCompletion: DataTaskCompletion = { data, response, error in
-            if error != nil, let response = response as? HTTPURLResponse {
-                guard (200...399).contains(response.statusCode) else {
-                    dump(response.statusCode)
-                    return
-                }
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let decodedData = try JSONDecoder().decode(ProductDetails.self, from: data)
-                completion(.success(decodedData))
-            } catch {
-                completion(.failure(error))
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let response = response as? HTTPURLResponse {
+            guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        URLSession.shared.dataTask(with: request, completionHandler: taskCompletion).resume()
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(ProductDetails.self, from: data)
+        } catch { throw error }
     }
 
     // MARK: - DELETE
-    func requestDELETE(at productID: Int, coincideWith productSecret: String, then completion: @escaping (Result<ProductDetails, Error>) -> Void) {
+    func deletePost(of productID: Int, coincideWith productSecret: String) async throws -> ProductDetails {
         let url = manager.generateURL(toDelete: productID, coincidingWith: productSecret)
 
         var request = URLRequest(url: url)
         request.httpMethod = String(describing: HTTPRequestMethods.delete)
-        request.setValue("\(Bundle.main.identifier)", forHTTPHeaderField: HTTPHeaders.identifier)
+        request.setValue(Bundle.main.identifier, forHTTPHeaderField: HTTPHeaders.identifier)
         request.setValue("application/json", forHTTPHeaderField: HTTPHeaders.contentType)
 
-        let taskCompletion: DataTaskCompletion = { data, response, error in
-            if error != nil, let response = response as? HTTPURLResponse {
-                guard (200...399).contains(response.statusCode) else {
-                    dump(response.statusCode)
-                    return
-                }
-            }
-
-            guard let data = data else {
-                return
-            }
-
-            do {
-                let decodedData = try JSONDecoder().decode(ProductDetails.self, from: data)
-                // TODO: 삭제처리만 하면되므로 고민해보기
-                completion(.success(decodedData))
-            } catch {
-                completion(.failure(error))
-            }
+        let (data, response) = try await URLSession.shared.data(for: request)
+        if let response = response as? HTTPURLResponse {
+            guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        URLSession.shared.dataTask(with: request, completionHandler: taskCompletion).resume()
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(ProductDetails.self, from: data)
+        } catch { throw error }
     }
 }

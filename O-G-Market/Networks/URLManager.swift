@@ -13,10 +13,7 @@ struct URLManager {
     }
 
     private var baseURL: URL {
-        guard let `self` = URL(string: "https://market-training.yagom-academy.kr/api/products") else {
-            fatalError(URLConvertingError.message)
-        }
-
+        guard let `self` = URL(string: "https://market-training.yagom-academy.kr/api/products") else { fatalError(URLConvertingError.message) }
         return self
     }
 
@@ -26,10 +23,8 @@ struct URLManager {
     }
 
     // MARK: - 상품 리스트 조회
-    func generateURL(toInquire page: Int) -> URL {
-        guard var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else {
-            fatalError(URLConvertingError.message)
-        }
+    func generateURL(toInquireFrom page: Int) -> URL {
+        guard var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else { fatalError(URLConvertingError.message) }
 
         let pageNumber = URLQueryItem(name: "page_no", value: "\(page)")
         let itemsPerPage = URLQueryItem(name: "items_per_page", value: "20")
@@ -43,7 +38,7 @@ struct URLManager {
     }
 
     // MARK: - 상품 상세 조회, 상품 수정
-    func generateURL(toInquireAndModify productID: Int) -> URL {
+    func generateURL(toInquireOrUpdate productID: Int) -> URL {
         return baseURL.appendingPathComponent("\(productID)")
     }
 
