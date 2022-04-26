@@ -11,6 +11,7 @@ class ProductImagePageViewController: UIViewController {
     var coordinator: MainCoordinator?
     var images: [UIImage] = []
     let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout(scrollDirection: .horizontal))
+    private let communicator = Network()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,17 +52,11 @@ class ProductImagePageViewController: UIViewController {
     func setUpComponentsData(product: ProductDetails) {
         product.images.forEach { image in
             guard let url = URL(string: image.url) else { return }
-            Networking.default.getProductImages(from: url) { result in
-                switch result {
-                case .success(let image):
-                    self.images.append(image)
+            Task {
+                guard let image = try? await communicator.fetchProductImages(from: url) else { throw Network.NetworkError.badRequest }
+                self.images.append(image)
 
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
-                    }
-                case .failure:
-                    return
-                }
+                await MainActor.run { self.collectionView.reloadData() }
             }
         }
     }

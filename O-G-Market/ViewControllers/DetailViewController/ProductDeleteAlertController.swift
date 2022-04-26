@@ -9,6 +9,7 @@ import UIKit
 
 class ProductDeleteAlertController: UIAlertController {
     var productID: Int?
+    private let communicator = Network()
 
     convenience init(productID: Int) {
         self.init(title: "상품 삭제", message: "삭제하면 되돌릴 수 없습니다! 신중하게 선택해주세요.", preferredStyle: .alert)
@@ -50,28 +51,18 @@ extension ProductDeleteAlertController {
         guard let productID = productID else { return }
         guard let userSecretKeyTextField = textFields?.first, let userSecretKey = userSecretKeyTextField.text else { return }
 
-        Networking.default.requestPOST(with: productID, userSecret: userSecretKey) { result in
-            switch result {
-            case .success(let productSecretKey):
-                self.deleteProduct(productSecretKey: productSecretKey)
-            case .failure(let error):
-                dump(error.localizedDescription)
-            }
+        Task {
+            guard let productSecretKey = try? await self.communicator.inquireSecretKey(of: productID, with: userSecretKey) else { throw Network.NetworkError.badRequest }
+            self.deleteProduct(productSecretKey: productSecretKey)
         }
     }
 
 
     private func deleteProduct(productSecretKey: String) {
         guard let productID = productID else { return }
-        let productDeletion = ProductDeletion(productID: productID, productSecret: productSecretKey)
 
-        Networking.default.requestDELETE(at: productID, coincideWith: productSecretKey) { result in
-            switch result {
-            case .success(let response):
-                dump(response)
-            case .failure(let error):
-                dump(error.localizedDescription)
-            }
+        Task {
+            try await communicator.deletePost(of: productID, coincideWith: productSecretKey)
         }
     }
 }

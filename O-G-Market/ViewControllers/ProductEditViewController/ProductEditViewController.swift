@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Then
 
 final class ProductEditViewController: UIViewController {
     enum ViewType {
@@ -26,9 +25,10 @@ final class ProductEditViewController: UIViewController {
     private var productID: Int?
     private var capturedValue: [String: Any] = [:]
     private var type: ViewType
+    private let communicator = Network()
 
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
-    private let productNameTextField = UITextField()
+    private let productNameTextField = UITextField(placeholder: "상품 이름을 입력해주세요.")
     private let productPriceTextField = UITextField(placeholder: "상품 가격을 입력해주세요.")
     private let productDiscountedPriceTextField = UITextField(placeholder: "할인 가격을 입력해주세요.")
     private let productStockTextField = UITextField(placeholder: "상품 갯수를 입력해주세요.")
@@ -44,7 +44,6 @@ final class ProductEditViewController: UIViewController {
         button.titleLabel?.font = .preferredFont(forTextStyle: .title3)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(enrollProduct), for: .touchUpInside)
-
         return button
     }()
     private let productDescriptionTextView: UITextView = {
@@ -109,29 +108,16 @@ final class ProductEditViewController: UIViewController {
         switch type {
         case .regist:
             guard let product = package() else { return }
-            Networking.default.requestPOST(with: product) { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self.coordinator?.dismissModal(sender: self)
-                        // TODO: MainViewController reload at completion handler
-                    }
-                case .failure(let error):
-                    dump(error.localizedDescription)
-                }
+            Task {
+                guard (try? await communicator.registerProduct(with: product)) != nil else { throw Network.NetworkError.badRequest }
+                dismissSelf()
             }
+
         case .edit:
             guard let parameters = revise(), let productID = self.productID else { return }
-            Networking.default.requestPATCH(with: productID, params: parameters) { result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self.coordinator?.dismissModal(sender: self)
-                        // TODO: MainViewController reload at completion handler
-                    }
-                case .failure(let error):
-                    dump(error.localizedDescription)
-                }
+            Task {
+                guard (try? await communicator.updateInfo(of: productID, to: parameters)) != nil else { throw Network.NetworkError.badRequest }
+                dismissSelf()
             }
         }
     }

@@ -6,7 +6,6 @@
 import Foundation
 import UIKit
 import SnapKit
-import SwiftUI
 
 private let zeroSize = CGRect.zero
 
@@ -93,6 +92,7 @@ extension DetailViewController {
     }
 
     @objc private func showEditActionSheet() {
+        guard let product = self.product else { return }
         coordinator?.presentEditActionSheet(product: product, images: productImagePageViewController.images)
     }
 }
