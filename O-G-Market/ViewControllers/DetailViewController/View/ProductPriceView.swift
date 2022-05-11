@@ -67,7 +67,7 @@ extension ProductPriceView {
         }
     }
 
-    func setUpComponentsData(product: ProductDetails) {
+    func setUpComponentsData(product: Post) {
         if product.bargainPrice != 0 {
             subPriceLabel.text = String(product.price)
             mainPriceLabel.text = String(product.bargainPrice)

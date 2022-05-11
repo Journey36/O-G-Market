@@ -7,26 +7,26 @@
 
 import Foundation
 
-struct Pages: Decodable, Hashable {
-    let pageNumber: Int
-    let itemsPerPage: Int
-    let itemsCount: Int
+struct Page: Decodable, Hashable {
+    let number: Int
+    let postPerPage: Int
+    let postCount: Int
     let firstIndex: Int
     let lastIndex: Int
     let lastPage: Int
     let hasNextPage: Bool
     let hasPreviousPage: Bool
-    let items: [ListProduct]
+    let post: [Post]
 
     enum CodingKeys: String, CodingKey {
-        case pageNumber = "page_no"
-        case itemsPerPage = "items_per_page"
-        case itemsCount = "total_count"
+        case number = "page_no"
+        case postPerPage = "items_per_page"
+        case postCount = "total_count"
         case firstIndex = "offset"
         case lastIndex = "limit"
         case lastPage = "last_page"
         case hasNextPage = "has_next"
         case hasPreviousPage = "has_prev"
-        case items = "pages"
+        case post = "pages"
     }
 }

@@ -49,7 +49,7 @@ final class MainCoordinator: Coordinator {
         navigationController.topViewController?.present(newNavigationController, animated: true, completion: nil)
     }
 
-    func presentEditViewController(product: ProductDetails?, images: [UIImage]) {
+    func presentEditViewController(product: Post?, images: [UIImage]) {
         let viewController = ProductEditViewController(type: .edit)
         let newNavigationController = UINavigationController(rootViewController: viewController)
         viewController.coordinator = self
@@ -68,7 +68,7 @@ final class MainCoordinator: Coordinator {
         sender.present(viewController, animated: true, completion: nil)
     }
 
-    func presentEditActionSheet(product: ProductDetails, images: [UIImage]) {
+    func presentEditActionSheet(product: Post, images: [UIImage]) {
         let actionSheet = UIAlertController(title: nil, message: "Edit Product", preferredStyle: .actionSheet)
         let editAction = UIAlertAction(title: "수정하기", style: .default) { _ in
             self.presentEditViewController(product: product, images: images)

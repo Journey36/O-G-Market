@@ -49,7 +49,7 @@ class ProductImagePageViewController: UIViewController {
         collectionView.collectionViewLayout = createLayout()
     }
 
-    func setUpComponentsData(product: ProductDetails) {
+    func setUpComponentsData(product: Post) {
         product.images.forEach { image in
             guard let url = URL(string: image.url) else { return }
             Task {

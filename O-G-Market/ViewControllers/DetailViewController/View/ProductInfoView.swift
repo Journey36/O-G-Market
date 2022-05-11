@@ -61,7 +61,7 @@ class ProductInfoView: UIView {
         addSubview(containerView)
     }
 
-    func setUpComponentsData(product: ProductDetails) {
+    func setUpComponentsData(product: Post) {
         titleLabel.text = product.name
         descriptionLabel.text = product.description
         registrationDateLabel.text = product.createdAt

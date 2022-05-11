@@ -11,7 +11,7 @@ private let zeroSize = CGRect.zero
 
 class DetailViewController: UIViewController {
     var coordinator: MainCoordinator?
-    var product: ProductDetails?
+    var product: Post?
 
     let scrollView = UIScrollView()
     let productImagePageViewController = ProductImagePageViewController()
@@ -67,7 +67,7 @@ class DetailViewController: UIViewController {
         }
     }
 
-    func setUpComponentsData(product: ProductDetails) {
+    func setUpComponentsData(product: Post) {
         self.product = product
 
         productInfoView.setUpComponentsData(product: product)
