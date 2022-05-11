@@ -21,7 +21,7 @@ final class ProductEditViewController: UIViewController {
     }
 
     var coordinator: MainCoordinator?
-    private var product: ProductDetails?
+    private var product: Post?
     private var productID: Int?
     private var capturedValue: [String: Any] = [:]
     private var type: ViewType
@@ -123,7 +123,7 @@ final class ProductEditViewController: UIViewController {
     }
 
     // MARK: - 수정
-    private func revise() -> ProductUpdate? {
+    private func revise() -> Update? {
         guard let name = productNameTextField.text else { return nil }
         guard let description = productDescriptionTextView.text else { return nil }
         guard let priceText = productPriceTextField.text, let price = Double(priceText) else { return nil }
@@ -131,7 +131,7 @@ final class ProductEditViewController: UIViewController {
         guard let discountedPriceText = productDiscountedPriceTextField.text, let discountedPrice = Double(discountedPriceText) else { return nil }
         guard let stockText = productStockTextField.text, let stock = Int(stockText) else { return nil }
 
-        return ProductUpdate(name: name == capturedValue["productNameTextField"] as? String ? nil : name,
+        return Update(name: name == capturedValue["productNameTextField"] as? String ? nil : name,
                              descriptions: description == capturedValue["productDescriptionTextView"] as? String ? nil : description,
                              thumbnailID: nil,
                              price: price == capturedValue["productPriceTextField"] as? Double ? nil : price,
@@ -157,7 +157,7 @@ final class ProductEditViewController: UIViewController {
     }
 
     // MARK: - 생성
-    private func package() -> ProductCreation? {
+    private func package() -> Registration? {
         guard let name = productNameTextField.text else {
             return nil
         }
@@ -182,7 +182,7 @@ final class ProductEditViewController: UIViewController {
         let product = Product(name: name, descriptions: description, price: price, currency: currency, discountedPrice: discountedPrice, stock: stock, secret: Bundle.main.password)
         let images = addProductImageCollectionViewController.imageList.compactMap { $0.jpegData(compressionQuality: 0.1) }
 
-        return ProductCreation(product: product, images: images)
+        return Registration(product: product, images: images)
     }
 
     private func isAllComponentsFull() -> Bool {
@@ -264,7 +264,7 @@ final class ProductEditViewController: UIViewController {
 }
 
 extension ProductEditViewController {
-    func setUpComponentsData(product: ProductDetails?, images: [UIImage]) {
+    func setUpComponentsData(product: Post?, images: [UIImage]) {
         guard type == .edit, let product = product else { return }
 
         productID = product.id

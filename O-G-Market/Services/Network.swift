@@ -41,7 +41,7 @@ final class Network {
     }
 
     // MARK: - GET
-    func fetchDetails(of productID: Int) async throws -> ProductDetails {
+    func fetchDetails(of productID: Int) async throws -> Post {
         let url = manager.generateURL(toInquireOrUpdate: productID)
 
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -51,11 +51,11 @@ final class Network {
 
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(ProductDetails.self, from: data)
+            return try decoder.decode(Post.self, from: data)
         } catch { throw error }
     }
 
-    func fetchPages(from startPage: Int) async throws -> Pages {
+    func fetchPages(from startPage: Int) async throws -> Page {
         let url = manager.generateURL(toInquireFrom: startPage)
 
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -65,7 +65,7 @@ final class Network {
 
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(Pages.self, from: data)
+            return try decoder.decode(Page.self, from: data)
         } catch { throw error }
     }
 
@@ -81,7 +81,7 @@ final class Network {
     }
 
     // MARK: - POST
-    func registerProduct(with info: ProductCreation) async throws -> ProductDetails {
+    func registerProduct(with info: Registration) async throws -> Post {
         let url = manager.generateURL()
 
         let encoder = JSONEncoder()
@@ -117,7 +117,7 @@ final class Network {
 
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(ProductDetails.self, from: data)
+            return try decoder.decode(Post.self, from: data)
         } catch { throw error }
     }
 
@@ -139,12 +139,13 @@ final class Network {
             guard (200...399).contains(response.statusCode) else { throw NetworkError.badRequest }
         }
 
-        if let productSecretKey = String(data: data, encoding: .utf8) { return productSecretKey }
-        else { throw NetworkError.badRequest }
+        if let productSecretKey = String(data: data, encoding: .utf8) {
+            return productSecretKey
+        } else { throw NetworkError.badRequest }
     }
 
     // MARK: - PATCH
-    func updateInfo(of productID: Int, to newInfo: ProductUpdate) async throws -> ProductDetails {
+    func updateInfo(of productID: Int, to newInfo: Update) async throws -> Post {
         let url = manager.generateURL(toInquireOrUpdate: productID)
 
         let encoder = JSONEncoder()
@@ -163,12 +164,12 @@ final class Network {
 
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(ProductDetails.self, from: data)
+            return try decoder.decode(Post.self, from: data)
         } catch { throw error }
     }
 
     // MARK: - DELETE
-    func deletePost(of productID: Int, coincideWith productSecret: String) async throws -> ProductDetails {
+    func deletePost(of productID: Int, coincideWith productSecret: String) async throws -> Post {
         let url = manager.generateURL(toDelete: productID, coincidingWith: productSecret)
 
         var request = URLRequest(url: url)
@@ -183,7 +184,7 @@ final class Network {
 
         do {
             let decoder = JSONDecoder()
-            return try decoder.decode(ProductDetails.self, from: data)
+            return try decoder.decode(Post.self, from: data)
         } catch { throw error }
     }
 }

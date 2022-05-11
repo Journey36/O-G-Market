@@ -10,8 +10,8 @@ final class MainViewController: UIViewController {
 
     // MARK: - Properties
     var coordinator: MainCoordinator?
-    private var dataSource: UICollectionViewDiffableDataSource<Section, ListProduct>?
-    private var snapshot = NSDiffableDataSourceSnapshot<Section, ListProduct>()
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Post>?
+    private var snapshot = NSDiffableDataSourceSnapshot<Section, Post>()
     private var startPage: Int = 1
     private var fetchingIndexPathRow = 18
     private let communicator = Network()
@@ -45,8 +45,8 @@ final class MainViewController: UIViewController {
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
 
-    private func configureProductCell() -> UICollectionView.CellRegistration<ProductCell, ListProduct> {
-        return UICollectionView.CellRegistration<ProductCell, ListProduct> { cell, _, product in
+    private func configureProductCell() -> UICollectionView.CellRegistration<ProductCell, Post> {
+        return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, product in
             cell.setUpComponentsData(of: product)
         }
     }
@@ -54,19 +54,19 @@ final class MainViewController: UIViewController {
     private func configureDiffableDataSource() {
         let productCell = configureProductCell()
 
-        dataSource = UICollectionViewDiffableDataSource<Section, ListProduct>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
             collectionView.dequeueConfiguredReusableCell(using: productCell, for: indexPath, item: id)
         }
     }
 
-    private func takeInitialSnapshot(with list: Pages) {
+    private func takeInitialSnapshot(with list: Page) {
         snapshot.appendSections([.main])
-        snapshot.appendItems(list.items)
+        snapshot.appendItems(list.post)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
 
-    private func takeOtherSnapshot(with list: Pages) {
-        snapshot.appendItems(list.items)
+    private func takeOtherSnapshot(with list: Page) {
+        snapshot.appendItems(list.post)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
 

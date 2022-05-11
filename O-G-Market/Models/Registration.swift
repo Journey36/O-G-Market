@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProductCreation: Encodable {
+struct Registration: Encodable {
     let product: Product
     let images: [Data]
 
