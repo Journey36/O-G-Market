@@ -11,7 +11,7 @@ import PhotosUI
 final class MainCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var navigationController: UINavigationController
-    private let communicator = Network()
+    private let manager = NetworkManager()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -29,9 +29,9 @@ final class MainCoordinator: Coordinator {
         viewController.productImagePageViewController.coordinator = self
 
         Task {
-            guard let productDetails = try? await communicator.fetchDetails(of: productID) else {
+            guard let productDetails = try? await manager.fetch(details: productID) else {
                 self.dismissModal(sender: viewController)
-                throw Network.NetworkError.badRequest
+                return
             }
 
             await viewController.setUpComponentsData(product: productDetails)

@@ -6,49 +6,66 @@
 //
 
 import Foundation
+import Alamofire
 
 struct URLManager {
-    private enum URLConvertingError {
-        static let message = "모종의 이유로 URL을 만드는 데 실패했습니다."
-    }
+    private let apiAddress = "https://market-training.yagom-academy.kr/api/products"
 
-    private var baseURL: URL {
-        guard let `self` = URL(string: "https://market-training.yagom-academy.kr/api/products") else { fatalError(URLConvertingError.message) }
-        return self
-    }
-
-    // MARK: - 상품 등록
-    func generateURL() -> URL {
-        return baseURL
-    }
-
-    // MARK: - 상품 리스트 조회
-    func generateURL(toInquireFrom page: Int) -> URL {
-        guard var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false) else { fatalError(URLConvertingError.message) }
-
-        let pageNumber = URLQueryItem(name: "page_no", value: "\(page)")
-        let itemsPerPage = URLQueryItem(name: "items_per_page", value: "20")
-        components.queryItems = [pageNumber, itemsPerPage]
-
-        guard let url = components.url else {
-            fatalError(URLConvertingError.message)
+    func makeRegistrationURL() throws -> URL {
+        guard let endpoint = try? apiAddress.asURL() else {
+            throw AFError.invalidURL(url: apiAddress)
         }
 
-        return url
+        return endpoint
     }
 
-    // MARK: - 상품 상세 조회, 상품 수정
-    func generateURL(toInquireOrUpdate productID: Int) -> URL {
-        return baseURL.appendingPathComponent("\(productID)")
+    func makePageInquiryURL(startPage: Int) throws -> URL {
+        guard var components = URLComponents(string: apiAddress) else {
+            throw AFError.invalidURL(url: apiAddress)
+        }
+
+        let startPage = URLQueryItem(name: "page_no", value: "\(startPage)")
+        let postPerPage = URLQueryItem(name: "items_per_page", value: "20")
+        components.queryItems = [startPage, postPerPage]
+
+        guard let endpoint = try? components.asURL() else {
+            throw AFError.invalidURL(url: apiAddress)
+        }
+
+        return endpoint
     }
 
-    // MARK: - 상품 삭제 secret 조회
-    func generateURL(toInquireSecretOf productID: Int) -> URL {
-        return baseURL.appendingPathComponent("\(productID)").appendingPathComponent("secret")
+    func makeProductInquiryURL(productID: Int) throws -> URL {
+        guard let endpoint = try? apiAddress.asURL().appendingPathComponent("\(productID)") else {
+            throw AFError.invalidURL(url: apiAddress)
+        }
+
+        return endpoint
     }
 
-    // MARK: - 상품 삭제
-    func generateURL(toDelete productID: Int, coincidingWith productSecret: String) -> URL {
-        return baseURL.appendingPathComponent("\(productID)").appendingPathComponent(productSecret)
+    func makeProductUpdateURL(productID: Int) throws -> URL {
+        guard let endpoint = try? apiAddress.asURL().appendingPathComponent("\(productID)") else {
+            throw AFError.invalidURL(url: apiAddress)
+        }
+
+        return endpoint
+    }
+
+    func makeProductSecretInquiryURL(productID: Int) throws -> URL {
+        guard let endpoint = try? apiAddress.asURL().appendingPathComponent("\(productID)")
+            .appendingPathComponent("secret") else {
+            throw AFError.invalidURL(url: apiAddress)
+        }
+
+        return endpoint
+    }
+
+    func makeProductDeletionURL(productID: Int, productSecret: String) throws -> URL {
+        guard let endpoint = try? apiAddress.asURL().appendingPathComponent("\(productID)")
+            .appendingPathComponent(productSecret) else {
+            throw AFError.invalidURL(url: apiAddress)
+        }
+
+        return endpoint
     }
 }

@@ -25,7 +25,7 @@ final class ProductEditViewController: UIViewController {
     private var productID: Int?
     private var capturedValue: [String: Any] = [:]
     private var type: ViewType
-    private let communicator = Network()
+    private let manager = NetworkManager()
 
     let addProductImageCollectionViewController = AddProductImageCollectionViewController()
     private let productNameTextField = UITextField(placeholder: "상품 이름을 입력해주세요.")
@@ -109,14 +109,14 @@ final class ProductEditViewController: UIViewController {
         case .regist:
             guard let product = package() else { return }
             Task {
-                guard (try? await communicator.registerProduct(with: product)) != nil else { throw Network.NetworkError.badRequest }
+                guard (try? await manager.upload(content: product)) != nil else { return }
                 dismissSelf()
             }
 
         case .edit:
             guard let parameters = revise(), let productID = self.productID else { return }
             Task {
-                guard (try? await communicator.updateInfo(of: productID, to: parameters)) != nil else { throw Network.NetworkError.badRequest }
+                guard (try? await manager.update(productID: productID, content: parameters)) != nil else { return }
                 dismissSelf()
             }
         }
