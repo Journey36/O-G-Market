@@ -10,10 +10,17 @@ import Alamofire
 
 actor NetworkManager {
     private let manager = URLManager()
-    private let identifier = "3424eb5f-660f-11ec-8eff-b53506094baa"
+    private let identifier = Bundle.main.identifier
 
-    enum ConvertingError: Error {
+    enum ConvertingError: Error, CustomStringConvertible {
         case convertingImageFailed
+
+        var description: String {
+            switch self {
+            case .convertingImageFailed:
+                return "⛔️ Fail to convert image data."
+            }
+        }
     }
 
     @discardableResult
@@ -21,6 +28,12 @@ actor NetworkManager {
         let url = try manager.makePageInquiryURL(startPage: startPage)
         let response = AF.request(url)
             .validate(statusCode: 200..<400)
+            .responseDecodable(of: Page.self) { dataResponse in
+                guard dataResponse.error == nil else {
+                    debugPrint(dataResponse.error!)
+                    return
+                }
+            }
             .serializingDecodable(Page.self)
 
         return try await response.value
@@ -31,6 +44,12 @@ actor NetworkManager {
         let url = try manager.makeProductUpdateURL(productID: productID)
         let response = AF.request(url)
             .validate(statusCode: 200..<400)
+            .responseDecodable(of: Post.self) { dataResponse in
+                guard dataResponse.error == nil else {
+                    debugPrint(dataResponse.error!)
+                    return
+                }
+            }
             .serializingDecodable(Post.self)
 
         return try await response.value
@@ -40,6 +59,12 @@ actor NetworkManager {
     func fetch(images url: URL) async throws -> UIImage {
         let response = AF.request(url)
             .validate(statusCode: 200..<400)
+            .responseData { dataResponse in
+                guard dataResponse.error == nil else {
+                    debugPrint(dataResponse.error!)
+                    return
+                }
+            }
             .serializingData()
 
         if let image = try await UIImage(data: response.value) {
@@ -80,7 +105,7 @@ actor NetworkManager {
 
         let (data, response) = try await URLSession.shared.data(for: request)
         if let response = response as? HTTPURLResponse {
-            guard (200...399).contains(response.statusCode) else { throw AFError.invalidURL(url: url) }
+            guard (200..<400).contains(response.statusCode) else { throw AFError.invalidURL(url: url) }
         }
 
         do {
@@ -96,6 +121,12 @@ actor NetworkManager {
         let vendor = Vendor(secret: userSecret)
         let response = AF.request(url, method: .post, parameters: vendor, encoder: .json, headers: [identifier])
             .validate(statusCode: 200..<400)
+            .responseString { dataResponse in
+                guard dataResponse.error == nil else {
+                    debugPrint(dataResponse.error!)
+                    return
+                }
+            }
             .serializingString()
 
         return try await response.value
@@ -107,6 +138,12 @@ actor NetworkManager {
         let identifier = HTTPHeader(name: "identifier", value: identifier)
         let response = AF.request(url, method: .patch, parameters: content, encoder: .json, headers: [identifier])
             .validate(statusCode: 200..<400)
+            .responseDecodable(of: Post.self) { dataResponse in
+                guard dataResponse.error == nil else {
+                    debugPrint(dataResponse.error!)
+                    return
+                }
+            }
             .serializingDecodable(Post.self)
 
         return try await response.value
@@ -117,7 +154,13 @@ actor NetworkManager {
         let url = try manager.makeProductDeletionURL(productID: productID, productSecret: productSecret)
         let identifier = HTTPHeader(name: "identifier", value: identifier)
         let response = AF.request(url, method: .delete, headers: [identifier])
-            .validate(statusCode: 200..<499)
+            .validate(statusCode: 200..<400)
+            .responseDecodable(of: Post.self) { dataResponse in
+                guard dataResponse.error == nil else {
+                    debugPrint(dataResponse.error!)
+                    return
+                }
+            }
             .serializingDecodable(Post.self)
 
         return try await response.value

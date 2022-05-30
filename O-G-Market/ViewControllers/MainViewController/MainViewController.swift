@@ -14,7 +14,7 @@ final class MainViewController: UIViewController {
     private var snapshot = NSDiffableDataSourceSnapshot<Section, Post>()
     private var startPage: Int = 1
     private var fetchingIndexPathRow = 18
-    private let communicator = Network()
+    private let communicator = NetworkManager()
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
@@ -90,7 +90,9 @@ final class MainViewController: UIViewController {
 
     private func fetchList() {
         Task {
-            guard let page = try? await communicator.fetchPages(from: startPage) else { throw Network.NetworkError.badRequest }
+            guard let page = try? await communicator.fetch(pages: startPage) else {
+                return
+            }
             startPage == 1 ? takeInitialSnapshot(with: page) : takeOtherSnapshot(with: page)
             guard !page.hasNextPage else {
                 startPage += 1

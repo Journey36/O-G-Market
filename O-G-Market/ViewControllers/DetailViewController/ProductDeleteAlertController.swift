@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProductDeleteAlertController: UIAlertController {
     var productID: Int?
-    private let communicator = Network()
+    private let manager = NetworkManager()
 
     convenience init(productID: Int) {
         self.init(title: "상품 삭제", message: "삭제하면 되돌릴 수 없습니다! 신중하게 선택해주세요.", preferredStyle: .alert)
@@ -49,10 +50,12 @@ class ProductDeleteAlertController: UIAlertController {
 extension ProductDeleteAlertController {
     private func inquireProductSecret() {
         guard let productID = productID else { return }
-        guard let userSecretKeyTextField = textFields?.first, let userSecretKey = userSecretKeyTextField.text else { return }
+        guard let userSecretKeyTextField = textFields?.first,
+              let userSecretKey = userSecretKeyTextField.text else { return }
 
         Task {
-            guard let productSecretKey = try? await self.communicator.inquireSecretKey(of: productID, with: userSecretKey) else { throw Network.NetworkError.badRequest }
+            guard let productSecretKey = try? await manager.upload(productID: productID,
+                                                                   userSecret: userSecretKey) else { return }
             self.deleteProduct(productSecretKey: productSecretKey)
         }
     }
@@ -62,7 +65,7 @@ extension ProductDeleteAlertController {
         guard let productID = productID else { return }
 
         Task {
-            try await communicator.deletePost(of: productID, coincideWith: productSecretKey)
+            try await manager.delete(productID: productID, productSecret: productSecretKey)
         }
     }
 }

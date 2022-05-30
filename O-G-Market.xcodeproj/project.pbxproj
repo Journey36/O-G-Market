@@ -8,12 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3D1EC7AF279C5D4A00A23D1E /* Vendor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */; };
-		3D2965D62790C29E00B90A51 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965D52790C29E00B90A51 /* Network.swift */; };
+		3D2965D62790C29E00B90A51 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D2965D52790C29E00B90A51 /* NetworkManager.swift */; };
 		3D31E94C279ED944009D7E8A /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D31E94B279ED944009D7E8A /* Bundle+.swift */; };
 		3D32C3C42785AD79008B7B5B /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D32C3C22785AD79008B7B5B /* ProductCell.swift */; };
 		3D52FF46278BDFFE007E9F3C /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D52FF45278BDFFE007E9F3C /* Page.swift */; };
 		3D52FF4B278C1258007E9F3C /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D52FF4A278C1258007E9F3C /* URLManager.swift */; };
-		3D67429D27F1FE3C003466FA /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 3D67429C27F1FE3C003466FA /* Then */; };
 		3D6B60342789580100A292AF /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6B60332789580100A292AF /* Currency.swift */; };
 		3D6B6038278987B300A292AF /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6B6037278987B300A292AF /* Image.swift */; };
 		3D6B603A278A1B6200A292AF /* Registration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6B6039278A1B6200A292AF /* Registration.swift */; };
@@ -51,7 +50,7 @@
 
 /* Begin PBXFileReference section */
 		3D1EC7AE279C5D4A00A23D1E /* Vendor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vendor.swift; sourceTree = "<group>"; };
-		3D2965D52790C29E00B90A51 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		3D2965D52790C29E00B90A51 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3D31E94A279ED32D009D7E8A /* UserKeys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = UserKeys.xcconfig; sourceTree = "<group>"; };
 		3D31E94B279ED944009D7E8A /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 		3D32C3C22785AD79008B7B5B /* ProductCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProductCell.swift; path = MainView/ProductCell.swift; sourceTree = "<group>"; };
@@ -100,7 +99,6 @@
 			files = (
 				69B16E7828444C8E00CA6996 /* Alamofire in Frameworks */,
 				3DD69BDC27643E9100F053E0 /* SnapKit in Frameworks */,
-				3D67429D27F1FE3C003466FA /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				3D52FF4A278C1258007E9F3C /* URLManager.swift */,
-				3D2965D52790C29E00B90A51 /* Network.swift */,
+				3D2965D52790C29E00B90A51 /* NetworkManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -293,7 +291,6 @@
 			name = "O-G-Market";
 			packageProductDependencies = (
 				3DD69BDB27643E9100F053E0 /* SnapKit */,
-				3D67429C27F1FE3C003466FA /* Then */,
 				69B16E7728444C8E00CA6996 /* Alamofire */,
 			);
 			productName = "O-G-Market";
@@ -326,7 +323,6 @@
 			mainGroup = 3DD69B8727642DD900F053E0;
 			packageReferences = (
 				3DD69BDA27643E9100F053E0 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				3D67429B27F1FE3C003466FA /* XCRemoteSwiftPackageReference "Then" */,
 				69B16E7628444C8E00CA6996 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 3DD69B9127642DD900F053E0 /* Products */;
@@ -388,7 +384,7 @@
 				DE8B1C1327A16E8600573454 /* ProductInfoView.swift in Sources */,
 				DE9A7FF3279BBD3D00C8362D /* AddImageCollectionViewCell.swift in Sources */,
 				3D32C3C42785AD79008B7B5B /* ProductCell.swift in Sources */,
-				3D2965D62790C29E00B90A51 /* Network.swift in Sources */,
+				3D2965D62790C29E00B90A51 /* NetworkManager.swift in Sources */,
 				DE61EBED27AA397700BD8A95 /* ImageViewerController.swift in Sources */,
 				3DD69B9427642DD900F053E0 /* AppDelegate.swift in Sources */,
 				3D1EC7AF279C5D4A00A23D1E /* Vendor.swift in Sources */,
@@ -616,14 +612,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3D67429B27F1FE3C003466FA /* XCRemoteSwiftPackageReference "Then" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.7.0;
-			};
-		};
 		3DD69BDA27643E9100F053E0 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -643,11 +631,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3D67429C27F1FE3C003466FA /* Then */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3D67429B27F1FE3C003466FA /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
-		};
 		3DD69BDB27643E9100F053E0 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3DD69BDA27643E9100F053E0 /* XCRemoteSwiftPackageReference "SnapKit" */;
