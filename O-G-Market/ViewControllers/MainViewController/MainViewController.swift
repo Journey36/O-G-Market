@@ -2,6 +2,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 final class MainViewController: UIViewController {
     private enum Section {
@@ -46,8 +47,8 @@ final class MainViewController: UIViewController {
     }
 
     private func configureProductCell() -> UICollectionView.CellRegistration<ProductCell, Post> {
-        return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, product in
-            cell.setUpComponentsData(of: product)
+        return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, post in
+            cell.composeCell(cell, with: post)
         }
     }
 

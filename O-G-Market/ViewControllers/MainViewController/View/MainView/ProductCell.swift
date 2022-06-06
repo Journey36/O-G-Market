@@ -6,132 +6,195 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProductCell: UICollectionViewListCell {
 	static let identifier = String(describing: ProductCell.self)
+
     var productID: Int?
-	let productImageView: UIImageView = {
-		let productImageView = UIImageView()
-		productImageView.contentMode = .scaleAspectFit
-		return productImageView
+
+    let postThumbnailImageView: UIImageView = {
+		let postThumbnailImageView = UIImageView()
+		postThumbnailImageView.contentMode = .scaleAspectFit
+		return postThumbnailImageView
 	}()
 
-	let labelStackView: UIStackView = {
-		let labelStackView = UIStackView()
-		labelStackView.alignment = .leading
-		labelStackView.axis = .horizontal
-		labelStackView.spacing = 5
-		labelStackView.distribution = .fillProportionally
-		return labelStackView
-	}()
+    let postTitleLabel: UILabel = {
+        let postTitleLabel = UILabel()
+        postTitleLabel.font = .preferredFont(forTextStyle: .headline)
+        postTitleLabel.numberOfLines = 2
+        return postTitleLabel
+    }()
+    let priceLabelStackView: UIStackView = {
+        let priceLabelStackView = UIStackView()
+        priceLabelStackView.axis = .horizontal
+        priceLabelStackView.spacing = 5
+        priceLabelStackView.distribution = .fillEqually
+        return priceLabelStackView
+    }()
+    let productPriceLabel: UILabel = {
+        let productPriceLabel = UILabel()
+        productPriceLabel.font = .preferredFont(forTextStyle: .body)
+        productPriceLabel.textColor = .systemGray
+        return productPriceLabel
+    }()
+    let productBargainPriceLabel: UILabel = {
+        let productBargainPriceLabel = UILabel()
+        productBargainPriceLabel.font = .preferredFont(forTextStyle: .body)
+        return productBargainPriceLabel
+    }()
 
-	let productNameLabel: UILabel = {
-		let productNameLabel = UILabel()
-		productNameLabel.font = .preferredFont(forTextStyle: .headline)
-		return productNameLabel
-	}()
-
-	let productDiscountedPriceLabel: UILabel = {
-		let productDiscountedPriceLabel = UILabel()
-		let textAttributes = NSMutableAttributedString(string: productDiscountedPriceLabel.text ?? "nil")
-		let textRange = NSRange(location: 0, length: textAttributes.length)
-		textAttributes.addAttributes([.font: UIFont.preferredFont(forTextStyle: .subheadline),
-                                      .foregroundColor: UIColor(hex: "#cc0000"),
-                                      .strikethroughStyle: 1], range: textRange)
-		productDiscountedPriceLabel.attributedText = textAttributes
-		return productDiscountedPriceLabel
-	}()
-
-	let productPriceLabel: UILabel = {
-		let productPriceLabel = UILabel()
-		productPriceLabel.font = .preferredFont(forTextStyle: .subheadline)
-		productPriceLabel.textColor = .systemGray
-		return productPriceLabel
-	}()
-
-	let productStockLabel: UILabel = {
+    let productStockLabel: UILabel = {
 		let productStockLabel = UILabel()
-		let textAttributes = NSMutableAttributedString(string: productStockLabel.text ?? "nil")
-		let textRange = NSRange(location: 0, length: textAttributes.length)
-		textAttributes.addAttributes([.font: UIFont.preferredFont(forTextStyle: .subheadline), .foregroundColor: UIColor.systemYellow], range: textRange)
-		productStockLabel.attributedText = textAttributes
+        productStockLabel.font = .preferredFont(forTextStyle: .body)
+        productStockLabel.numberOfLines = 0
 		return productStockLabel
 	}()
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		configureHierachy()
-		configureConstraints()
+		arrangeViews()
 	}
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
-		configureHierachy()
-		configureConstraints()
+		arrangeViews()
 	}
 
-	private func configureHierachy() {
-		contentView.addSubview(productImageView)
-		contentView.addSubview(labelStackView)
-		contentView.addSubview(productNameLabel)
+    override func prepareForReuse() {
+        postThumbnailImageView.image = nil
+        productPriceLabel.text = nil
+        productBargainPriceLabel.text = nil
+        productStockLabel.text = nil
+        super.prepareForReuse()
+    }
+
+	private func arrangeViews() {
+		contentView.addSubview(postThumbnailImageView)
+		contentView.addSubview(priceLabelStackView)
+		contentView.addSubview(postTitleLabel)
 		contentView.addSubview(productStockLabel)
 
-		labelStackView.addArrangedSubview(productDiscountedPriceLabel)
-		labelStackView.addArrangedSubview(productPriceLabel)
+        priceLabelStackView.addArrangedSubview(productPriceLabel)
+        priceLabelStackView.addArrangedSubview(productBargainPriceLabel)
+
+        postThumbnailImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalTo(postTitleLabel.snp.leading).offset(-10)
+            make.width.height.equalTo(90)
+        }
+
+        postTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(postThumbnailImageView)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalTo(contentView.snp.centerY)
+        }
+
+        priceLabelStackView.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.centerY)
+            make.leading.equalTo(postThumbnailImageView.snp.trailing).offset(10)
+            make.trailing.lessThanOrEqualToSuperview().offset(-10)
+            make.bottom.lessThanOrEqualTo(productStockLabel.snp.top)
+        }
+
+        productStockLabel.snp.makeConstraints { make in
+            make.leading.greaterThanOrEqualTo(postThumbnailImageView.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalTo(postThumbnailImageView)
+        }
 	}
 
-	private func configureConstraints() {
-		productImageView.snp.makeConstraints { make in
-			make.centerY.equalToSuperview()
-			make.leading.equalToSuperview().offset(20)
-			make.trailing.equalTo(productNameLabel.snp.leading).offset(-10)
-			make.width.height.equalTo(50)
-		}
-
-		productNameLabel.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(10)
-			make.trailing.lessThanOrEqualTo(productStockLabel.snp.leading).offset(10)
-			make.bottom.equalTo(contentView.snp.centerY)
-		}
-
-		labelStackView.snp.makeConstraints { make in
-			make.top.equalTo(contentView.snp.centerY)
-			make.leading.equalTo(productNameLabel)
-			make.trailing.equalTo(productNameLabel)
-			make.bottom.equalToSuperview().offset(-20)
-		}
-
-		productStockLabel.snp.makeConstraints { make in
-			make.centerY.equalToSuperview()
-			make.top.bottom.equalTo(productImageView)
-			make.trailing.equalToSuperview().offset(-20)
-		}
-	}
+    func composeCell(_ cell: ProductCell, with data: Post) {
+        composeID(of: cell, from: data)
+        composeImage(of: cell, from: data)
+        composeTitle(of: cell, from: data)
+        composePrice(of: cell, from: data)
+        composeBargainPrice(of: cell, from: data)
+        composeStock(of: cell, from: data)
+    }
 }
 
-// MARK: - Set UI Components
 extension ProductCell {
-    private func fetchImage(from imageURLString: String) {
-        let imageLoadQueue = DispatchQueue(label: "com.joruney36.o-g-market")
-        imageLoadQueue.async {
-            guard let imageURL = URL(string: imageURLString),
-                  let imageData = try? Data(contentsOf: imageURL),
-                  let image = UIImage(data: imageData) else {
-                      return
-                  }
+    private func composeID(of cell: ProductCell, from data: Post) {
+        cell.productID = data.id
+    }
+
+    private func composeImage(of cell: ProductCell, from data: Post) {
+        DispatchQueue.global().async {
+            guard let imageURL = URL(string: data.thumbnail), let imageData = try? Data(contentsOf: imageURL),
+                  let image = UIImage(data: imageData) else { return }
 
             DispatchQueue.main.async {
-                self.productImageView.image = image
+                cell.postThumbnailImageView.image = image
             }
         }
     }
 
-    func setUpComponentsData(of product: Post) {
-        self.fetchImage(from: product.thumbnail)
-        self.productNameLabel.text = product.name
-        self.productDiscountedPriceLabel.text = product.discountedPrice.description
-        self.productPriceLabel.text = product.price.description
-        self.productStockLabel.text = product.stock.description
-        self.productID = product.id
+    private func composeTitle(of cell: ProductCell, from data: Post) {
+        cell.postTitleLabel.text = data.name
+    }
+
+    private func composePrice(of cell: ProductCell, from data: Post) {
+        let priceTextAttributes = NSMutableAttributedString(string: String(describing: data.price))
+        let priceTextRange = NSRange(location: 0, length: priceTextAttributes.length)
+        if data.discountedPrice != 0 {
+            priceTextAttributes.addAttributes([.foregroundColor: UIColor.systemRed,
+                                               .strikethroughStyle: 1,
+                                               .strikethroughColor: UIColor.systemRed],
+                                              range: priceTextRange)
+            cell.productPriceLabel.attributedText = priceTextAttributes
+            cell.priceLabelStackView.addArrangedSubview(cell.productBargainPriceLabel)
+            if data.price - floor(data.price) >= 0 {
+                switch data.currency {
+                case .KRW:
+                    cell.productPriceLabel.text = data.currency.rawValue + " " + String(describing: Int(data.price))
+                case .USD:
+                    cell.productPriceLabel.text = data.currency.rawValue + " " + String(describing: Int(data.price))
+                }
+            } else {
+                switch data.currency {
+                case .KRW:
+                    cell.productPriceLabel.text = data.currency.rawValue + " " + String(describing: data.price)
+                case .USD:
+                    cell.productPriceLabel.text = data.currency.rawValue + " " + String(describing: data.price)
+                }
+            }
+        } else {
+            cell.priceLabelStackView.removeArrangedSubview(cell.productBargainPriceLabel)
+        }
+    }
+
+    private func composeBargainPrice(of cell: ProductCell, from data: Post) {
+        if data.bargainPrice - floor(data.bargainPrice) >= 0 {
+            switch data.currency {
+            case .KRW:
+                cell.productBargainPriceLabel.text = data.currency.rawValue + " " + String(describing: Int(data.bargainPrice))
+            case .USD:
+                cell.productBargainPriceLabel.text = data.currency.rawValue + " " + String(describing: Int(data.bargainPrice))
+            }
+        } else {
+            switch data.currency {
+            case .KRW:
+                cell.productBargainPriceLabel.text = data.currency.rawValue + " " + String(describing: data.bargainPrice)
+            case .USD:
+                cell.productBargainPriceLabel.text = data.currency.rawValue + " " + String(describing: data.bargainPrice)
+            }
+        }
+    }
+
+    private func composeStock(of cell: ProductCell, from data: Post) {
+        let textAttributes = NSMutableAttributedString(string: String(describing: data.stock))
+        let textRange = NSRange(location: 0, length: textAttributes.length)
+        if data.stock == 0 {
+            textAttributes.addAttributes([.foregroundColor: UIColor.systemYellow], range: textRange)
+            cell.productStockLabel.attributedText = textAttributes
+            cell.productStockLabel.text = "품절"
+        } else {
+            textAttributes.addAttributes([.foregroundColor: UIColor.systemGray4], range: textRange)
+            cell.productStockLabel.attributedText = textAttributes
+            cell.productStockLabel.text = "\(data.stock)개"
+        }
     }
 }
