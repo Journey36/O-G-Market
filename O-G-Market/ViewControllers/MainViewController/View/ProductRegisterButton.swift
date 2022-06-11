@@ -21,11 +21,8 @@ class ProductRegisterButton: UIButton {
         let buttonImage = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 35, weight: .bold))
 
         self.setImage(buttonImage, for: .normal)
-        self.backgroundColor = .systemBlue
+        self.backgroundColor = .systemIndigo
         self.tintColor = .white
         self.layer.cornerRadius = 35
-        self.layer.shadowColor = UIColor.systemGray.cgColor
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize(width: 4, height: 4)
     }
 }
