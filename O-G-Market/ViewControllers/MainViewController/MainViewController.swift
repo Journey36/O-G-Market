@@ -2,6 +2,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 final class MainViewController: UIViewController {
     private enum Section {
@@ -9,21 +10,37 @@ final class MainViewController: UIViewController {
     }
 
     // MARK: - Properties
+    private let manager = NetworkManager()
     var coordinator: MainCoordinator?
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Post>?
+
+    private lazy var dataSource: UICollectionViewDiffableDataSource<Section, Post> = {
+        let productCell = configureProductCell()
+        let cellProvider: UICollectionViewDiffableDataSource<Section, Post>.CellProvider = { collectionView, indexPath, id -> UICollectionViewCell? in
+            collectionView.dequeueConfiguredReusableCell(using: productCell,
+                                                         for: indexPath, item: id)
+        }
+        let dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView, cellProvider: cellProvider)
+        return dataSource
+    }()
     private var snapshot = NSDiffableDataSourceSnapshot<Section, Post>()
+    private var collectionViewLayout: UICollectionViewLayout {
+        let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
+        return UICollectionViewCompositionalLayout.list(using: configuration)
+    }
+
     private var startPage: Int = 1
     private var fetchingIndexPathRow = 18
-    private let communicator = NetworkManager()
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
-        let productCollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: configureCollectionViewLayout())
+        let productCollectionView = UICollectionView(frame: view.bounds,
+                                                     collectionViewLayout: collectionViewLayout)
         return productCollectionView
     }()
     private lazy var productRegisterButton: UIButton = {
         let button = ProductRegisterButton(frame: CGRect.zero)
-        button.addTarget(self, action: #selector(presentProductRegisterViewController), for: .touchUpInside)
+        button.addTarget(self, action: #selector(presentProductRegisterViewController),
+                         for: .touchUpInside)
         return button
     }()
 
@@ -35,39 +52,29 @@ final class MainViewController: UIViewController {
         productCollectionView.delegate = self
         productCollectionView.prefetchDataSource = self
         configureConstraints()
-        configureDiffableDataSource()
         fetchList()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
     // MARK: - Methods
-    private func configureCollectionViewLayout() -> UICollectionViewLayout {
-        let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-        return UICollectionViewCompositionalLayout.list(using: configuration)
-    }
-
     private func configureProductCell() -> UICollectionView.CellRegistration<ProductCell, Post> {
-        return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, product in
-            cell.setUpComponentsData(of: product)
-        }
-    }
-
-    private func configureDiffableDataSource() {
-        let productCell = configureProductCell()
-
-        dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView) { collectionView, indexPath, id -> UICollectionViewCell? in
-            collectionView.dequeueConfiguredReusableCell(using: productCell, for: indexPath, item: id)
+        return UICollectionView.CellRegistration<ProductCell, Post> { cell, _, post in
+            cell.composeCell(cell, with: post)
         }
     }
 
     private func takeInitialSnapshot(with list: Page) {
         snapshot.appendSections([.main])
         snapshot.appendItems(list.post)
-        dataSource?.apply(snapshot, animatingDifferences: false)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 
     private func takeOtherSnapshot(with list: Page) {
         snapshot.appendItems(list.post)
-        dataSource?.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 
     private func configureConstraints() {
@@ -90,15 +97,22 @@ final class MainViewController: UIViewController {
 
     private func fetchList() {
         Task {
-            guard let page = try? await communicator.fetch(pages: startPage) else {
-                return
-            }
-            startPage == 1 ? takeInitialSnapshot(with: page) : takeOtherSnapshot(with: page)
+            guard let page = try? await manager.fetch(pages: startPage) else { return }
+            takeInitialSnapshot(with: page)
+        }
+    }
+
+    private func appendList() {
+        Task {
+            guard let page = try? await manager.fetch(pages: startPage + 1) else { return }
+            takeOtherSnapshot(with: page)
             guard !page.hasNextPage else {
                 startPage += 1
                 return
             }
         }
+
+        fetchingIndexPathRow += 20
     }
 }
 
@@ -116,8 +130,7 @@ extension MainViewController: UICollectionViewDelegate {
 extension MainViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths where indexPath.row == fetchingIndexPathRow {
-            fetchList()
-            fetchingIndexPathRow += 20
+            appendList()
         }
     }
 }

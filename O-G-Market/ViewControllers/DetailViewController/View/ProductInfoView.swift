@@ -64,6 +64,13 @@ class ProductInfoView: UIView {
     func setUpComponentsData(product: Post) {
         titleLabel.text = product.name
         descriptionLabel.text = product.description
-        registrationDateLabel.text = product.createdAt
+        // created At
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = .withFullDate
+        guard let date = formatter.date(from: product.createdAt) else { return }
+        let current = Date()
+        let relativeFormatter = RelativeDateTimeFormatter()
+
+        registrationDateLabel.text = relativeFormatter.localizedString(for: date, relativeTo: current)
     }
 }
