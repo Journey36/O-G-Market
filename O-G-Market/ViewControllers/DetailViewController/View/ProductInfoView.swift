@@ -65,12 +65,17 @@ class ProductInfoView: UIView {
         titleLabel.text = product.name
         descriptionLabel.text = product.description
         // created At
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = .withFullDate
-        guard let date = formatter.date(from: product.createdAt) else { return }
-        let current = Date()
-        let relativeFormatter = RelativeDateTimeFormatter()
+        let iso8601DateFormatter = ISO8601DateFormatter()
+        iso8601DateFormatter.formatOptions = .withFullDate
+        guard let date = iso8601DateFormatter.date(from: product.createdAt) else { return }
 
-        registrationDateLabel.text = relativeFormatter.localizedString(for: date, relativeTo: current)
+        let relativeWord = ["어제", "오늘", "내일"]
+        if !relativeWord.contains(date.relativeDateFormatting) {
+            let relativeDateTimeFormatter = RelativeDateTimeFormatter()
+            registrationDateLabel.text = relativeDateTimeFormatter
+                .localizedString(for: date, relativeTo: Date.now)
+        } else {
+            registrationDateLabel.text = date.relativeDateFormatting
+        }
     }
 }
