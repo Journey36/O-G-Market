@@ -25,6 +25,7 @@
 		3DD69B9D27642DDA00F053E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DD69B9C27642DDA00F053E0 /* Assets.xcassets */; };
 		3DD69BDC27643E9100F053E0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3DD69BDB27643E9100F053E0 /* SnapKit */; };
 		69B16E7828444C8E00CA6996 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 69B16E7728444C8E00CA6996 /* Alamofire */; };
+		AF05E5E02856645700B654D7 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF05E5DF2856645700B654D7 /* Date+.swift */; };
 		DE2BB52527AFFFA1007047FA /* AddProductImageCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2BB52427AFFFA1007047FA /* AddProductImageCollectionViewController.swift */; };
 		DE2BB53227B06356007047FA /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2BB53127B06356007047FA /* UIColor+.swift */; };
 		DE4B8CED2778A0EA007454FC /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4B8CEC2778A0EA007454FC /* UILabel+.swift */; };
@@ -69,6 +70,7 @@
 		3DD69B9C27642DDA00F053E0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3DD69BA127642DDA00F053E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3DD69BA827642EEB00F053E0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		AF05E5DF2856645700B654D7 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		DE2BB52427AFFFA1007047FA /* AddProductImageCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddProductImageCollectionViewController.swift; sourceTree = "<group>"; };
 		DE2BB53127B06356007047FA /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		DE4B8CEC2778A0EA007454FC /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				DE4B8CEC2778A0EA007454FC /* UILabel+.swift */,
+				AF05E5DF2856645700B654D7 /* Date+.swift */,
 				DE9A8020279E3F1D00C8362D /* UICollectionViewFlowLayout+.swift */,
 				DE4B8CF127792C2A007454FC /* UIStackView+.swift */,
 				DE8B1C0427A15BC000573454 /* UITextField+.swift */,
@@ -397,6 +400,7 @@
 				3D6B60342789580100A292AF /* Currency.swift in Sources */,
 				3DD69B9627642DD900F053E0 /* SceneDelegate.swift in Sources */,
 				DE61EBE427A2B4A000BD8A95 /* MainCoordinator.swift in Sources */,
+				AF05E5E02856645700B654D7 /* Date+.swift in Sources */,
 				3D6B603A278A1B6200A292AF /* Registration.swift in Sources */,
 				DE61EBE227A2B43900BD8A95 /* Coordinator.swift in Sources */,
 				DE61EBF227AC98B100BD8A95 /* ProductDeleteAlertController.swift in Sources */,
