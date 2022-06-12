@@ -22,19 +22,23 @@ final class MainViewController: UIViewController {
         let dataSource = UICollectionViewDiffableDataSource<Section, Post>(collectionView: productCollectionView, cellProvider: cellProvider)
         return dataSource
     }()
-    private var snapshot = NSDiffableDataSourceSnapshot<Section, Post>()
     private var collectionViewLayout: UICollectionViewLayout {
         let configuration = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
         return UICollectionViewCompositionalLayout.list(using: configuration)
     }
 
-    private var startPage: Int = 1
+    private let startPage = 1
+    private lazy var currentPage = startPage
     private var fetchingIndexPathRow = 18
 
     // MARK: - UI Componenets
     private lazy var productCollectionView: UICollectionView = {
         let productCollectionView = UICollectionView(frame: view.bounds,
                                                      collectionViewLayout: collectionViewLayout)
+
+        productCollectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshCollectionView), for: .valueChanged)
+
         return productCollectionView
     }()
     private lazy var productRegisterButton: UIButton = {
@@ -42,6 +46,10 @@ final class MainViewController: UIViewController {
         button.addTarget(self, action: #selector(presentProductRegisterViewController),
                          for: .touchUpInside)
         return button
+    }()
+    private let refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        return refreshControl
     }()
 
     // MARK: - Lifecycle
@@ -66,15 +74,17 @@ final class MainViewController: UIViewController {
         }
     }
 
-    private func takeInitialSnapshot(with list: Page) {
+    private func initializeSnapshot(with list: Page) {
+        var snapshot = dataSource.snapshot()
         snapshot.appendSections([.main])
         snapshot.appendItems(list.post)
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 
-    private func takeOtherSnapshot(with list: Page) {
+    private func changeSnapshot(with list: Page) {
+        var snapshot = dataSource.snapshot()
         snapshot.appendItems(list.post)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 
     private func configureConstraints() {
@@ -95,19 +105,36 @@ final class MainViewController: UIViewController {
         coordinator?.presentRegistViewController()
     }
 
+    @objc private func refreshCollectionView() {
+        Task {
+            guard let page = try? await manager.fetch(pages: startPage) else { return }
+            var snapshot = dataSource.snapshot()
+            snapshot.deleteAllItems()
+            snapshot.appendSections([.main])
+            snapshot.appendItems(page.post)
+            await dataSource.applySnapshotUsingReloadData(snapshot)
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.refreshControl.endRefreshing()
+        }
+
+        fetchingIndexPathRow = 18
+    }
+
     private func fetchList() {
         Task {
             guard let page = try? await manager.fetch(pages: startPage) else { return }
-            takeInitialSnapshot(with: page)
+            initializeSnapshot(with: page)
         }
     }
 
-    private func appendList() {
+    private func appendToList() {
         Task {
-            guard let page = try? await manager.fetch(pages: startPage + 1) else { return }
-            takeOtherSnapshot(with: page)
+            guard let page = try? await manager.fetch(pages: currentPage + 1) else { return }
+            changeSnapshot(with: page)
             guard !page.hasNextPage else {
-                startPage += 1
+                currentPage += 1
                 return
             }
         }
@@ -128,9 +155,10 @@ extension MainViewController: UICollectionViewDelegate {
 }
 
 extension MainViewController: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+    func collectionView(_ collectionView: UICollectionView,
+                        prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths where indexPath.row == fetchingIndexPathRow {
-            appendList()
+            appendToList()
         }
     }
 }
