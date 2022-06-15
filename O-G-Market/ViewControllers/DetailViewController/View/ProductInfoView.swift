@@ -8,7 +8,11 @@
 import UIKit
 
 class ProductInfoView: UIView {
-    let titleLabel = UILabel(textStyle: .largeTitle)
+    let titleLabel: UILabel = {
+        let titleLabel = UILabel(textStyle: .largeTitle)
+        titleLabel.numberOfLines = 0
+        return titleLabel
+    }()
     let registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
     let descriptionLabel = UILabel(textStyle: .body)
     private let stackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 8, distribution: .equalSpacing)
