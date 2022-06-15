@@ -68,9 +68,19 @@ final class ProductEditViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        view.endEditing(true)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
+
+        productNameTextField.delegate = self
+        productPriceTextField.delegate = self
+        productDiscountedPriceTextField.delegate = self
+        productStockTextField.delegate = self
 
         addSubviews()
         configureNavigationBar()
@@ -104,7 +114,7 @@ final class ProductEditViewController: UIViewController {
     }
 
     @objc func enrollProduct() {
-        guard isAllComponentsFull() else { return }
+        guard checkRequiredValueValidity() else { return }
         switch type {
         case .regist:
             guard let product = package() else { return }
@@ -185,19 +195,20 @@ final class ProductEditViewController: UIViewController {
         return Registration(product: product, images: images)
     }
 
-    private func isAllComponentsFull() -> Bool {
+    private func checkRequiredValueValidity() -> Bool {
         guard !addProductImageCollectionViewController.imageList.isEmpty else {
-            coordinator?.presentBasicAlert(sender: self, message: "이미지는 1장 이상 등록해야 합니다.")
+            coordinator?.presentBasicAlert(sender: self, message: "이미지를 1장 이상 등록해주세요!")
             return false
         }
 
         guard (10...1000).contains(productDescriptionTextView.text.count) else {
-            coordinator?.presentBasicAlert(sender: self, message: "상품 설명은 10자 이상, 1000자 이하로 작성해야 합니다.")
+            coordinator?.presentBasicAlert(sender: self,
+                                           message: "상품 설명을 10자 이상, 1000자 이하로 입력해주세요!")
             return false
         }
 
         guard currencySegmentControl.selectedSegmentIndex >= 0 && currencySegmentControl.selectedSegmentIndex <= currencySegmentControl.numberOfSegments else {
-            coordinator?.presentBasicAlert(sender: self, message: "통화를 선택해주세요.")
+            coordinator?.presentBasicAlert(sender: self, message: "통화를 선택해주세요!")
             return false
         }
 
@@ -205,7 +216,7 @@ final class ProductEditViewController: UIViewController {
               !(productPriceTextField.text?.isEmpty ?? false),
               !(productStockTextField.text?.isEmpty ?? false),
               !(productDiscountedPriceTextField.text?.isEmpty ?? false) else {
-                  coordinator?.presentBasicAlert(sender: self, message: "모든 필드를 채워주세요.")
+                  coordinator?.presentBasicAlert(sender: self, message: "모든 필드를 채워주세요!")
                   return false
               }
 
@@ -275,5 +286,153 @@ extension ProductEditViewController {
         productStockTextField.text = String(product.stock)
         currencySegmentControl.selectedSegmentIndex = product.currency == .KRW ? 0 : 1
         addProductImageCollectionViewController.imageList = images
+    }
+}
+
+extension ProductEditViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        guard let currentText = textField.text else { return false }
+        guard let textRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: textRange, with: string)
+
+        checkTextLengthValidity(of: textField, currentText: currentText, updatedText: updatedText)
+        return true
+    }
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        checkTextValidity(of: textField)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case productNameTextField:
+            textField.resignFirstResponder()
+            productPriceTextField.becomeFirstResponder()
+        case productPriceTextField:
+            textField.resignFirstResponder()
+            productDiscountedPriceTextField.becomeFirstResponder()
+        case productDiscountedPriceTextField:
+            textField.resignFirstResponder()
+            productStockTextField.becomeFirstResponder()
+        case productStockTextField:
+            textField.resignFirstResponder()
+            productDescriptionTextView.becomeFirstResponder()
+        default:
+            break
+        }
+
+        return true
+    }
+}
+
+extension ProductEditViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        let cursorPosition = textView.endOfDocument
+        textView.selectedTextRange = textView.textRange(from: cursorPosition, to: cursorPosition)
+    }
+}
+
+extension ProductEditViewController {
+    private func checkTextLengthValidity(of textField: UITextField, currentText: String,
+                                         updatedText: String) {
+        let becomeFirstResponder: ((UIAlertAction) -> Void)? = { _ in
+            textField.becomeFirstResponder()
+        }
+
+        switch textField {
+        case productNameTextField:
+            guard (0...50).contains(updatedText.count) else {
+                coordinator?.presentBasicAlert(sender: self,
+                                               message: "제품 이름을 최대 50자 이내로 입력해주세요!",
+                                               handler: becomeFirstResponder)
+                textField.text = currentText
+                return
+            }
+        case productPriceTextField:
+            guard (0...12).contains(updatedText.count) else {
+                coordinator?.presentBasicAlert(sender: self,
+                                               message:
+                                                "상품 가격을 12자리 이하로 입력해주세요!\n(최대 1000억)",
+                                               handler: becomeFirstResponder)
+                textField.text = currentText
+                return
+            }
+        case productDiscountedPriceTextField:
+            guard (0...3).contains(updatedText.count) else {
+                coordinator?.presentBasicAlert(sender: self,
+                                               message: "상품 할인률을 입력해주세요!\n(최대 100%)", handler: becomeFirstResponder)
+                textField.text = currentText
+                return
+            }
+        case productStockTextField:
+            guard (0...8).contains(updatedText.count) else {
+                coordinator?.presentBasicAlert(sender: self,
+                                               message:
+                                                "상품 재고를 8자리 이하로 입력해주세요!\n(최대 99,999,999개)",
+                                               handler: becomeFirstResponder)
+                textField.text = currentText
+                return
+            }
+        default:
+            break
+        }
+    }
+
+    private func checkTextValidity(of textField: UITextField) {
+        guard let currentText = textField.text else { return }
+        let becomeFirstResponder: ((UIAlertAction) -> Void)? = { _ in
+            textField.becomeFirstResponder()
+        }
+
+        switch textField {
+        case productPriceTextField:
+            let regularExpressionForInteger = "^[1-9][\\d]*$"
+            let regularExpressionForDouble = "^(([1-9][\\d]*\\.)|([0.]))[\\d]*[^0^\\.\\W]$"
+            if Int(currentText) == nil {
+                guard currentText.range(of: regularExpressionForDouble,
+                                            options: .regularExpression) != nil else {
+                    coordinator?.presentBasicAlert(sender: self,
+                                                   message:
+                                                    "올바른 가격을 입력해주세요!",
+                                                   handler: becomeFirstResponder)
+                    textField.text = nil
+                    return
+                }
+            } else {
+                guard currentText.range(of: regularExpressionForInteger,
+                                            options: .regularExpression) != nil else {
+                    coordinator?.presentBasicAlert(sender: self,
+                                                   message:
+                                                    "올바른 가격을 입력해주세요!",
+                                                   handler: becomeFirstResponder)
+                    textField.text = nil
+                    return
+                }
+            }
+        case productDiscountedPriceTextField:
+            if let number = Int(currentText) {
+                guard (0...100).contains(number) else {
+                    coordinator?.presentBasicAlert(sender: self,
+                                                   message: "할인율을 올바르게 입력해주세요!",
+                                                   handler: becomeFirstResponder)
+                    textField.text = nil
+                    return
+                }
+            }
+            return
+        case productStockTextField:
+            let regularExpression = "^0$|^[1-9][\\d]*$"
+            guard currentText.range(of: regularExpression,
+                                    options: .regularExpression) != nil else {
+                coordinator?.presentBasicAlert(sender: self,
+                                               message: "올바른 상품 재고를 입력해주세요!",
+                                               handler: becomeFirstResponder)
+                textField.text = nil
+                return
+            }
+        default:
+            break
+        }
     }
 }
