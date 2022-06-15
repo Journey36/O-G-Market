@@ -110,9 +110,10 @@ final class MainCoordinator: Coordinator {
         sender.dismiss(animated: true, completion: nil)
     }
 
-    func presentBasicAlert(sender: UIViewController, message: String) {
+    func presentBasicAlert(sender: UIViewController, message: String,
+                           handler: ((UIAlertAction) -> Void)? = nil) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: handler)
 
         alert.addAction(okAction)
         sender.present(alert, animated: true, completion: nil)
