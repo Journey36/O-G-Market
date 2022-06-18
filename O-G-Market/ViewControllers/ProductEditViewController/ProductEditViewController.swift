@@ -126,8 +126,24 @@ final class ProductEditViewController: UIViewController {
             guard let parameters = revise(), let productID = self.productID else { return }
             Task {
                 guard (try? await manager.update(productID: productID, content: parameters)) != nil else { return }
-                dismissSelf()
             }
+
+            let recomposeDetailViewData: CompletionHandler = {
+                guard let presentingViewController = self.coordinator?.navigationController
+                    .children.last as? DetailViewController else { return }
+
+                Task {
+                    guard let product = try? await self.manager
+                        .fetch(details: productID) else { return }
+
+                    await MainActor.run {
+                        presentingViewController.productImagePageViewController.images.removeAll()
+                        presentingViewController.setUpComponentsData(product: product)
+                    }
+                }
+            }
+
+            coordinator?.dismissModal(sender: self, after: recomposeDetailViewData)
         }
     }
 
