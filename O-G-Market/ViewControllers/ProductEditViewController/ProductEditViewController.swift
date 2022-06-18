@@ -119,8 +119,15 @@ final class ProductEditViewController: UIViewController {
             guard let product = package() else { return }
             Task {
                 guard (try? await manager.upload(content: product)) != nil else { return }
-                dismissSelf()
             }
+
+            let reloadMainViewItems: CompletionHandler = {
+                guard let presentingViewController = self.coordinator?.navigationController
+                    .children.last as? MainViewController else { return }
+                presentingViewController.reloadCollectionView()
+            }
+
+            coordinator?.dismissModal(sender: self, after: reloadMainViewItems)
 
         case .edit:
             guard let parameters = revise(), let productID = self.productID else { return }
