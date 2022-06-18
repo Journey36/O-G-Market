@@ -68,16 +68,17 @@ extension ProductPriceView {
     }
 
     func setUpComponentsData(product: Post) {
-        if product.bargainPrice != 0 {
-            subPriceLabel.text = String(product.price)
-            mainPriceLabel.text = String(product.bargainPrice)
+        if product.discountedPrice != 0 {
+            subPriceLabel.text = composePrice(of: product)
+            mainPriceLabel.text = composeBargainPrice(of: product)
             makeDiscountedPriceLabel()
         } else {
             subPriceLabel.text = "할인 없음"
-            mainPriceLabel.text = String(product.price)
+            mainPriceLabel.text = composePrice(of: product)
         }
 
         stockLabel.text = "남은 수량: \(product.stock)"
+        subPriceLabel.text? += " " + product.currency.rawValue
         mainPriceLabel.text? += " " + product.currency.rawValue
 
         if product.stock == 0 {
@@ -85,6 +86,28 @@ extension ProductPriceView {
             buyButton.setTitle("품절", for: .normal)
             buyButton.backgroundColor = .systemGray3
         }
+    }
+
+    private func composePrice(of product: Post) -> String? {
+        var priceText = String(product.price)
+        guard let textStartIndex = priceText.firstIndex(of: ".") else { return nil }
+        let textEndIndex = priceText.endIndex
+        let bounds = textStartIndex..<textEndIndex
+
+        if priceText.hasSuffix(".0") {
+            priceText.removeSubrange(bounds)
+        }
+
+        return priceText
+    }
+
+    private func composeBargainPrice(of product: Post) -> String? {
+        var bargainPriceText = String(product.bargainPrice)
+        guard let textStartIndex = bargainPriceText.firstIndex(of: ".") else { return nil }
+        let textEndIndex = bargainPriceText.endIndex
+        let bounds = textStartIndex..<textEndIndex
+        bargainPriceText.removeSubrange(bounds)
+        return bargainPriceText
     }
 
     private func makeDiscountedPriceLabel() {

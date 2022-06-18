@@ -122,6 +122,19 @@ final class MainViewController: UIViewController {
         fetchingIndexPathRow = 18
     }
 
+    func reloadCollectionView() {
+        Task {
+            guard let page = try? await manager.fetch(pages: startPage) else { return }
+            var snapshot = dataSource.snapshot()
+            snapshot.deleteAllItems()
+            snapshot.appendSections([.main])
+            snapshot.appendItems(page.post)
+            await dataSource.applySnapshotUsingReloadData(snapshot)
+        }
+
+        fetchingIndexPathRow = 18
+    }
+
     private func fetchList() {
         Task {
             guard let page = try? await manager.fetch(pages: startPage) else { return }
