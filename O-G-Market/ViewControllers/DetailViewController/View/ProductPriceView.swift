@@ -78,6 +78,7 @@ extension ProductPriceView {
         }
 
         stockLabel.text = "남은 수량: \(product.stock)"
+        subPriceLabel.text? += " " + product.currency.rawValue
         mainPriceLabel.text? += " " + product.currency.rawValue
 
         if product.stock == 0 {
