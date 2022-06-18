@@ -21,7 +21,6 @@ final class ProductEditViewController: UIViewController {
     }
 
     var coordinator: MainCoordinator?
-    private var product: Post?
     private var productID: Int?
     private var capturedValue: [String: Any] = [:]
     private var type: ViewType
@@ -127,8 +126,24 @@ final class ProductEditViewController: UIViewController {
             guard let parameters = revise(), let productID = self.productID else { return }
             Task {
                 guard (try? await manager.update(productID: productID, content: parameters)) != nil else { return }
-                dismissSelf()
             }
+
+            let recomposeDetailViewData: CompletionHandler = {
+                guard let presentingViewController = self.coordinator?.navigationController
+                    .children.last as? DetailViewController else { return }
+
+                Task {
+                    guard let product = try? await self.manager
+                        .fetch(details: productID) else { return }
+
+                    await MainActor.run {
+                        presentingViewController.productImagePageViewController.images.removeAll()
+                        presentingViewController.setUpComponentsData(product: product)
+                    }
+                }
+            }
+
+            coordinator?.dismissModal(sender: self, after: recomposeDetailViewData)
         }
     }
 
@@ -277,15 +292,36 @@ final class ProductEditViewController: UIViewController {
 extension ProductEditViewController {
     func setUpComponentsData(product: Post?, images: [UIImage]) {
         guard type == .edit, let product = product else { return }
-
         productID = product.id
         productNameTextField.text = product.name
-        productPriceTextField.text = String(product.price)
-        productDiscountedPriceTextField.text = String(product.bargainPrice)
+        productPriceTextField.text = composePrice(of: product)
+        productDiscountedPriceTextField.text = composeDiscountedPrice(of: product)
         productDescriptionTextView.text = product.description
         productStockTextField.text = String(product.stock)
         currencySegmentControl.selectedSegmentIndex = product.currency == .KRW ? 0 : 1
         addProductImageCollectionViewController.imageList = images
+    }
+
+    private func composePrice(of product: Post) -> String? {
+        var priceText = String(product.price)
+        guard let textStartIndex = priceText.firstIndex(of: ".") else { return nil }
+        let textEndIndex = priceText.endIndex
+        let bounds = textStartIndex..<textEndIndex
+
+        if priceText.hasSuffix(".0") {
+            priceText.removeSubrange(bounds)
+        }
+
+         return priceText
+    }
+
+    private func composeDiscountedPrice(of product: Post) -> String? {
+        var discountedPriceText = String(product.discountedPrice)
+        guard let textStartIndex = discountedPriceText.firstIndex(of: ".") else { return nil }
+        let textEndIndex = discountedPriceText.endIndex
+        let bounds = textStartIndex..<textEndIndex
+        discountedPriceText.removeSubrange(bounds)
+        return discountedPriceText
     }
 }
 

@@ -106,8 +106,8 @@ final class MainCoordinator: Coordinator {
         sender.present(imagePickerViewcontroller, animated: true, completion: nil)
     }
 
-    func dismissModal(sender: UIViewController) {
-        sender.dismiss(animated: true, completion: nil)
+    func dismissModal(sender: UIViewController, after completion: CompletionHandler = nil) {
+        sender.dismiss(animated: true, completion: completion)
     }
 
     func presentBasicAlert(sender: UIViewController, message: String,
