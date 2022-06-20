@@ -12,10 +12,26 @@ class ProductPriceView: UIView {
     let subPriceLabel = UILabel(textStyle: .caption1, textColor: .gray)
     let stockLabel = UILabel(textStyle: .caption1, textColor: .gray)
     let buyButton = UIButton()
-    private let priceStackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 8)
-    private let buyStackView = UIStackView(axis: .vertical, alignment: .leading)
-    private let totalStackView = UIStackView(axis: .horizontal, alignment: .center)
-    private let transparentBlankView = UIView(frame: CGRect.zero)
+    private let priceStackView: UIStackView = {
+        let priceStackView = UIStackView()
+        priceStackView.axis = .vertical
+        return priceStackView
+    }()
+    private let buyStackView: UIStackView = {
+        let buyStackView = UIStackView()
+        buyStackView.axis = .vertical
+        buyStackView.spacing = 5
+        buyStackView.distribution = .fillProportionally
+        return buyStackView
+    }()
+    private let totalStackView: UIStackView = {
+        let totalStackView = UIStackView()
+        totalStackView.axis = .horizontal
+        totalStackView.alignment = .center
+        totalStackView.spacing = 10
+        totalStackView.distribution = .fillProportionally
+        return totalStackView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -47,7 +63,6 @@ extension ProductPriceView {
         totalStackView.addArrangedSubview(buyStackView)
 
         addSubview(totalStackView)
-        addSubview(transparentBlankView)
     }
 
     private func configureLayout() {
@@ -55,15 +70,21 @@ extension ProductPriceView {
             make.top.equalToSuperview().offset(10)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().multipliedBy(0.9)
-            make.bottom.equalToSuperview().offset(-30)
+            make.bottom.equalTo(safeAreaLayoutGuide)
         }
 
         priceStackView.snp.makeConstraints { make in
             make.width.equalToSuperview().multipliedBy(0.6)
         }
 
-        buyButton.snp.makeConstraints { make in
-            make.width.equalToSuperview()
+        mainPriceLabel.snp.makeConstraints { make in
+            make.top.equalTo(priceStackView.snp.centerY)
+            make.leading.bottom.equalToSuperview()
+        }
+
+        subPriceLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview()
+            make.bottom.equalTo(priceStackView.snp.centerY)
         }
     }
 
