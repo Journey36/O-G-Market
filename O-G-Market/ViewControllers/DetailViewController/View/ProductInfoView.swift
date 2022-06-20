@@ -15,7 +15,6 @@ class ProductInfoView: UIView {
     }()
     let registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
     let descriptionLabel = UILabel(textStyle: .body)
-    private let stackView = UIStackView(axis: .vertical, alignment: .leading, spacing: 8, distribution: .equalSpacing)
     private let containerView = UIView()
 
     override init(frame: CGRect) {

@@ -79,11 +79,11 @@ class ProductCell: UICollectionViewListCell {
         priceLabelStackView.addArrangedSubview(productBargainPriceLabel)
 
         postThumbnailImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(10).priority(.low)
+            make.bottom.equalToSuperview().offset(-10).priority(.low)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalTo(postTitleLabel.snp.leading).offset(-10)
-            make.width.height.equalTo(90)
+            make.size.equalTo(90)
         }
 
         postTitleLabel.snp.makeConstraints { make in

@@ -48,14 +48,13 @@ class DetailViewController: UIViewController {
         productImagePageViewController.view.snp.makeConstraints { make in
             make.width.equalToSuperview()
             make.height.equalTo(view.snp.width)
-            make.centerX.equalToSuperview()
             make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
         }
 
         productInfoView.snp.makeConstraints { make in
             make.top.equalTo(productImagePageViewController.view.snp.bottom)
-            make.width.equalToSuperview()
-            make.centerX.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
 
