@@ -29,7 +29,6 @@ class ProductPriceView: UIView {
         totalStackView.axis = .horizontal
         totalStackView.alignment = .center
         totalStackView.spacing = 10
-        totalStackView.distribution = .fillProportionally
         return totalStackView
     }()
 
