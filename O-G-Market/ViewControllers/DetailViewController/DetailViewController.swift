@@ -13,7 +13,11 @@ class DetailViewController: UIViewController {
     var coordinator: MainCoordinator?
     var product: Post?
 
-    let scrollView = UIScrollView()
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .systemBackground
+        return scrollView
+    }()
     let productImagePageViewController = ProductImagePageViewController()
     let productPriceView = ProductPriceView(frame: zeroSize)
     let productInfoView = ProductInfoView(frame: zeroSize)
@@ -83,7 +87,7 @@ extension DetailViewController {
 
         navigationItem.rightBarButtonItems = [editButton, shareButton]
         navigationItem.title = "상품 상세"
-        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .systemBackground
     }
 
     @objc private func showActivityView() {

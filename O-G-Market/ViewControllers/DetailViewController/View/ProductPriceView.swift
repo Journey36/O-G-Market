@@ -8,7 +8,7 @@
 import UIKit
 
 class ProductPriceView: UIView {
-    let mainPriceLabel = UILabel(textStyle: .title1)
+    let mainPriceLabel = UILabel(textStyle: .title1, textColor: .label)
     let subPriceLabel = UILabel(textStyle: .caption1, textColor: .gray)
     let stockLabel = UILabel(textStyle: .caption1, textColor: .gray)
     let buyButton = UIButton()

@@ -11,10 +11,11 @@ class ProductInfoView: UIView {
     let titleLabel: UILabel = {
         let titleLabel = UILabel(textStyle: .largeTitle)
         titleLabel.numberOfLines = 0
+        titleLabel.textColor = .label
         return titleLabel
     }()
     let registrationDateLabel = UILabel(textStyle: .body, textColor: .darkGray)
-    let descriptionLabel = UILabel(textStyle: .body)
+    let descriptionLabel = UILabel(textStyle: .body, textColor: .label)
     private let containerView = UIView()
 
     override init(frame: CGRect) {
